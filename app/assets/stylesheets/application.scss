@@ -1,0 +1,52 @@
+@debug '________ applciation compile______';
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'bootstrap-select';
+@import 'bootstrap-table/bootstrap-table';
+@import "glyphicons";
+@import "spiner";
+@debug '________ applciation compiled______';
+
+body {
+  margin: 0;
+}
+
+#app {
+  height: 100vh;
+
+  /* grid container settings */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+}
+
+#app > header {
+  grid-area: header;
+}
+
+#app > main {
+  grid-area: main;
+  padding: 15px 15px 10px 15px;
+}
+
+#app > footer {
+  grid-area: footer;
+  padding: 15px 15px 10px 15px;
+}
+
+.display_flex { display: flex; }
+.position_relative { position: relative; }
+.position_absolute { position: absolute; }
+.left_85_per { left: 85% }
+.left_84_per { left: 84% }
+.left_83_per { left: 83% }
+.left_75_per { left: 75% }
+.left_15_per { left: 15% }
+.left_10_per { left: 10% }
+.margin_top_2_per { margin-top: 2% }
+.margin_left { margin-right: -20%;}
+.width75 { width: 125px; }

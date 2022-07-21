@@ -1,0 +1,79 @@
+%div.modal-style
+  %h3{ style: "color: #11b124" } Операция успешна
+  - if params[:action] == 'open_browser_0' || params[:action] == 'open_browser_1'
+    %h3{ style: "color: #11b124" }
+      %div Клиент - #{params[:client]}
+      %div УЛ - #{params[:acus]}
+
+  %div{ class: "modal-body" }
+    %div
+      - if params[:action] == 'download_dump'
+        %div{ style: 'overflow-wrap: anywhere; text-align: inherit;' }
+          = @content
+
+      - if params[:action] == 'get_egrul'
+        %div{ style: 'overflow-wrap: anywhere; text-align: inherit;' }
+          %pre
+            = @content
+
+      - if params[:action] == 'add_albo'
+        %div{ style: 'overflow-wrap: anywhere; text-align: inherit;' }
+          %pre
+            = @content
+            :javascript
+              $("th.albo-#{Client.find(params[:client_id]).id} > form > div").css("color", "green").text("+")
+
+      - if params[:action] == 'add_personal'
+        %div{ style: 'overflow-wrap: anywhere; text-align: inherit;' }
+          %pre
+            = "Ведение (ввод/редактирование) информации по персональному составу субъектов клиента,"
+          %pre
+            = params.to_s
+          %pre
+            = "выполнено:"
+          %pre
+            = @content
+          :javascript
+            $("th.party-#{Client.find(params[:client_id]).id} > form > div").css("color", "green").text("+")
+
+      - if params[:action] == 'governing_client'
+        %div{ style: 'overflow-wrap: anywhere; text-align: inherit;' }
+          %pre
+            = @content
+            :javascript
+                $("th.governing-#{Client.find(params[:client_id]).id} > form > div").css("color", "green").text("+")
+
+      - if params[:action] == 'open_browser_0' || params[:action] == 'open_browser_1'
+
+        %div{ style: 'overflow-wrap: anywhere; ' }
+          =text_field_tag "url-browser", @content[:url], style: "position: absolute !important; z-index: -1"
+          =button_tag 'Скопировать URL', { class: "btn btn-primary clipboard-btn", :'data-clipboard-action' => "copy",  :'data-clipboard-target' => "#url-browser" }
+
+          =text_field_tag "url-browser-session", @content[:session_id], style: "position: absolute !important; z-index: -1"
+          =button_tag 'Скопировать Session ID', { class: "btn btn-primary clipboard-btn", :'data-clipboard-action' => "copy",  :'data-clipboard-target' => "#url-browser-session" }
+
+      - if params[:action].include?('fee')
+        - if @content.nil?
+          Не найдено ни одного счета
+        - else
+          - if @content.class == Hash
+            - @content.each do |acc|
+              %table{ style: 'color:white;' }
+                - acc.each do |key, value|
+                  %th= key
+                  %th= value
+          - else
+            - @content.each do |acc|
+              %table{ style: 'color:white;' }
+                - acc.each do |key, value|
+                  %tr
+                    %th= key
+                    %th= value
+              %br
+
+  = link_to "Обновить страницу", '', class: "btn", id: 'btn-refresh'
+
+:javascript
+  $('#btn-refresh').click(function() {
+    location.reload();
+  });

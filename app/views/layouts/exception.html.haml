@@ -1,0 +1,4 @@
+- if @exception.status == 404
+  = render 'layouts/404'
+- elsif @exception.status == 500
+  = render 'layouts/500'

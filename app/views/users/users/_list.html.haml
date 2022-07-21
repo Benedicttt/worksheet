@@ -1,0 +1,27 @@
+%table.text-params
+  %tr
+    %th.width75
+      = t('first_name')
+    %th.width75
+      = t('last_name')
+    %th.width75
+      = t('nickname')
+    %th.width75
+      = t('email')
+    %th.width75
+      = t('phone')
+    %th.width75
+      = t('telegram')
+
+  - @users.each do |u|
+    %tr
+      %th= u.first_name
+      %th= u.last_name
+      %th= u.nickname
+      %th= u.email
+      %th= u.phone
+      %th= u.telegram
+      %th
+        =button_to t('edit'), users_path(u.id), { :method => :get, class: 'btn btn-primary' }
+      %th
+        =button_to t('delete'), users_destroy_path(id: u.id), { class: 'btn btn-danger' }

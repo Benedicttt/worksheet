@@ -1,0 +1,63 @@
+.div.modal-style
+  %div.modal-header
+    %h3{ style: "color: #ec5700" } Ошибка
+    =button_tag '', type: "button", class: "close", :"data-dismiss" =>  "modal", :"aria-label" => "Close"
+
+  %div{ class: "modal-body", style: 'word-wrap: break-word; text-align: inherit;' }
+    %p{ style: "color: red" }
+      - if @fault_code.class == Hash
+        - @fault_code.each do |key, value|
+          %div{ style: 'color: yellow' }
+            = "#{key.to_s}: "
+            %span{ style: 'color: red' }
+              = "#{value.to_s}"
+          :css
+            .modal-style {
+              background-color: #272727;
+              text-align: inherit;
+              margin: 4% 20%;
+              padding: 10px;
+              width: 1250px;
+            }
+      - elsif @fault_code.class == Array
+        %span{ style: 'color: yellow' }
+          = @err
+          %br
+        - @fault_code.each_with_index do |err, num|
+          %span{ style: 'color: red' }
+            %br
+            = (num + 1).to_s + ". " + err
+
+        %br
+        %br
+        = "Params:"
+        %pre{style: 'background: #272727; color: green'}
+          - params_new = JSON.parse(params.to_json, serialize_name: true)
+          = JSON.pretty_generate(params_new).gsub(": null", ": nil").gsub(/(^\s*)"([a-zA-Z][a-zA-Z\d_]*)":/, "\\1\\2:").gsub(/(^\s*)(".*?"):/, "\\1\\2 =>")
+
+          :css
+            .modal-style {
+              background-color: #272727;
+              text-align: inherit;
+              margin: 4s% 20%;
+              padding: 10px;
+              width: 1250px;
+            }
+      - else
+        %span{ style: 'color: red' }
+          = @fault_code
+
+
+  - if !@button_back
+    %div{ class: 'modal-footer' }
+      =button_tag 'Закрыть', type: "button", class: "btn btn-link", :"data-dismiss" => "modal", id: "modal_error"
+  - else
+    %div{ class: 'modal-footer' }
+      =link_to "Назад к таблице клиентов", clients_list_path,  class: "btn btn-ligth"
+
+:javascript
+    $("#modal_error").click(function () {
+      console.log('modal error');
+      $(".modal-backdrop.fade.in").each(function() { $(this).remove( )})
+    })
+

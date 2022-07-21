@@ -1,0 +1,22 @@
+%div.container.text-center
+  %h1
+    = t('list_users')
+  %br
+  - if !current_user.present?
+    =link_to t('auth'), sessions_new_path, class: "btn btn-ligth"
+  =link_to t('create_user'), users_new_path, class: "btn btn-ligth"
+
+  .position_absolute.left_84_per
+    = render "layouts/select_lang"
+
+  %br
+  %br
+
+%div{ style: "margin-left: 35%" }
+
+  = render 'users/users/list'
+
+  %br
+  %br
+  %div{ style: "margin-left: 30%" }
+    -# = paginate @users, outer_window: 10

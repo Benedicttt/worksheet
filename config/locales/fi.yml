@@ -1,0 +1,29 @@
+fi:
+  sign_in: Kirjaudu sisään
+  sign_up: Kirjaudu
+  login_via: Kirjaudu sisään lempinimellä
+  nickname: Nimimerkki
+  email: Sähköposti
+  password: Salasana
+  password_again: Toista salasana
+  password_must_be: Salasanan tulee sisältää yksi iso kirjain ja numero. Salasanan pituus on vähintään 8 merkkiä
+  password_length: Salasanan pituus on vähintään 8 merkkiä
+  password_capital: Salasanan tulee sisältää yksi iso kirjain
+  password_number: Salasanan tulee sisältää yksi iso numero
+  password_no_capital: Salasanan tulee sisältää yksi ei iso kirjain
+  password_match: Salasanat eivät täsmää
+  incorrectly: Sähköpostiosoite, salasana tai lempinimi syötetty väärin
+  auth: Valtuutus
+  create_user: Luo käyttäjä
+  edit_user: Muokkaa
+  delete_user: Poista
+  first_name: Etunimi
+  last_name: Sukunimi
+  phone: Puhelin
+  telegram: Telegram
+  list_users: Listaa käyttäjät
+  not_found_users: Käyttäjää ei löytynyt
+  success_create_user: Käyttäjän luominen onnistui
+  need_email: Sähköpostikenttä ei saa olla tyhjä
+  exist_nickname: 'Tällä \"Lempinimellä\" kirjautumistunnuksella on jo käyttäjä'
+  exist_email: 'Käyttäjä tällä \"Lempinimellä\" käyttäjätunnuksella on jo olemassa'

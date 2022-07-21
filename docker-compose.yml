@@ -1,0 +1,20 @@
+version: "3.4"
+
+services:
+  worksheet:
+    build:
+      context: .
+    image: worksheet:v1
+    container_name: worksheet
+    hostname: worksheet
+    command: bash container/inst.sh
+    environment:
+      - LEVEL=dev
+      - POSTGRES_USER=admin_blog
+      - POSTGRES_PASSWORD=admin_blog
+      - POSTGRES_DB=db_blog_development
+    ports:
+      - 5499:5432
+      - 4002:3000
+    volumes:
+      - ./:/app

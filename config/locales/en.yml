@@ -1,0 +1,29 @@
+en:
+  sign_in: Sign in
+  sign_up: Sign up
+  login_via: Login via nickname
+  nickname: Nickname
+  email: Email
+  password: Password
+  password_again: Password repeat
+  password_must_be: The password must contain one capital letter and a number. Password length is at least 8 characters
+  password_length: Password length is at least 8 characters
+  password_number: The password must contain one number
+  password_capital: The password must contain one capital letter
+  password_no_capital: The password must contain one not capital letter
+  password_match: Password do not match
+  incorrectly: Email, password or nickname entered incorrectly
+  auth: Authorization
+  create_user: Create user
+  edit_user: Edit
+  delete_user: Delete
+  first_name: First name
+  last_name: Last name
+  phone: Phone
+  telegram: Telegram
+  list_users: List users
+  not_found_users: Not found users
+  success_create_user: User creation was successful
+  need_email: Email field must not be null
+  exist_nickname: 'There is already a user with this \"Nickname\" login'
+  exist_email: 'User with this \"Nickname\" username already exists'
