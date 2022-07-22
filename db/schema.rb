@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.string "password"
     t.string "telegram"
     t.string "last_name"
+    t.boolean "create_user"
     t.boolean "edit_user"
     t.boolean "edit_all_work_list"
     t.boolean "edit_all_eggs_collection"

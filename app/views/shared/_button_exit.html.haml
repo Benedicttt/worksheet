@@ -1,3 +1,4 @@
-%div.margin_top_15_px
-  = form_for "", url: { controller: '/sessions', action: "destroy"} do |f|
-    = f.button "", class: "icon-exit"
+- if current_user.present?
+  %div.margin_top_15_px
+    = form_for "", url: { controller: '/sessions', action: "destroy"} do |f|
+      = f.button "", class: "icon-exit"

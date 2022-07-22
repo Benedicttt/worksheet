@@ -1,5 +1,23 @@
+.icon-main {
+  background: url(main.png);
+  background-size: 100%;
+  margin-left: 20%;
+  height: 35px;
+  width: 35px !important;
+  border: 0px;
+}
+
+.icon-main:hover {
+  transition: 0.02s case;
+  transform: translate(-5%, -5%) scale(1.1, 1.1);
+}
+
+.icon-main:hover + .cursor {
+  transform: translate(-50%, -50%) scale(8);
+}
+//
 .icon-auth {
-  background: url(auth.svg);
+  background: url(auth.png);
   background-size: 100%;
   margin-left: 20%;
   height: 35px;
@@ -53,7 +71,7 @@
 }
 //
 .icon-list-users {
-  background: url(list-users.jpeg);
+  background: url(users.png);
   background-size: 100%;
   margin-left: 20%;
   height: 35px;

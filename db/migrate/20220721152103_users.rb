@@ -8,6 +8,7 @@ class Users < ActiveRecord::Migration[7.0]
       t.string :password
       t.string :telegram
       t.string :last_name
+      t.boolean :create_user
       t.boolean :edit_user
       t.boolean :edit_all_work_list
       t.boolean :edit_all_eggs_collection

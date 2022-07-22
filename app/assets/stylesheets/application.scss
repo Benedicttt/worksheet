@@ -10,23 +10,31 @@
 
 header {
   grid-area: header;
-  background-color: #fed330;
+  background-color: #c7c7c7;
   padding: 20px;
+  border-radius: 15px;
 }
+
 article {
   grid-area: content;
-  background-color: #20bf6b;
+  background-color: #c7c7c7;
   padding: 20px;
+  border-radius: 15px;
 }
+
 aside {
   grid-area: sidebar;
-  background-color: #45aaf2;
+  background-color: #c7c7c7;
+  border-radius: 15px;
 }
+
 footer {
   padding: 20px;
   grid-area: footer;
-  background-color: #fd9644;
+  background-color: #c7c7c7;
+  border-radius: 15px;
 }
+
 .wrapper {
   padding: 20px 20px 0px 20px;
   display: grid;

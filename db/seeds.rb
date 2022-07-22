@@ -7,6 +7,7 @@ user.nickname = "admin"
 user.phone = ""
 user.telegram = ""
 user.password = "Admin1234"
+user.create_user = true
 user.edit_user = true
 user.edit_all_work_list = true
 user.edit_all_eggs_collection = true
