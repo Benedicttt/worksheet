@@ -1,39 +1,5 @@
-%body#app
-  - if !flash.empty?
-    - flash.keys.each do |k|
-      -unless flash['success'].blank?
-        %div.text-center.position_absolute{style: 'color:green;'}
-          %br
-          %h1=flash[k]
-
-  %header
-    %div.display_flex.margin_top_2_per
-      %div.position_relative.left_83_per
-        - if current_user.edit_user
-          = link_to t('list_users'), users_list_path, class: "btn btn-warning"
-      %div.position_relative.left_84_per
-        = render "layouts/select_lang"
-      %div.position_relative.left_85_per
-        = form_for "", url: { controller: '/sessions', action: "destroy"} do |f|
-          =f.button "Выход", class:"pull-right btn btn-danger"
-
-  %main
-    article dsadsdsadsadsa
-    dsa
-    ds
-    dsa
-    dsa
-    dsa
-    dsa
-    ds
-    dsa
-    ads
-    d
-    ads
-  %footer
-    footer
-    adsds
-    dsa
-    dsa
-    dsa
-    dsadsa
+.wrapper
+  = render "header"
+  = render "aside"
+  = render "article"
+  = render "footer"

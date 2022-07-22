@@ -7,35 +7,52 @@
 @import "spiner";
 @debug '________ applciation compiled______';
 
-body {
-  margin: 0;
-}
-
-#app {
-  height: 100vh;
-
-  /* grid container settings */
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    'header'
-    'main'
-    'footer';
-}
-
-#app > header {
+header {
   grid-area: header;
+  background-color: #fed330;
+  padding: 20px;
 }
-
-#app > main {
-  grid-area: main;
-  padding: 15px 15px 10px 15px;
+article {
+  grid-area: content;
+  background-color: #20bf6b;
+  padding: 20px;
 }
-
-#app > footer {
+aside {
+  grid-area: sidebar;
+  background-color: #45aaf2;
+}
+footer {
+  padding: 20px;
   grid-area: footer;
-  padding: 15px 15px 10px 15px;
+  background-color: #fd9644;
+}
+.wrapper {
+  padding: 20px 20px 0px 20px;
+  display: grid;
+  grid-gap: 20px;
+  height: 98vh;
+  grid-template-rows: 1fr 12fr;
+  grid-template-columns: 1fr 15fr;
+  grid-template-areas:
+    "header  header"
+    "sidebar content"
+    "footer  footer";
+}
+
+@media (max-width: 500px) {
+  .wrapper {
+    padding: 20px 20px 0px 20px;
+    display: grid;
+    height: 98vh;
+    grid-gap: 20px;
+    grid-template-rows: 1fr 12fr;
+    grid-template-columns: 1fr 15fr;
+    grid-template-areas:
+    "header  header"
+    "sidebar sidebar"
+    "content content"
+    "footer  footer";
+  }
 }
 
 .display_flex { display: flex; }
@@ -48,5 +65,9 @@ body {
 .left_15_per { left: 15% }
 .left_10_per { left: 10% }
 .margin_top_2_per { margin-top: 2% }
+.margin_top_15_per { margin-top: 15% }
+.margin_top_20_per { margin-top: 20% }
 .margin_left { margin-right: -20%;}
 .width75 { width: 125px; }
+.float-right { float: right }
+.margin_top_0_per { margin-top: 0%; }
