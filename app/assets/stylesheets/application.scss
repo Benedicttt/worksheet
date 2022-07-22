@@ -5,6 +5,7 @@
 @import 'bootstrap-table/bootstrap-table';
 @import "glyphicons";
 @import "spiner";
+@import "icons";
 @debug '________ applciation compiled______';
 
 header {
@@ -71,3 +72,6 @@ footer {
 .width75 { width: 125px; }
 .float-right { float: right }
 .margin_top_0_per { margin-top: 0%; }
+.margin_top_5_px { margin-top: 5px; }
+.margin_top_15_px { margin-top: 15px; }
+.padding-20-per { padding: 20px 20px 20px 20px }

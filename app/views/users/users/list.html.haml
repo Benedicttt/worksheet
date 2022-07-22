@@ -1,22 +1,16 @@
-%div.container.text-center
-  %h1
-    = t('list_users')
-  %br
-  - if !current_user.present?
-    =link_to t('auth'), sessions_new_path, class: "btn btn-ligth"
-  =link_to t('create_user'), users_new_path, class: "btn btn-ligth"
+.wrapper
+  = render "index/header"
+  = render "index/aside"
 
-  .position_absolute.left_84_per
-    = render "layouts/select_lang"
+  %article
+    %h1
+      = t('list_users')
 
-  %br
-  %br
+    %div{ style: "margin-left: 35%" }
 
-%div{ style: "margin-left: 35%" }
+      = render 'users/users/list'
 
-  = render 'users/users/list'
-
-  %br
-  %br
-  %div{ style: "margin-left: 30%" }
-    -# = paginate @users, outer_window: 10
+      %br
+      %br
+      %div{ style: "margin-left: 30%" }
+        -# = paginate @users, outer_window: 10

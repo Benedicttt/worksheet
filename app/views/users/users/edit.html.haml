@@ -1,101 +1,100 @@
-%div.container.text-center
-  =link_to t('create_user'), users_new_path, class: "btn btn-ligth"
-%div.position_relative.left_84_per
-  = render "layouts/select_lang"
+.wrapper
+  = render "index/header"
+  = render "index/aside"
 
-%div.container.text-center
-  %h1
-    = t('edit_user')
-  %br
-  %div{ style: "margin-left: 40%" }
-    =form_for "", url: { controller: 'users', action: 'update' } do |f|
-      %table
-        %tr
+  %article
+    %h1
+      = t('edit_user')
+    %br
+    %div{ style: "margin-left: 40%" }
+      =form_for "", url: { controller: 'users', action: 'update' } do |f|
+        %table
           %tr
-            %th
-              %br
-              .btn.btn-primary ID
-            %th
-              %br
-              =f.hidden_field :id, value: @user.id
-              =@user.id
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('first_name')
-            %th
-              %br
-              =f.text_field :first_name, value: @user.first_name
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('last_name')
-            %th
-              %br
-              =f.text_field :last_name, value: @user.last_name
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('email')
-            %th
-              %br
-              =f.email_field :email, value: @user.email
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('nickname')
-            %th
-              %br
-              =f.text_field :nickname, value: @user.nickname
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('phone')
-            %th
-              %br
-              =f.text_field :phone, value: @user.phone
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('telegram')
-            %th
-              %br
-              =f.text_field :telegram, value: @user.telegram
-          -#%tr
-          -#  %th
-          -#    %br
-          -#    .btn.btn-primary Пароль
-          -#  %th
-          -#    %br
-          -#    =f.password_field :password, value: @user.password
-          -#%tr
-          -#  %th
-          -#    %br
-          -#    .btn.btn-primary Пароль повторно
-          -#  %th
-          -#    %br
-          -#    =f.password_field :password, value: @user.password
-          %tr
-            %th
-            %th
-              =f.submit t('edit_user'), class: 'btn btn-warning'
+            %tr
+              %th
+                %br
+                .btn.btn-primary ID
+              %th
+                %br
+                =f.hidden_field :id, value: @user.id
+                =@user.id
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('first_name')
+              %th
+                %br
+                =f.text_field :first_name, value: @user.first_name
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('last_name')
+              %th
+                %br
+                =f.text_field :last_name, value: @user.last_name
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('email')
+              %th
+                %br
+                =f.email_field :email, value: @user.email
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('nickname')
+              %th
+                %br
+                =f.text_field :nickname, value: @user.nickname
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('phone')
+              %th
+                %br
+                =f.text_field :phone, value: @user.phone
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('telegram')
+              %th
+                %br
+                =f.text_field :telegram, value: @user.telegram
+            -#%tr
+            -#  %th
+            -#    %br
+            -#    .btn.btn-primary Пароль
+            -#  %th
+            -#    %br
+            -#    =f.password_field :password, value: @user.password
+            -#%tr
+            -#  %th
+            -#    %br
+            -#    .btn.btn-primary Пароль повторно
+            -#  %th
+            -#    %br
+            -#    =f.password_field :password, value: @user.password
+            %tr
+              %th
+              %th
+                =f.submit t('edit_user'), class: 'btn btn-warning'
 
-              %br
-              %br
-              %br
-              - if !flash.empty?
-                - flash.keys.each do |k|
-                  - unless flash['alert'].blank?
-                    %div{ style: 'color: orange; left: 45%; position: absolute;'}
-                      -flash[:alert].each do |key, value|
-                        %br
-                        =value[0]
-                  - unless flash['success'].blank?
-                    %div{ style: 'color:green; left: 45%; position: absolute;'}
-                      =flash[k]
+                %br
+                %br
+                %br
+                - if !flash.empty?
+                  - flash.keys.each do |k|
+                    - unless flash['alert'].blank?
+                      %div{ style: 'color: orange; left: 45%; position: absolute;'}
+                        -flash[:alert].each do |key, value|
+                          %br
+                          =value[0]
+                    - unless flash['success'].blank?
+                      %div{ style: 'color:green; left: 45%; position: absolute;'}
+                        =flash[k]

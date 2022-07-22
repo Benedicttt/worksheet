@@ -1,101 +1,96 @@
-%div.container.text-center
-  - if !current_user.present?
-    =link_to t('auth'), sessions_new_path, class: "btn btn-ligth"
+.wrapper
+  = render "index/header"
+  = render "index/aside"
 
-  - if current_user.present? && current_user.edit_user
-    = link_to t('list_users'), users_list_path, class: "btn btn-warning"
+  %article
+    %h1
+      = t('create_user')
+    %br
+    %div{ style: "margin-left: 30%; max-width: 600px;" }
+      =form_for "", url: { controller: 'users', action: 'create' } do |f|
+        %table
+          %tr
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('first_name')
+              %th
+                %br
+                =f.text_field :first_name, value: params[:first_name]
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('last_name')
+              %th
+                %br
+                =f.text_field :last_name, value: params[:last_name]
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('email')
+              %th
+                %br
+                =f.email_field :email, value: params[:email]
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('nickname')
+              %th
+                %br
+                =f.text_field :nickname, value: params[:nickname]
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('phone')
+              %th
+                %br
+                =f.text_field :phone, value: params[:phone]
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('telegram')
+              %th
+                %br
+                =f.text_field :telegram, value: params[:telegram]
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('password')
+              %th
+                %br
+                =f.password_field :password, placeholder: t('password')
+            %tr
+              %th
+                %br
+                .btn.btn-primary
+                  = t('password_again')
+              %th
+                %br
+                =f.password_field :password_confirmation, placeholder: t('password')
+            %tr
+              %th
+                =f.submit t('create_user'), class: 'btn btn-warning'
 
-  .position_absolute.left_84_per
-    = render "layouts/select_lang"
-
-  %h1
-    = t('create_user')
-  %br
-  %div{ style: "margin-left: 30%; max-width: 600px;" }
-    =form_for "", url: { controller: 'users', action: 'create' } do |f|
-      %table
-        %tr
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('first_name')
-            %th
-              %br
-              =f.text_field :first_name, value: params[:first_name]
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('last_name')
-            %th
-              %br
-              =f.text_field :last_name, value: params[:last_name]
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('email')
-            %th
-              %br
-              =f.email_field :email, value: params[:email]
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('nickname')
-            %th
-              %br
-              =f.text_field :nickname, value: params[:nickname]
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('phone')
-            %th
-              %br
-              =f.text_field :phone, value: params[:phone]
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('telegram')
-            %th
-              %br
-              =f.text_field :telegram, value: params[:telegram]
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('password')
-            %th
-              %br
-              =f.password_field :password, placeholder: t('password')
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('password_again')
-            %th
-              %br
-              =f.password_field :password_confirmation, placeholder: t('password')
-          %tr
-            %th
-              =f.submit t('create_user'), class: 'btn btn-warning'
-
-            %th{ style: 'color: white;' }
-              %br
-                = t('password_must_be')
-              %br
-              %br
-              %br
-              - if !flash.empty?
-                - flash.keys.each do |k|
-                  - unless flash['alert'].blank?
-                    %div{ style: 'color: orange; left: 45%; position: absolute;'}
-                      - flash[:alert].each do |key, value|
-                        %br
-                        =value[0]
-                  - unless flash['success'].blank?
-                    %div{ style: 'color:green; left: 45%; position: absolute;'}
-                      =flash[k]
+              %th{ style: 'color: white;' }
+                %br
+                  = t('password_must_be')
+                %br
+                %br
+                %br
+                - if !flash.empty?
+                  - flash.keys.each do |k|
+                    - unless flash['alert'].blank?
+                      %div{ style: 'color: orange; left: 45%; position: absolute;'}
+                        - flash[:alert].each do |key, value|
+                          %br
+                          =value[0]
+                    - unless flash['success'].blank?
+                      %div{ style: 'color:green; left: 45%; position: absolute;'}
+                        =flash[k]
