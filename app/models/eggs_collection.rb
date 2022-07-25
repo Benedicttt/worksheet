@@ -1,0 +1,3 @@
+class EggCollection < ApplicationRecord
+
+end

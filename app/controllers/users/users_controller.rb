@@ -38,15 +38,15 @@ class Users::UsersController < ApplicationController
         ")
       end
 
-      render "sessions/new"
+      render "index/index"
     else
-      flash[:alert] = Hash.new
-
       msg = {}
       msg.merge!(password_confirmation: [t('password_match').to_s]) if params[:password] != params[:password_confirmation]
       msg =  user.errors.messages.dup.merge! msg
-      flash[:alert] = msg
+      flash[:alert] = msg.uniq
 
+      puts "flash[:alert]"
+      puts "#{msg}"
       render 'users/users/new'
     end
   end

@@ -8,13 +8,33 @@ class Users < ActiveRecord::Migration[7.0]
       t.string :password
       t.string :telegram
       t.string :last_name
+    end
+
+    create_table :rules do |t|
+      t.integer :user_id
+      t.boolean :worker, default: true
+      t.boolean :manager, default: false
       t.boolean :create_user
       t.boolean :edit_user
       t.boolean :edit_all_work_list
+      t.boolean :edit_work_list
       t.boolean :edit_all_eggs_collection
+      t.boolean :edit_eggs_collection
     end
 
-    create_table :work_list do |t|
+    create_table :work_shift_schedule do |t|
+      t.string :user_id
+      t.string :period_date
+      t.string :monday
+      t.string :tuesday
+      t.string :wednesday
+      t.string :thursday
+      t.string :friday
+      t.string :saturday
+      t.string :sunday
+    end
+
+    create_table :work_lists do |t|
       t.integer :user_id
       t.string  :years
       t.string  :month
@@ -27,7 +47,7 @@ class Users < ActiveRecord::Migration[7.0]
       t.string  :work_list
     end
 
-    create_table :eggs_collection do |t|
+    create_table :eggs_collections do |t|
       t.integer :user_id
       t.string  :years
       t.string  :month
@@ -50,7 +70,9 @@ class Users < ActiveRecord::Migration[7.0]
 
   def down
     drop_table :users
-    drop_table :work_list
-    drop_table :eggs_collection
+    drop_table :work_lists
+    drop_table :work_shift_schedule
+    drop_table :rules
+    drop_table :eggs_collections
   end
 end

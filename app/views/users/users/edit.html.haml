@@ -6,9 +6,9 @@
     %h1
       = t('edit_user')
     %br
-    %div{ style: "margin-left: 40%" }
+    %div{ style: "margin-left: 30%" }
       =form_for "", url: { controller: 'users', action: 'update' } do |f|
-        %table
+        %table{ style: "width: 50%" }
           %tr
             %tr
               %th
@@ -98,4 +98,4 @@
                     - unless flash['success'].blank?
                       %div{ style: 'color:green; left: 45%; position: absolute;'}
                         =flash[k]
-%footer
+  %footer

@@ -1,4 +1,4 @@
-%table.text-params
+%table.text-params{ style: "margin-left: 25%" }
   %tr
     %th.width75
       = t('first_name')
@@ -6,12 +6,13 @@
       = t('last_name')
     %th.width75
       = t('nickname')
-    %th.width75
+    %th.width250
       = t('email')
-    %th.width75
+    %th.width125
       = t('phone')
-    %th.width75
+    %th.width125
       = t('telegram')
+    %th.width75
 
   - @users.each do |u|
     %tr
@@ -25,3 +26,4 @@
         =button_to t('edit'), users_path(u.id), { :method => :get, class: 'btn btn-primary' }
       %th
         =button_to t('delete'), users_destroy_path(id: u.id), { class: 'btn btn-danger' }
+

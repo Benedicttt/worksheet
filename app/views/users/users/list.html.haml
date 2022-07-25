@@ -6,12 +6,9 @@
     %h1
       = t('list_users')
 
-    %div{ style: "margin-left: 35%" }
-
       = render 'users/users/list'
-
       %br
       %br
       %div{ style: "margin-left: 30%" }
         -# = paginate @users, outer_window: 10
-%footer
+  %footer

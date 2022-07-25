@@ -36,6 +36,10 @@
 # end
 
 class User < ApplicationRecord
+  has_one :rule
+  has_many :eggs_collections
+  has_many :work_lists
+  has_many :work_shift_schedules
 
   validates_presence_of :email, :message => "Email field must not be null"
   validate :user_email

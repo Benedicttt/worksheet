@@ -14,7 +14,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "eggs_collection", force: :cascade do |t|
+  create_table "eggs_collections", force: :cascade do |t|
     t.integer "user_id"
     t.string "years"
     t.string "month"
@@ -34,6 +34,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.string "info_started"
   end
 
+  create_table "rules", force: :cascade do |t|
+    t.integer "user_id"
+    t.boolean "worker"
+    t.boolean "manager"
+    t.boolean "create_user"
+    t.boolean "edit_user"
+    t.boolean "edit_all_work_list"
+    t.boolean "edit_work_list"
+    t.boolean "edit_all_eggs_collection"
+    t.boolean "edit_eggs_collection"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "email"
@@ -42,13 +54,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.string "password"
     t.string "telegram"
     t.string "last_name"
-    t.boolean "create_user"
-    t.boolean "edit_user"
-    t.boolean "edit_all_work_list"
-    t.boolean "edit_all_eggs_collection"
   end
 
-  create_table "work_list", force: :cascade do |t|
+  create_table "work_lists", force: :cascade do |t|
     t.integer "user_id"
     t.string "years"
     t.string "month"
@@ -59,6 +67,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.string "break_stop"
     t.string "hours"
     t.string "work_list"
+  end
+
+  create_table "work_shift_schedule", force: :cascade do |t|
+    t.string "user_id"
+    t.string "period_date"
+    t.string "monday"
+    t.string "tuesday"
+    t.string "wednesday"
+    t.string "thursday"
+    t.string "friday"
+    t.string "saturday"
+    t.string "sunday"
   end
 
 end
