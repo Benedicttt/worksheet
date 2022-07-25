@@ -27,7 +27,7 @@ rules = Rule.new
 
 user.first_name = "Serhii"
 user.last_name = "Kiyvskyi"
-user.email = "benedicttt27051987@gmail.com"
+user.email = "benedicttt270519873@gmail.com"
 user.nickname = "benedicttt"
 user.phone = "044 984-72-54"
 user.telegram = "@SergeyK2705"
@@ -44,3 +44,16 @@ rules.edit_work_list = true
 rules.edit_all_eggs_collection = false
 rules.edit_eggs_collection = true
 rules.save!
+
+//
+wl = WorkShiftSchedule.new
+wl.user_id = user.id
+wl.period_date = "period_date"
+wl.monday = "monday"
+wl.tuesday = "tuesday"
+wl.wednesday = "wednesday"
+wl.thursday = "thursday"
+wl.friday = "friday"
+wl.saturday = "saturday"
+wl.sunday = "sunday"
+wl.save

@@ -36,8 +36,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
 
   create_table "rules", force: :cascade do |t|
     t.integer "user_id"
-    t.boolean "worker"
-    t.boolean "manager"
+    t.boolean "worker", default: true
+    t.boolean "manager", default: false
     t.boolean "create_user"
     t.boolean "edit_user"
     t.boolean "edit_all_work_list"
@@ -58,9 +58,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
 
   create_table "work_lists", force: :cascade do |t|
     t.integer "user_id"
-    t.string "years"
-    t.string "month"
+    t.integer "years"
+    t.integer "month"
     t.integer "day"
+    t.integer "week"
     t.string "work_start"
     t.string "work_stop"
     t.string "break_start"
@@ -69,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.string "work_list"
   end
 
-  create_table "work_shift_schedule", force: :cascade do |t|
+  create_table "work_shift_schedules", force: :cascade do |t|
     t.string "user_id"
     t.string "period_date"
     t.string "monday"

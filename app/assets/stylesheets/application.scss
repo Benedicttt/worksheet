@@ -77,12 +77,14 @@ input {
 }
 
 .display_flex { display: flex; }
+.display-inline-block { display: inline-block; }
 .position_relative { position: relative; }
 .position_absolute { position: absolute; }
 .left_85_per { left: 85% }
 .left_84_per { left: 84% }
 .left_83_per { left: 83% }
 .left_75_per { left: 75% }
+.left_25_per { left: 25% }
 .left_15_per { left: 15% }
 .left_10_per { left: 10% }
 .margin_top_2_per { margin-top: 2% }
@@ -107,4 +109,4 @@ input {
 .padding-20-per { padding: 20px 20px 20px 20px }
 .transform-1-3 { transform: scale(1.3); }
 
-a, button, input, table {   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+a, button, input, table, select {   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }

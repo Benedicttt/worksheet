@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
       flash[:success] = ""
       flash[:alert] = session.nil? ? t('incorrectly') : ''
 
-      render "new"
+      render "sessions/new"
     end
   end
 
@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
     logger.debug 'destroy'
     log_out
     reset_session
+
     redirect_to sessions_new_path
   end
 end

@@ -1,11 +1,12 @@
 %article
-  %section
+  %section.position_relative.display-inline-block
     / for demo wrap
     %h1 WorkSheet
     .tbl-header
       %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
         %thead
           %tr
+            %th Period date
             %th Worker
             %th Mon
             %th Tue
@@ -14,15 +15,29 @@
             %th Fri
             %th Sat
             %th Sun
-    .tbl-content
+    .tbl-content-form
       %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
         %tbody
-          %tr
-            %td AAC
-            %td AUSTRALIAN COMPANY
-            %td $1.38
-            %td +2.01
-            %td -0.36%
-            %td -0.36%
-            %td -0.36%
-            %td -0.36%
+          - User.all.each do |u|
+            - if u.rule.worker
+              %tr
+                - u.work_shift_schedule.each do |wss|
+                  %td
+                    = wss.period_date
+                  %td
+                    = u.first_name
+                    = u.last_name
+                  %td
+                    = wss.monday
+                  %td
+                    = wss.tuesday
+                  %td
+                    = wss.wednesday
+                  %td
+                    = wss.thursday
+                  %td
+                    = wss.friday
+                  %td
+                    = wss.saturday
+                  %td
+                    = wss.sunday

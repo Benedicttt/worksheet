@@ -4,7 +4,7 @@
     = render "index/aside"
 
     %article
-      %div.container.text-center.margin_left_40_per
+      %div.container.text-center
         %div
           - if !flash.empty?
             - flash.keys.each do |k|
@@ -13,7 +13,7 @@
                   %br
                   %h1=flash[k]
 
-        %div.col-md-2.col-md-offset-5.form_sign
+        %div.col-md-2.form_sign.position_relative.display-inline-block
           = form_for(:session, url: login_path) do |f|
             %div
               %div
