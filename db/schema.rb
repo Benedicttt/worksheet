@@ -34,6 +34,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.string "info_started"
   end
 
+  create_table "periods", force: :cascade do |t|
+    t.integer "to"
+    t.integer "from"
+    t.integer "month"
+    t.integer "year"
+  end
+
   create_table "rules", force: :cascade do |t|
     t.integer "user_id"
     t.boolean "worker", default: true
@@ -71,8 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
   end
 
   create_table "work_shift_schedules", force: :cascade do |t|
-    t.string "user_id"
-    t.string "period_date"
+    t.integer "user_id"
+    t.string "period_id"
     t.string "monday"
     t.string "tuesday"
     t.string "wednesday"

@@ -15,29 +15,40 @@
             %th Fri
             %th Sat
             %th Sun
+            %th
     .tbl-content-form
-      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
-        %tbody
-          - User.all.each do |u|
-            - if u.rule.worker
+      - Period.all.each do |p|
+        %br
+        %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+          %tbody
+
+            - WorkShiftSchedule.where(period_id: p.id).each_with_index do |wss, index|
+              - u = User.find(wss.user_id)
               %tr
-                - u.work_shift_schedule.each do |wss|
-                  %td
-                    = wss.period_date
-                  %td
-                    = u.first_name
-                    = u.last_name
-                  %td
-                    = wss.monday
-                  %td
-                    = wss.tuesday
-                  %td
-                    = wss.wednesday
-                  %td
-                    = wss.thursday
-                  %td
-                    = wss.friday
-                  %td
-                    = wss.saturday
-                  %td
-                    = wss.sunday
+                %td
+                  - if index == 0
+                    #{p.to} - #{p.from} .#{p.month}.#{p.year}
+                %td
+                  = u.first_name
+                  = u.last_name
+                %td
+                  = wss.monday
+                %td
+                  = wss.tuesday
+                %td
+                  = wss.wednesday
+                %td
+                  = wss.thursday
+                %td
+                  = wss.friday
+                %td
+                  = wss.saturday
+                %td
+                  = wss.sunday
+                %td
+                  .display_flex
+                    - if index == 0
+                      .btn.btn-primary
+                        = button_to :EDIT
+                      .btn.btn-danger
+                        = button_to :DELETE

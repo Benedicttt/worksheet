@@ -23,8 +23,8 @@ class Users < ActiveRecord::Migration[7.0]
     end
 
     create_table :work_shift_schedules do |t|
-      t.string :user_id
-      t.string :period_date
+      t.integer :user_id
+      t.string :period_id
       t.string :monday
       t.string :tuesday
       t.string :wednesday
@@ -32,6 +32,13 @@ class Users < ActiveRecord::Migration[7.0]
       t.string :friday
       t.string :saturday
       t.string :sunday
+    end
+
+    create_table :periods do |t|
+      t.integer :to
+      t.integer :from
+      t.integer :month
+      t.integer :year
     end
 
     create_table :work_lists do |t|
@@ -73,6 +80,7 @@ class Users < ActiveRecord::Migration[7.0]
     drop_table :users
     drop_table :work_lists
     drop_table :work_shift_schedules
+    drop_table :periods
     drop_table :rules
     drop_table :eggs_collections
   end

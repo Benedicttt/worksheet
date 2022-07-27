@@ -10,6 +10,15 @@ user.telegram = ""
 user.password = "Admin1234"
 user.save!
 
+//
+p = Period.new
+p.to = 25
+p.from = 31
+p.month = 7
+p.year = 2022
+p.save!
+
+//
 rules.user_id = user.id
 rules.manager = true
 rules.worker = false
@@ -24,6 +33,7 @@ rules.save!
 //
 user = User.new
 rules = Rule.new
+wl = WorkShiftSchedule.new
 
 user.first_name = "Serhii"
 user.last_name = "Kiyvskyi"
@@ -46,9 +56,8 @@ rules.edit_eggs_collection = true
 rules.save!
 
 //
-wl = WorkShiftSchedule.new
 wl.user_id = user.id
-wl.period_date = "period_date"
+wl.period_id = p.id
 wl.monday = "monday"
 wl.tuesday = "tuesday"
 wl.wednesday = "wednesday"
@@ -56,4 +65,88 @@ wl.thursday = "thursday"
 wl.friday = "friday"
 wl.saturday = "saturday"
 wl.sunday = "sunday"
-wl.save
+wl.save!
+
+//
+
+user = User.new
+rules = Rule.new
+wl = WorkShiftSchedule.new
+
+user.first_name = "Serhii"
+user.last_name = "Kiyvskyi"
+user.email = "benedicttt270519874@gmail.com"
+user.nickname = "benedicttt"
+user.phone = "044 984-72-54"
+user.telegram = "@SergeyK2705"
+user.password = "Folken123123"
+user.save!
+
+rules.user_id = user.id
+rules.manager = false
+rules.worker = true
+rules.create_user = false
+rules.edit_user = false
+rules.edit_all_work_list = false
+rules.edit_work_list = true
+rules.edit_all_eggs_collection = false
+rules.edit_eggs_collection = true
+rules.save!
+
+//
+wl.user_id = user.id
+wl.period_id = p.id
+wl.monday = "monday"
+wl.tuesday = "tuesday"
+wl.wednesday = "wednesday"
+wl.thursday = "thursday"
+wl.friday = "friday"
+wl.saturday = "saturday"
+wl.sunday = "sunday"
+wl.save!
+
+//
+//
+user = User.new
+rules = Rule.new
+wl = WorkShiftSchedule.new
+
+p = Period.new
+p.to = 31
+p.from = 5
+p.month = 8
+p.year = 2022
+p.save!
+
+user.first_name = "Serhii1"
+user.last_name = "Kiyvskyi2"
+user.email = "benedicttt270519871@gmail.com"
+user.nickname = "benedicttt"
+user.phone = "044 984-72-54"
+user.telegram = "@SergeyK2705"
+user.password = "Folken123123"
+user.save!
+
+rules.user_id = user.id
+rules.manager = false
+rules.worker = true
+rules.create_user = false
+rules.edit_user = false
+rules.edit_all_work_list = false
+rules.edit_work_list = true
+rules.edit_all_eggs_collection = false
+rules.edit_eggs_collection = true
+rules.save!
+
+//
+wl.user_id = user.id
+wl.period_id = p.id
+wl.monday = "monday"
+wl.tuesday = "tuesday"
+wl.wednesday = "wednesday"
+wl.thursday = "thursday"
+wl.friday = "friday"
+wl.saturday = "saturday"
+wl.sunday = "sunday"
+wl.save!
+
