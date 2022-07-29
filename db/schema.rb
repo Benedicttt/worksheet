@@ -81,12 +81,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.integer "user_id"
     t.string "period_id"
     t.string "monday"
+    t.float "monday_hours"
     t.string "tuesday"
+    t.float "tuesday_hours"
     t.string "wednesday"
+    t.float "wednesday_hours"
     t.string "thursday"
+    t.float "thursday_hours"
     t.string "friday"
+    t.float "friday_hours"
     t.string "saturday"
+    t.float "saturday_hours"
     t.string "sunday"
+    t.float "sunday_hours"
   end
 
 end

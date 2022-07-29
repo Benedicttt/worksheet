@@ -59,12 +59,19 @@ rules.save!
 wl.user_id = user.id
 wl.period_id = p.id
 wl.monday = "monday"
+wl.monday_hours = 8.0
 wl.tuesday = "tuesday"
+wl.tuesday_hours = 8.0
 wl.wednesday = "wednesday"
+wl.wednesday_hours = 8.0
 wl.thursday = "thursday"
+wl.thursday_hours = 8.0
 wl.friday = "friday"
+wl.friday_hours = 8.0
 wl.saturday = "saturday"
+wl.saturday_hours = 8.0
 wl.sunday = "sunday"
+wl.sunday_hours = 8.0
 wl.save!
 
 //
@@ -97,12 +104,19 @@ rules.save!
 wl.user_id = user.id
 wl.period_id = p.id
 wl.monday = "monday"
+wl.monday_hours = 8.0
 wl.tuesday = "tuesday"
+wl.tuesday_hours = 8.0
 wl.wednesday = "wednesday"
+wl.wednesday_hours = 8.0
 wl.thursday = "thursday"
+wl.thursday_hours = 8.0
 wl.friday = "friday"
+wl.friday_hours = 8.0
 wl.saturday = "saturday"
+wl.saturday_hours = 8.0
 wl.sunday = "sunday"
+wl.sunday_hours = 8.0
 wl.save!
 
 //
@@ -142,11 +156,18 @@ rules.save!
 wl.user_id = user.id
 wl.period_id = p.id
 wl.monday = "monday"
+wl.monday_hours = 8.0
 wl.tuesday = "tuesday"
+wl.tuesday_hours = 8.0
 wl.wednesday = "wednesday"
+wl.wednesday_hours = 8.0
 wl.thursday = "thursday"
+wl.thursday_hours = 8.0
 wl.friday = "friday"
+wl.friday_hours = 8.0
 wl.saturday = "saturday"
+wl.saturday_hours = 8.0
 wl.sunday = "sunday"
+wl.sunday_hours = 8.0
 wl.save!
 

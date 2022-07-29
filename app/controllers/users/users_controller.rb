@@ -1,11 +1,13 @@
 class Users::UsersController < ApplicationController
   def list
-    @users = User.all.order("users.id asc").limit(10).page(params[:page])
+    @users = User.all.order("users.id desc").limit(10).page(params[:page])
   end
 
   def new
     flash[:alert] = ''
     flash[:success] = ''
+
+    render "users/new"
   end
 
   def create
@@ -13,6 +15,7 @@ class Users::UsersController < ApplicationController
     flash[:success] = ''
 
     user = User.new
+    r = Rule.new
 
     user.first_name = params[:first_name]
     user.last_name = params[:last_name]
@@ -22,8 +25,21 @@ class Users::UsersController < ApplicationController
     user.telegram = params[:telegram]
     user.password = params[:password]
 
+
     if user.valid? && params[:password] == params[:password_confirmation]
-      user.save
+      user.save!
+
+      r.user_id = user.id
+      r.worker = params[:worker] == "0" ? false : true
+      r.manager = params[:manager] == "0" ? false : true
+      r.create_user = params[:role_create_user] == "0" ? false : true
+      r.edit_user = params[:role_edit_user] == "0" ? false : true
+      r.edit_all_work_list = params[:edit_all_work_list] == "0" ? false : true
+      r.edit_work_list = params[:edit_work_list] == "0" ? false : true
+      r.edit_all_eggs_collection = params[:edit_all_eggs_collection] == "0" ? false : true
+      r.edit_eggs_collection = params[:edit_eggs_collection] == "0" ? false : true
+      r.save!
+
       flash[:success] = t('success_create_user')
 
       File.open("./app/channels/channel_" + User.last.id.to_s + ".rb", 'w') do |f|
@@ -38,7 +54,9 @@ class Users::UsersController < ApplicationController
         ")
       end
 
-      render "index/index"
+      @users = User.all.order("users.id desc").limit(10).page(params[:page])
+
+      render "users/list"
     else
       msg = {}
       msg.merge!(password_confirmation: [t('password_match').to_s]) if params[:password] != params[:password_confirmation]
@@ -47,12 +65,13 @@ class Users::UsersController < ApplicationController
 
       puts "flash[:alert]"
       puts "#{msg}"
-      render 'users/users/new'
+
+      render 'shared/create_user'
     end
   end
 
   def destroy
-    @users = User.all.order("users.id asc").limit(10).page(params[:page])
+    @users = User.all.order("users.id desc").limit(10).page(params[:page])
     User.find(params[:id]).destroy
 
     begin
@@ -62,13 +81,15 @@ class Users::UsersController < ApplicationController
       flash[:alert] = { msg: 'Ошибка удаления файла, файла не существует' }
     end
 
-    render 'users/users/list'
+    render 'users/list'
   end
 
   def edit
     @user = User.find(params[:id])
     flash[:alert] = ''
     flash[:success] = ''
+
+    render "users/edit"
   end
 
   def update
@@ -91,7 +112,7 @@ class Users::UsersController < ApplicationController
       flash[:alert] = { msg: ['Логин или АД уже есть в системе'] }
     end
 
-    render "index/index"
+    render "users/list"
   end
 
   def valid_nickname?

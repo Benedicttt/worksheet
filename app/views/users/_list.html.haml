@@ -1,0 +1,83 @@
+%article
+  %h2
+  - if !flash.empty?
+    - flash.keys.each do |k|
+      - unless flash['alert'].blank?
+        %div.position_relative.lef.margin_top_5_px{ style: 'color: orange; left: 45%;'}
+          -flash[:alert].each do |key, value|
+            %br
+            =value[0]
+      - unless flash['success'].blank?
+        %div.position_relative{ style: 'color:green; left: 45%;'}
+          =flash[k]
+
+  - if current_user.present?
+    %h1
+      = t('list_users')
+
+      %table.position_relative.display-inline-block
+        %tr
+          %th.width75
+            = t('first_name')
+          %th.width75
+            = t('last_name')
+          %th.width75
+            = t('nickname')
+          %th.width250
+            = t('email')
+          %th.width125
+            = t('phone')
+          %th.width125
+            = t('telegram')
+          %th.width75
+          %th.width75
+            Worker
+          %th.width75
+            Manager
+          %th.width75
+            Create user
+          %th.width75
+            Edit_user
+          %th.width75
+            Edit all work list
+          %th.width75
+            Edit work list
+          %th.width75
+            Edit all eggs collection
+          %th.width75
+            Edit eggs collection
+          %th.width75
+        - @users.each do |u|
+          %tr
+            %th= u.first_name
+            %th= u.last_name
+            %th= u.nickname
+            %th= u.email
+            %th= u.phone
+            %th= u.telegram
+            %th
+            - if !u.rule.nil?
+              %th= u.rule.worker.nil? ? "Undefined" : u.rule.worker
+              %th= u.rule.manager.nil? ? "Undefined" : u.rule.manager
+              %th= u.rule.create_user.nil? ? "Undefined" : u.rule.create_user
+              %th= u.rule.edit_user.nil? ? "Undefined" : u.rule.edit_user
+              %th= u.rule.edit_all_work_list.nil? ? "Undefined" : u.rule.edit_all_work_list
+              %th= u.rule.edit_work_list.nil? ? "Undefined" : u.rule.edit_work_list
+              %th= u.rule.edit_all_eggs_collection.nil? ? "Undefined" : u.rule.edit_all_eggs_collection
+              %th= u.rule.edit_eggs_collection.nil? ? "Undefined" : u.rule.edit_eggs_collection
+            - else
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+
+
+            %td.display_flex{style: "border: 0px solid;"}
+              = form_for "", remote: true, url: { controller: "users/users", action: "edit", id: u.id} do |f|
+                = f.submit "", class: "icon-edit-worksheet btn"
+              = form_for "", remote: true, url: { controller: "users/users", action: "destroy", id: u.id} do |f|
+                = f.submit "", class: "icon-delete-worksheet btn"

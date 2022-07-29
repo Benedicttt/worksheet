@@ -1,5 +1,5 @@
 .margin_top_15_px
-  = select_tag(:option, options_for_select([['🇫🇮', "fi", {:class=>'font-size-34'}], ['🇬🇧', "en", {:class=>'font-size-34'}]], selected: params[:locale] ), class: "icon-select-lang", id: "select_lang_mobile")
+  = select_tag(:option, options_for_select([['🇫🇮', "fi", {:class=>'font-size-34'}], ['🇬🇧', "en", {:class=>'font-size-34'}]], selected: params[:locale] ), class: "icon-select-lang", id: "select_lang")
 
 :css
   option: {
@@ -17,8 +17,10 @@
 
 :javascript
   $(document).ready(function() {
+
     $('#select_lang, #select_lang_mobile').change(function(){
       window.location = window.location.origin + "/" + $(this).val()
     });
+
   })
 

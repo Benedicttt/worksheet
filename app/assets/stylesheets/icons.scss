@@ -105,3 +105,60 @@
 .icon-create-user:hover + .cursor {
   transform: translate(-50%, -50%) scale(8);
 }
+
+//
+.icon-new-worksheet {
+  background: url(new_worksheet.png);
+  background-size: 100%;
+  margin-left: 36%;
+  height: 34px;
+  width: 35px !important;
+  border: 0px;
+}
+
+.icon-new-worksheet:hover {
+  transition: 0.02s case;
+  transform: translate(-5%, -5%) scale(1.1, 1.1);
+}
+
+.icon-new-worksheet:hover + .cursor {
+  transform: translate(-50%, -50%) scale(8);
+}
+
+//
+.icon-edit-worksheet {
+  background: url(edit_worksheet.png);
+  background-size: 100%;
+  margin-left: 12%;
+  height: 34px;
+  width: 35px !important;
+  border: 0px;
+}
+
+.icon-edit-worksheet:hover {
+  transition: 0.02s case;
+  transform: translate(-5%, -5%) scale(1.1, 1.1);
+}
+
+.icon-edit-worksheet:hover + .cursor {
+  transform: translate(-50%, -50%) scale(8);
+}
+
+//
+.icon-delete-worksheet {
+  background: url(delete_worksheet.png);
+  background-size: 100%;
+  margin-left: 12%;
+  height: 34px;
+  width: 35px !important;
+  border: 0px;
+}
+
+.icon-delete-worksheet:hover {
+  transition: 0.02s case;
+  transform: translate(-5%, -5%) scale(1.1, 1.1);
+}
+
+.icon-delete-worksheet:hover + .cursor {
+  transform: translate(-50%, -50%) scale(8);
+}

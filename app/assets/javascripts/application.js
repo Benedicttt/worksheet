@@ -32,4 +32,5 @@
 "./app/assets/javascripts/"
 
 $(document).ready(function(){
+
 });

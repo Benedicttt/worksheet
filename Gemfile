@@ -86,5 +86,7 @@ group :development, :production, :test do
   gem 'rails-highlightjs'
   gem 'clipboard-rails'
   gem 'bindex', '~> 0.8.1'
+  gem 'kaminari'
+
 end
 

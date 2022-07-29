@@ -26,12 +26,19 @@ class Users < ActiveRecord::Migration[7.0]
       t.integer :user_id
       t.string :period_id
       t.string :monday
+      t.float :monday_hours
       t.string :tuesday
+      t.float :tuesday_hours
       t.string :wednesday
+      t.float :wednesday_hours
       t.string :thursday
+      t.float :thursday_hours
       t.string :friday
+      t.float :friday_hours
       t.string :saturday
+      t.float :saturday_hours
       t.string :sunday
+      t.float :sunday_hours
     end
 
     create_table :periods do |t|

@@ -52,19 +52,13 @@ footer {
     "footer  footer";
 }
 
-@media (max-width: 500px) {
-  .wrapper {
-    padding: 20px 20px 0px 20px;
-    display: grid;
-    height: 98vh;
-    grid-gap: 20px;
-    grid-template-rows: 1fr 12fr;
-    grid-template-columns: 1fr 15fr;
-    grid-template-areas:
-    "header  header"
-    "sidebar sidebar"
-    "content content"
-    "footer  footer";
+@media (max-width: 1024px) {
+  @media (orientation: landscape) {
+    body { zoom: 0.3; }
+
+    section {
+      margin: 5px;
+    }
   }
 }
 
@@ -90,6 +84,7 @@ input {
 .margin_top_2_per { margin-top: 2% }
 .margin_top_15_per { margin-top: 15% }
 .margin_top_20_per { margin-top: 20% }
+.margin_left_10_per { margin-left: 10% }
 .margin_left_30_per { margin-left: 30% }
 .margin_left_35_per { margin-left: 35% }
 .margin_left_39_per { margin-left: 39% }

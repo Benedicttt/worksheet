@@ -1,54 +1,82 @@
 %article
-  %section.position_relative.display-inline-block
-    / for demo wrap
-    %h1 WorkSheet
-    .tbl-header
-      %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
-        %thead
-          %tr
-            %th Period date
-            %th Worker
-            %th Mon
-            %th Tue
-            %th Wed
-            %th Thu
-            %th Fri
-            %th Sat
-            %th Sun
-            %th
-    .tbl-content-form
-      - Period.all.each do |p|
-        %br
+  - if current_user.present?
+    %section.position_relative.display-inline-block
+      / for demo wrap
+      %h1 WorkSheet
+      .tbl-header
         %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
-          %tbody
+          %thead
+            %tr
+              %th.text-center Period date
+              %th.text-center Worker
+              %th.text-center Mon
+              %th.text-center Tue
+              %th.text-center Wed
+              %th.text-center Thu
+              %th.text-center Fri
+              %th.text-center Sat
+              %th.text-center Sun
+              %th.text-center Total hours
+              - if !current_user.rule.nil? && current_user.rule.manager
+                %th.text-center
+                  = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "new"} do |f|
+                    = f.submit "", class: "icon-new-worksheet btn"
+      .tbl-content-form
+        - Period.all.each do |p|
+          %br
+          %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+            %tbody
 
-            - WorkShiftSchedule.where(period_id: p.id).each_with_index do |wss, index|
-              - u = User.find(wss.user_id)
-              %tr
-                %td
-                  - if index == 0
-                    #{p.to} - #{p.from} .#{p.month}.#{p.year}
-                %td
-                  = u.first_name
-                  = u.last_name
-                %td
-                  = wss.monday
-                %td
-                  = wss.tuesday
-                %td
-                  = wss.wednesday
-                %td
-                  = wss.thursday
-                %td
-                  = wss.friday
-                %td
-                  = wss.saturday
-                %td
-                  = wss.sunday
-                %td
-                  .display_flex
+              - WorkShiftSchedule.where(period_id: p.id).each_with_index do |wss, index|
+                - u = User.find(wss.user_id)
+                %tr
+                  %td
                     - if index == 0
-                      .btn.btn-primary
-                        = button_to :EDIT
-                      .btn.btn-danger
-                        = button_to :DELETE
+                      %strong{ style: "color: #a46811; font-size: 16px;" }
+                        #{p.to} - #{p.from} .#{p.month}.#{p.year}
+                  %td
+                    %strong{ style: "color: #3c2d09;" }
+                      = u.first_name
+                      = u.last_name
+                  %td.text-center
+                    #{wss.monday}
+                    %br
+                    #{wss.monday_hours}
+                  %td.text-center
+                    #{wss.tuesday}
+                    %br
+                    #{wss.tuesday_hours}
+                  %td.text-center
+                    #{wss.wednesday}
+                    %br
+                    #{wss.wednesday_hours}
+                  %td.text-center
+                    #{wss.thursday}
+                    %br
+                    #{wss.thursday_hours}
+                  %td.text-center
+                    #{wss.friday}
+                    %br
+                    #{wss.friday_hours}
+                  %td.text-center
+                    #{wss.saturday}
+                    %br
+                    #{wss.saturday_hours}
+                  %td.text-center
+                    #{wss.sunday}
+                    %br
+                    #{wss.sunday_hours}
+                  %td.text-center
+                    = wss.monday_hours + wss.tuesday_hours + wss.wednesday_hours + wss.thursday_hours + wss.friday_hours + wss.saturday_hours + wss.sunday_hours
+
+                  - if !current_user.rule.nil? && current_user.rule.manager
+                    - if index == 0
+                      %td.display_flex{style: "border: 0px solid;"}
+                        = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "show", id: wss.id} do |f|
+                          = f.submit "", class: "icon-edit-worksheet btn"
+                        .margin_left_30_per
+                          = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
+                            = f.submit "", class: "icon-delete-worksheet btn"
+
+  - else
+    = render "sessions/new_sessions"
