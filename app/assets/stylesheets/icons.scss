@@ -162,3 +162,22 @@
 .icon-delete-worksheet:hover + .cursor {
   transform: translate(-50%, -50%) scale(8);
 }
+
+//
+.icon-new-user {
+  background: url(new_user.png);
+  background-size: 100%;
+  margin-left: 20%;
+  height: 34px;
+  width: 35px !important;
+  border: 0px;
+}
+
+.icon-new-user:hover {
+  transition: 0.02s case;
+  transform: translate(-5%, -5%) scale(1.1, 1.1);
+}
+
+.icon-new-user:hover + .cursor {
+  transform: translate(-50%, -50%) scale(8);
+}

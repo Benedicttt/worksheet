@@ -1,3 +1,4 @@
 - if current_user.present?
-  = form_for "", remote: true, url: { controller: "users/steps", action: "go_to_main"} do |f|
-    = f.submit "", class: "btn icon-main margin_top_15_px"
+  -# = form_for "", remote: true, url: { controller: "users/steps", action: "go_to_main"} do |f|
+  -#  = f.submit "", class: "btn icon-main margin_top_15_px"
+  = link_to "", root_path, class: "btn icon-main margin_top_15_px"

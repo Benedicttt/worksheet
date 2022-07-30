@@ -42,6 +42,7 @@ user.nickname = "benedicttt"
 user.phone = "044 984-72-54"
 user.telegram = "@SergeyK2705"
 user.password = "Folken123123"
+user.is_available = true
 user.save!
 
 rules.user_id = user.id
@@ -87,6 +88,7 @@ user.nickname = "benedicttt"
 user.phone = "044 984-72-54"
 user.telegram = "@SergeyK2705"
 user.password = "Folken123123"
+user.is_available = true
 user.save!
 
 rules.user_id = user.id
@@ -139,6 +141,7 @@ user.nickname = "benedicttt"
 user.phone = "044 984-72-54"
 user.telegram = "@SergeyK2705"
 user.password = "Folken123123"
+user.is_available = true
 user.save!
 
 rules.user_id = user.id

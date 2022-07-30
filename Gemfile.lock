@@ -92,6 +92,8 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.5, < 3)
       sassc-rails (>= 2.0.0)
+    bootstrap-datepicker-rails (1.9.0.1)
+      railties (>= 3.0)
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
@@ -445,6 +447,7 @@ DEPENDENCIES
   bindex (~> 0.8.1)
   bootsnap
   bootstrap (~> 5.2.0)
+  bootstrap-datepicker-rails
   bootstrap-sass (= 3.4.1)
   bootstrap-select-rails
   bootstrap-table-rails

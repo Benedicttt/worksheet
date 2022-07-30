@@ -1,96 +1,108 @@
-%article
-  %h1
-    = t('edit_user')
-  %br
-  %div{ style: "margin-left: 30%" }
-    =form_for "", url: { controller: 'users', action: 'update' } do |f|
-      %table{ style: "width: 0%" }
-        %tr
-          %tr
-            %th
-              %br
-              .btn.btn-primary ID
-            %th
-              %br
-              =f.hidden_field :id, value: @user.id
-              =@user.id
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('first_name')
-            %th
-              %br
-              =f.text_field :first_name, value: @user.first_name
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('last_name')
-            %th
-              %br
-              =f.text_field :last_name, value: @user.last_name
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('email')
-            %th
-              %br
-              =f.email_field :email, value: @user.email
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('nickname')
-            %th
-              %br
-              =f.text_field :nickname, value: @user.nickname
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('phone')
-            %th
-              %br
-              =f.text_field :phone, value: @user.phone
-          %tr
-            %th
-              %br
-              .btn.btn-primary
-                = t('telegram')
-            %th
-              %br
-              =f.text_field :telegram, value: @user.telegram
-          -#%tr
-          -#  %th
-          -#    %br
-          -#    .btn.btn-primary Пароль
-          -#  %th
-          -#    %br
-          -#    =f.password_field :password, value: @user.password
-          -#%tr
-          -#  %th
-          -#    %br
-          -#    .btn.btn-primary Пароль повторно
-          -#  %th
-          -#    %br
-          -#    =f.password_field :password, value: @user.password
-          %tr
-            %th
-            %th
-              =f.submit t('edit_user'), class: 'btn btn-warning'
+- if current_user.present?
+  - u = @user
 
-              %br
-              %br
-              %br
-              - if !flash.empty?
-                - flash.keys.each do |k|
-                  - unless flash['alert'].blank?
-                    %div{ style: 'color: orange; left: 45%; position: absolute;'}
-                      -flash[:alert].each do |key, value|
-                        %br
-                        =value[0]
-                  - unless flash['success'].blank?
-                    %div{ style: 'color:green; left: 45%; position: absolute;'}
-                      =flash[k]
+  %article
+    %br
+    =form_for "", remote: true, url: { controller: 'users', action: 'update' } do |f|
+      %section.position_relative.display-inline-block
+        - if !flash[:alert].nil?
+          %div{style: 'color:red;'}
+            %br
+            %h3
+              =flash[:alert]
+
+        -unless flash[:success].nil?
+          %div{style: 'color:green;'}
+            %br
+            %h3
+              =flash[:success]
+
+        - flash[:success] = ""
+        - flash[:alert] = ""
+        %h1
+          = t('edit_user')
+
+        %table.table.position_relative.display-inline-block
+          =f.hidden_field :id, value: u.id
+          %tr
+            %th
+              = t('first_name')
+            %th
+              = f.text_field :first_name, value: u.first_name
+
+          %tr
+            %th
+              = t('last_name')
+            %th
+              = f.text_field :last_name, value: u.last_name
+          %tr
+            %th
+              = t('nickname')
+            %th
+              = f.text_field :nickname, value: u.nickname
+          %tr
+            %th
+              = t('email')
+            %th
+              = f.text_field :email, value: u.email
+          %tr
+            %th
+              = t('phone')
+            %th
+              = f.text_field :phone, value: u.phone
+          %tr
+            %th
+              = t('telegram')
+            %th
+              = f.text_field :telegram, value: u.telegram
+          %tr
+            %th
+              Worker
+            %th
+              .form-check.form-switch
+                = f.check_box :worker, checked: u.rule.worker, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              Manager
+            %th
+              .form-check.form-switch
+                = f.check_box :manager, checked: u.rule.manager, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              Create user
+            %th
+              .form-check.form-switch
+                = f.check_box :create_user, checked: u.rule.create_user, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              Edit_user
+            %th
+              .form-check.form-switch
+                = f.check_box :edit_user, checked: u.rule.edit_user, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              Edit all work list
+            %th
+              .form-check.form-switch
+                = f.check_box :edit_all_work_list, checked: u.rule.edit_all_work_list, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              Edit work list
+            %th
+              .form-check.form-switch
+                = f.check_box :edit_work_list, checked: u.rule.edit_work_list, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              Edit all eggs collection
+            %th
+              .form-check.form-switch
+                = f.check_box :edit_all_eggs_collection, checked: u.rule.edit_all_eggs_collection, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              Edit eggs collection
+            %th
+              .form-check.form-switch
+                = f.check_box :edit_eggs_collection, checked: u.rule.edit_eggs_collection, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+          %tr
+            %th
+              = f.submit "Save", class: "btn-primary btn"

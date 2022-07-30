@@ -7,6 +7,7 @@
 @import "icons";
 @import "worksheet";
 @debug '________ applciation compiled______';
+@import "bootstrap-datepicker";
 
 header {
   grid-area: header;
@@ -92,16 +93,27 @@ input {
 .margin_left_45_per { margin-left: 45% }
 .margin_left_50_per { margin-left: 50% }
 .margin_left { margin-right: -20%;}
+.margin_left_5_per { margin-left: 5%; }
 .margin_left_minus_20_per { margin-right: -20%;}
+.width50 { width: 50px; }
 .width75 { width: 75px; }
+.width100 { width: 100px; }
 .width125 { width: 125px; }
+.width145 { width: 145px; }
+.width175 { width: 175px; }
 .width200 { width: 200px; }
 .width250 { width: 250px; }
+.height75 { height: 75px; }
+.height100 { height: 100px; }
+.height125 { height: 125px; }
+.height200 { height: 200px; }
+.height250 { height: 250px; }
 .float-right { float: right }
 .margin_top_0_per { margin-top: 0%; }
 .margin_top_5_px { margin-top: 5px; }
 .margin_top_15_px { margin-top: 15px; }
 .padding-20-per { padding: 20px 20px 20px 20px }
 .transform-1-3 { transform: scale(1.3); }
+.border-radius-15px { border-radius: 5px; }
 
 a, button, input, table, select {   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }

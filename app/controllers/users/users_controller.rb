@@ -24,6 +24,7 @@ class Users::UsersController < ApplicationController
     user.phone = params[:phone]
     user.telegram = params[:telegram]
     user.password = params[:password]
+    user.is_available = params[:is_available]
 
 
     if user.valid? && params[:password] == params[:password_confirmation]
@@ -72,14 +73,9 @@ class Users::UsersController < ApplicationController
 
   def destroy
     @users = User.all.order("users.id desc").limit(10).page(params[:page])
-    User.find(params[:id]).destroy
 
-    begin
-      File.delete("./app/channels/channel_" + params[:id].to_s + ".rb")
-    rescue
-      logger.error 'Ошибка удаления файла'
-      flash[:alert] = { msg: 'Ошибка удаления файла, файла не существует' }
-    end
+    User.find(params[:id]).update_attribute(:is_available, false)
+    flash[:alert] = "User delete"
 
     render 'users/list'
   end
@@ -88,30 +84,46 @@ class Users::UsersController < ApplicationController
     @user = User.find(params[:id])
     flash[:alert] = ''
     flash[:success] = ''
-
+    puts "EDIT USER"
     render "users/edit"
   end
 
   def update
-    @user = User.find(params[:id])
     flash[:alert] = ''
     flash[:success] = ''
 
-    logger.debug valid_nickname?
-    logger.debug valid_email?
-    if valid_nickname? && valid_email?
-      user = User.find(params['id'])
-      user.update_attribute('first_name', params['first_name'])
-      user.update_attribute('last_name', params['last_name'])
-      user.update_attribute('nickname', params['nickname'])
-      user.update_attribute('email', params['email'])
+    # begin
 
-      flash[:success] = "Пользователь Отредактирован успешно"
+      user = User.find(params[:id])
+      user.update!(
+          id: params[:id],
+          first_name: params[:first_name],
+          last_name: params[:last_name],
+          nickname: params[:nickname],
+          email: params[:email],
+          phone: params[:phone],
+          telegram: params[:telegram]
+      )
 
-    else
-      flash[:alert] = { msg: ['Логин или АД уже есть в системе'] }
-    end
+      rules = Rule.find_by(user_id: user.id)
+      rules.update(
+        worker: params[:worker],
+        manager: params[:manager],
+        create_user: params[:create_user],
+        edit_user: params[:edit_user],
+        edit_all_work_list: params[:edit_all_work_list],
+        edit_work_list: params[:edit_work_list],
+        edit_all_eggs_collection: params[:edit_all_eggs_collection],
+        edit_eggs_collection: params[:edit_eggs_collection]
+      )
 
+      flash[:success] = "User updated successful"
+
+    # rescue
+    #   flash[:alert] = "User not updated"
+    # end
+
+    @users = User.all.order("users.id desc").limit(10).page(params[:page])
     render "users/list"
   end
 

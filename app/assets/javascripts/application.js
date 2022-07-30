@@ -23,11 +23,11 @@
 //= require_self
 //= require_tree ./channels
 //= require jquery.autosize
-//= require bootstrap-select
 //= require bootstrap/alert
 //= require bootstrap/dropdown
 //= require bootag.js
 //= require json-formatter
+//= require bootstrap-datepicker
 
 "./app/assets/javascripts/"
 

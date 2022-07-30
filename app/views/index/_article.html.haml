@@ -1,10 +1,12 @@
+%link{:rel => :stylesheet, media: "all",  type: "text/css", :href => "file:///Users/benedicttt/RubyMineProjects/worksheet/app/assets/stylesheets/worksheet.scss"}
+
 %article
   - if current_user.present?
     %section.position_relative.display-inline-block
       / for demo wrap
       %h1 WorkSheet
       .tbl-header
-        %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %thead
             %tr
               %th.text-center Period date
@@ -21,56 +23,58 @@
                 %th.text-center
                   = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "new"} do |f|
                     = f.submit "", class: "icon-new-worksheet btn"
-      .tbl-content-form
-        - Period.all.each do |p|
-          %br
-          %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
-            %tbody
 
+
+      .tbl-content-form
+        %br
+        %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+          %tbody
+            - Period.all.each do |p|
               - WorkShiftSchedule.where(period_id: p.id).each_with_index do |wss, index|
                 - u = User.find(wss.user_id)
-                %tr
-                  %td
-                    - if index == 0
-                      %strong{ style: "color: #a46811; font-size: 16px;" }
-                        #{p.to} - #{p.from} .#{p.month}.#{p.year}
-                  %td
-                    %strong{ style: "color: #3c2d09;" }
-                      = u.first_name
-                      = u.last_name
-                  %td.text-center
-                    #{wss.monday}
-                    %br
-                    #{wss.monday_hours}
-                  %td.text-center
-                    #{wss.tuesday}
-                    %br
-                    #{wss.tuesday_hours}
-                  %td.text-center
-                    #{wss.wednesday}
-                    %br
-                    #{wss.wednesday_hours}
-                  %td.text-center
-                    #{wss.thursday}
-                    %br
-                    #{wss.thursday_hours}
-                  %td.text-center
-                    #{wss.friday}
-                    %br
-                    #{wss.friday_hours}
-                  %td.text-center
-                    #{wss.saturday}
-                    %br
-                    #{wss.saturday_hours}
-                  %td.text-center
-                    #{wss.sunday}
-                    %br
-                    #{wss.sunday_hours}
-                  %td.text-center
-                    = wss.monday_hours + wss.tuesday_hours + wss.wednesday_hours + wss.thursday_hours + wss.friday_hours + wss.saturday_hours + wss.sunday_hours
+                - if u.is_available && u.rule.worker && !u.rule.manager
+                  %tr
+                    %td
+                      - if index == 0
+                        %strong{ style: "color: #a46811; font-size: 16px;" }
+                          #{p.to} - #{p.from} .#{p.month}.#{p.year}
+                        %p Week #{p.week_number}
+                    %td
+                      %strong{ style: "color: #3c2d09;" }
+                        = u.first_name
+                        = u.last_name
+                    %td.text-center
+                      #{wss.monday_hours}
+                      %br
+                      #{wss.monday}
+                    %td.text-center
+                      #{wss.tuesday_hours}
+                      %br
+                      #{wss.tuesday}
+                    %td.text-center
+                      #{wss.wednesday_hours}
+                      %br
+                      #{wss.wednesday}
+                    %td.text-center
+                      #{wss.thursday_hours}
+                      %br
+                      #{wss.thursday}
+                    %td.text-center
+                      #{wss.friday_hours}
+                      %br
+                      #{wss.friday}
+                    %td.text-center
+                      #{wss.saturday_hours}
+                      %br
+                      #{wss.saturday}
+                    %td.text-center
+                      #{wss.sunday_hours}
+                      %br
+                      #{wss.sunday}
+                    %td.text-center
+                      = wss.monday_hours.to_i + wss.tuesday_hours.to_i + wss.wednesday_hours.to_i + wss.thursday_hours.to_i + wss.friday_hours.to_i + wss.saturday_hours.to_i + wss.sunday_hours.to_i
 
-                  - if !current_user.rule.nil? && current_user.rule.manager
-                    - if index == 0
+                    - if !current_user.rule.nil? && current_user.rule.manager
                       %td.display_flex{style: "border: 0px solid;"}
                         = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "show", id: wss.id} do |f|
                           = f.submit "", class: "icon-edit-worksheet btn"
@@ -78,5 +82,21 @@
                           = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
                             = f.submit "", class: "icon-delete-worksheet btn"
 
+        - if !flash[:alert].nil?
+          %div{style: 'color:red;'}
+            %br
+            %h5
+              =flash[:alert]
+
+        -unless flash[:success].nil?
+          %div{style: 'color:green;'}
+            %br
+            %h5
+              =flash[:success]
+
+        - flash[:success] = ""
+        - flash[:alert] = ""
+
   - else
     = render "sessions/new_sessions"
+

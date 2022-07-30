@@ -41,8 +41,8 @@ class User < ApplicationRecord
   has_many :work_list
   has_many :work_shift_schedule
 
-  validates_presence_of :email, :message => "Email field must not be null"
-  validate :user_email
+  # validates_presence_of :email, :message => "Email field must not be null"
+  # validate :user_email
 
   validate :password_size
   validate :password_lower_case

@@ -1,4 +1,5 @@
-- if current_user.present? && !current_user.rule.nil? && current_user.rule.create_user
+- if current_user.present? && !current_user.rule.nil?
   %div.margin_top_5_px
-    = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
+    = form_for "", remote: true, url: { controller: "users/users", action: "edit", id: current_user.id} do |f|
       = f.submit "", class: "icon-create-user btn margin_top_15_px"
+

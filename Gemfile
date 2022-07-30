@@ -87,6 +87,7 @@ group :development, :production, :test do
   gem 'clipboard-rails'
   gem 'bindex', '~> 0.8.1'
   gem 'kaminari'
+  gem 'bootstrap-datepicker-rails'
 
 end
 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Worksheet</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <style>
+        #overlay {
+            background: white;
+            color: black;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            z-index: 5000;
+            top: 0;
+            left: 0%;
+            float: left;
+            text-align: center;
+            padding-top: 25%;
+            font-size: 20px;
+            font-family: monaco,Consolas,Lucida Console,monospace;
+        }
+
+        .loader {
+            z-index: 152;
+            position: fixed;
+            left: 54%;
+            margin-top: -2em;
+            display: inline-flex;
+            flex-wrap: wrap;
+            width: 90px;
+            height: 90px;
+            transform-style: preserve-3d;
+            transform: rotateX(45deg) rotate(45deg);
+        }
+
+    </style>
+    <div id="overlay">
+      Loading ...
+      <div class="loader" alt="Loading" >
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+    </div>
+    <script>
+        $(window).on("load", function(){
+            $('#overlay').fadeOut();
+            setTimeout(() => {
+                console.log("Loading page");
+
+            }, 2500);
+        });
+    </script>
+
+    <script>
+        window.App = {
+            config: {
+                ip: '<%= request.ip %>'
+            }
+        };
+
+    </script>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <div>
+      <div id="modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+    </div>
+
+    <%= yield %>
+  </body>
+</html>

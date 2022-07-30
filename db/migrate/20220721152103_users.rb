@@ -8,6 +8,7 @@ class Users < ActiveRecord::Migration[7.0]
       t.string :password
       t.string :telegram
       t.string :last_name
+      t.boolean :is_available, default: false
     end
 
     create_table :rules do |t|
@@ -24,21 +25,22 @@ class Users < ActiveRecord::Migration[7.0]
 
     create_table :work_shift_schedules do |t|
       t.integer :user_id
+      t.string :comment
       t.string :period_id
       t.string :monday
-      t.float :monday_hours
+      t.float :monday_hours, default: 0.0
       t.string :tuesday
-      t.float :tuesday_hours
+      t.float :tuesday_hours, default: 0.0
       t.string :wednesday
-      t.float :wednesday_hours
+      t.float :wednesday_hours, default: 0.0
       t.string :thursday
-      t.float :thursday_hours
+      t.float :thursday_hours, default: 0.0
       t.string :friday
-      t.float :friday_hours
+      t.float :friday_hours, default: 0.0
       t.string :saturday
-      t.float :saturday_hours
+      t.float :saturday_hours, default: 0.0
       t.string :sunday
-      t.float :sunday_hours
+      t.float :sunday_hours, default: 0.0
     end
 
     create_table :periods do |t|
@@ -46,6 +48,7 @@ class Users < ActiveRecord::Migration[7.0]
       t.integer :from
       t.integer :month
       t.integer :year
+      t.integer :week_number
     end
 
     create_table :work_lists do |t|
