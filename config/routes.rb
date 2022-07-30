@@ -35,6 +35,14 @@ Rails.application.routes.draw do
       post   'destroy'         => 'work_shift_schedules#destroy'
     end
 
+    namespace :work_lists do
+      post   'new'             => 'work_lists#new'
+      post   'create'          => 'work_lists#create'
+      post   'show'            => 'work_lists#show'
+      post   'edit/:id'        => 'work_lists#edit'
+      post   'update'          => 'work_lists#update'
+    end
+
     namespace :examples do
       get  'users_for_example', to: "users_for_example#index"
       post 'user_new', to: "users_for_example#user_new"
