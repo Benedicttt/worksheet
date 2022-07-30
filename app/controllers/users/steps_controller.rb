@@ -7,7 +7,8 @@ class Users::StepsController < ApplicationController
   end
 
   def list
-    @users = User.all.order("users.id desc").limit(10).page(params[:page])
+    # @users = User.all.order("users.id desc").limit(10).page(params[:page])
+    @users = User.where(is_available: true).order("users.id desc")
 
     render "shared/list"
   end

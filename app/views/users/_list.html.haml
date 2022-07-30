@@ -1,27 +1,27 @@
 %article
+  %h1
+    = t('list_users')
+
   - if current_user.present?
+
+    - if !flash[:alert].nil?
+      %div{style: 'color:red;'}
+        %h3
+          =flash[:alert]
+
+    -unless flash[:success].nil?
+      %div{style: 'color:green;'}
+        %h3
+          =flash[:success]
+
+    - flash[:success] = ""
+    - flash[:alert] = ""
+
     %section.position_relative.display-inline-block
-
-      - if !flash[:alert].nil?
-        %div{style: 'color:red;'}
-          %br
-          %h3
-            =flash[:alert]
-
-      -unless flash[:success].nil?
-        %div{style: 'color:green;'}
-          %br
-          %h3
-            =flash[:success]
-
-      - flash[:success] = ""
-      - flash[:alert] = ""
-
-      %h1
-        = t('list_users')
-
       %table.table.position_relative.display-inline-block
         %tr
+          %th
+            Id
           %th.width75
             = t('first_name')
           %th.width75
@@ -35,6 +35,7 @@
           %th.width125
             = t('telegram')
           %th.width75
+            = t('is_available')
           %th.width75
             Worker
           %th.width75
@@ -57,37 +58,37 @@
                 = f.submit "", class: "icon-new-user btn margin_top_15_px"
 
         - @users.each do |u|
-          - if u.is_available
-            %tr
-              %th= u.first_name
-              %th= u.last_name
-              %th= u.nickname
-              %th= u.email
-              %th= u.phone
-              %th= u.telegram
-              %th
-              - if !u.rule.nil?
-                %th= u.rule.worker.nil? ? "Undefined" : u.rule.worker
-                %th= u.rule.manager.nil? ? "Undefined" : u.rule.manager
-                %th= u.rule.create_user.nil? ? "Undefined" : u.rule.create_user
-                %th= u.rule.edit_user.nil? ? "Undefined" : u.rule.edit_user
-                %th= u.rule.edit_all_work_list.nil? ? "Undefined" : u.rule.edit_all_work_list
-                %th= u.rule.edit_work_list.nil? ? "Undefined" : u.rule.edit_work_list
-                %th= u.rule.edit_all_eggs_collection.nil? ? "Undefined" : u.rule.edit_all_eggs_collection
-                %th= u.rule.edit_eggs_collection.nil? ? "Undefined" : u.rule.edit_eggs_collection
-              - else
-                %th Undefined
-                %th Undefined
-                %th Undefined
-                %th Undefined
-                %th Undefined
-                %th Undefined
-                %th Undefined
-                %th Undefined
+          %tr
+            %th= u.id
+            %th= u.first_name
+            %th= u.last_name
+            %th= u.nickname
+            %th= u.email
+            %th= u.phone
+            %th= u.telegram
+            %th= u.is_available
+            - if !u.rule.nil?
+              %th= u.rule.worker.nil? ? "Undefined" : u.rule.worker
+              %th= u.rule.manager.nil? ? "Undefined" : u.rule.manager
+              %th= u.rule.create_user.nil? ? "Undefined" : u.rule.create_user
+              %th= u.rule.edit_user.nil? ? "Undefined" : u.rule.edit_user
+              %th= u.rule.edit_all_work_list.nil? ? "Undefined" : u.rule.edit_all_work_list
+              %th= u.rule.edit_work_list.nil? ? "Undefined" : u.rule.edit_work_list
+              %th= u.rule.edit_all_eggs_collection.nil? ? "Undefined" : u.rule.edit_all_eggs_collection
+              %th= u.rule.edit_eggs_collection.nil? ? "Undefined" : u.rule.edit_eggs_collection
+            - else
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
+              %th Undefined
 
 
-              %td.display_flex{style: "border: 0px solid;"}
-                = form_for "", remote: true, url: { controller: "users/users", action: "edit", id: u.id} do |f|
-                  = f.submit "", class: "icon-edit-worksheet btn"
-                = form_for "", remote: true, url: { controller: "users/users", action: "destroy", id: u.id} do |f|
-                  = f.submit "", class: "icon-delete-worksheet btn"
+            %td.display_flex{style: "border: 0px solid;"}
+              = form_for "", remote: true, url: { controller: "users/users", action: "edit", id: u.id} do |f|
+                = f.submit "", class: "icon-edit-worksheet btn"
+              = form_for "", remote: true, url: { controller: "users/users", action: "destroy", id: u.id} do |f|
+                = f.submit "", class: "icon-delete-worksheet btn"

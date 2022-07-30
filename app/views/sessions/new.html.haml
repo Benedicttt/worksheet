@@ -5,29 +5,3 @@
     = render "new_sessions"
     = render "index/footer"
 
-:javascript
-
-  $(document).ready(function(){
-    $("#session_nickname").hide()
-    $("#session_checkbox_signin_nickname").on('change', function() {
-
-      if ( this.checked  === true) {
-        console.log(this.checked)
-        $("#session_nickname").show();
-        $("#session_email").hide();
-
-        document.getElementById('session_email').value = ''
-        $("#id_email").text("#{t('nickname')}")
-
-      } else {
-        console.log(this.checked)
-        $("#session_nickname").hide();
-        $("#session_email").show();
-
-        document.getElementById('session_nickname').value = ''
-        $("#id_email").text("#{t('email')}")
-      }
-
-    });
-    $('#session_checkbox_signin_nickname').click()
-  });

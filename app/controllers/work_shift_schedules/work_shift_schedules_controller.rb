@@ -5,7 +5,7 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
   end
 
   def create
-    # begin
+    begin
       wss = WorkShiftSchedule.new
 
       date_to   = params[:to].split("-")
@@ -21,13 +21,14 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
 
       conditions_period = Period.where(params_period)
       period_id = if !conditions_period.empty?
-                    conditions_period[0].id
-                  else
-                    p = Period.new(params_period).save!
-                    puts "p"
-                    puts p
-                    p.id
-                  end
+                  conditions_period[0].id
+                else
+                  p = Period.new(params_period).save!
+                  puts "p"
+                  puts p
+                  p.id
+                end
+
       //
       wss.id = params[:id]
       wss.user_id = params[:user_id]
@@ -52,9 +53,9 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
       name = "#{u.first_name} #{u.last_name}"
       flash['success'] = "New worksheet for user #{name} created"
 
-      # rescue
-      #   flash['alert'] = "New worksheet for user #{name} NOT created\n"
-      # end
+      rescue
+        flash['alert'] = "New worksheet for user #{name} NOT created\n"
+      end
 
       render "work_shift_schedules/new"
   end

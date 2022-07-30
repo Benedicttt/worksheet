@@ -1,10 +1,10 @@
 %link{:rel => :stylesheet, media: "all",  type: "text/css", :href => "file:///Users/benedicttt/RubyMineProjects/worksheet/app/assets/stylesheets/worksheet.scss"}
 
 %article
+  %h1 WorkSheet
   - if current_user.present?
     %section.position_relative.display-inline-block
       / for demo wrap
-      %h1 WorkSheet
       .tbl-header
         %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %thead
@@ -43,6 +43,7 @@
                       %strong{ style: "color: #3c2d09;" }
                         = u.first_name
                         = u.last_name
+                        (#{u.id})
                     %td.text-center
                       #{wss.monday_hours}
                       %br

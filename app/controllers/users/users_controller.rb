@@ -1,6 +1,7 @@
 class Users::UsersController < ApplicationController
   def list
-    @users = User.all.order("users.id desc").limit(10).page(params[:page])
+    # @users = User.all.order("users.id desc").limit(10).page(params[:page])
+    @users = User.where(is_available: true).order("users.id desc")
   end
 
   def new
@@ -55,9 +56,14 @@ class Users::UsersController < ApplicationController
         ")
       end
 
-      @users = User.all.order("users.id desc").limit(10).page(params[:page])
+      # @users = User.all.order("users.id desc").limit(10).page(params[:page])
+      @users = User.where(is_available: true).order("users.id desc")
 
-      render "users/list"
+      if !current_user.nil?
+        render "users/list"
+      else
+        render "sessions/new_sessions"
+      end
     else
       msg = {}
       msg.merge!(password_confirmation: [t('password_match').to_s]) if params[:password] != params[:password_confirmation]
@@ -72,7 +78,8 @@ class Users::UsersController < ApplicationController
   end
 
   def destroy
-    @users = User.all.order("users.id desc").limit(10).page(params[:page])
+    # @users = User.all.order("users.id desc").limit(10).page(params[:page])
+    @users = User.where(is_available: true).order("users.id desc")
 
     User.find(params[:id]).update_attribute(:is_available, false)
     flash[:alert] = "User delete"
@@ -92,7 +99,7 @@ class Users::UsersController < ApplicationController
     flash[:alert] = ''
     flash[:success] = ''
 
-    # begin
+    begin
 
       user = User.find(params[:id])
       user.update!(
@@ -119,11 +126,14 @@ class Users::UsersController < ApplicationController
 
       flash[:success] = "User updated successful"
 
-    # rescue
-    #   flash[:alert] = "User not updated"
-    # end
+    rescue
+      flash[:alert] = "User not updated"
+    end
 
-    @users = User.all.order("users.id desc").limit(10).page(params[:page])
+    # @users = User.all.order("users.id desc").limit(10).page(params[:page])
+
+    @users = User.where(is_available: true).order("users.id desc")
+
     render "users/list"
   end
 
