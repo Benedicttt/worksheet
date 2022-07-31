@@ -1,3 +1,7 @@
 $("article").replaceWith('<%= j  render partial: "work_shift_schedules/show", params: params %>');
+$('body').remove('modify')
+document.body.appendChild(document.createElement('modify'));
+$("modify").replaceWith('<%= j  render partial: "work_shift_schedules/css_show_wss", params: params %>');
 
+document.body.appendChild(document.createElement('modify'));
 console.log('references results <%=params[:file_name] %>')

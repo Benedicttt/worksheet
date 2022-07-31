@@ -1,8 +1,19 @@
-%link{:rel => :stylesheet, media: "all",  type: "text/css", :href => "file:///Users/benedicttt/RubyMineProjects/worksheet/app/assets/stylesheets/worksheet.scss"}
-
 %article
   %h1 WorkSheet
   - if current_user.present?
+    - if !flash[:alert].nil?
+      %div.text-center{style: 'color:red;'}
+        %h5
+          =flash[:alert]
+
+    -unless flash[:success].nil?
+      %div.text-center{style: 'color:green;'}
+        %h5
+          =flash[:success]
+
+    - flash[:success] = ""
+    - flash[:alert] = ""
+
     %section.position_relative.display-inline-block
       / for demo wrap
       .tbl-header
@@ -82,21 +93,6 @@
                         .margin_left_30_per
                           = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
                             = f.submit "", class: "icon-delete-worksheet btn"
-
-        - if !flash[:alert].nil?
-          %div{style: 'color:red;'}
-            %br
-            %h5
-              =flash[:alert]
-
-        -unless flash[:success].nil?
-          %div{style: 'color:green;'}
-            %br
-            %h5
-              =flash[:success]
-
-        - flash[:success] = ""
-        - flash[:alert] = ""
 
   - else
     = render "sessions/new_sessions"

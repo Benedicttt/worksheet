@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       post   'new'             => 'work_shift_schedules#new'
       post   'create'          => 'work_shift_schedules#create'
       post   'show/:id'        => 'work_shift_schedules#show'
-      post   'edit/:id'        => 'work_shift_schedules#edit'
+      post   'update/:id'      => 'work_shift_schedules#update'
       post   'destroy'         => 'work_shift_schedules#destroy'
     end
 

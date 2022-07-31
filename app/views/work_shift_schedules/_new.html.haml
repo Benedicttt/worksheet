@@ -3,7 +3,7 @@
     %section.position_relative.display-inline-block
 
       %h1
-        New Worksheet #{params[:id]}
+        New Worksheet
 
       %div{ style: "margin-left: 15%; max-width: 600px;" }
       = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "create"} do |f|

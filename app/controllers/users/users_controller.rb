@@ -1,7 +1,7 @@
 class Users::UsersController < ApplicationController
   def list
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
-    @users = User.where(is_available: true).order("users.id desc")
+        @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
   end
 
   def new
@@ -57,7 +57,7 @@ class Users::UsersController < ApplicationController
       # end
 
       # @users = User.all.order("users.id desc").limit(10).page(params[:page])
-      @users = User.where(is_available: true).order("users.id desc")
+          @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
       if !current_user.nil?
         render "users/list"
@@ -70,16 +70,13 @@ class Users::UsersController < ApplicationController
       msg =  user.errors.messages.dup.merge! msg
       flash[:alert] = msg.uniq
 
-      puts "flash[:alert]"
-      puts "#{msg}"
-
       render 'shared/create_user'
     end
   end
 
   def destroy
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
-    @users = User.where(is_available: true).order("users.id desc")
+        @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
     User.find(params[:id]).update_attribute(:is_available, false)
     flash[:alert] = "User delete"
@@ -91,7 +88,7 @@ class Users::UsersController < ApplicationController
     @user = User.find(params[:id])
     flash[:alert] = ''
     flash[:success] = ''
-    puts "EDIT USER"
+
     render "users/edit"
   end
 
@@ -109,7 +106,8 @@ class Users::UsersController < ApplicationController
           nickname: params[:nickname],
           email: params[:email],
           phone: params[:phone],
-          telegram: params[:telegram]
+          telegram: params[:telegram],
+          is_available: params[:is_available]
       )
 
       rules = Rule.find_by(user_id: user.id)
@@ -132,7 +130,7 @@ class Users::UsersController < ApplicationController
 
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
 
-    @users = User.where(is_available: true).order("users.id desc")
+        @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
     render "users/list"
   end

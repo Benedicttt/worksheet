@@ -9,6 +9,10 @@
 @debug '________ applciation compiled______';
 @import "bootstrap-datepicker";
 
+body {
+  background: #516678;
+}
+
 header {
   grid-area: header;
   background-color: #f4f4f4;
@@ -55,7 +59,10 @@ footer {
 
 @media (max-width: 1024px) {
   @media (orientation: landscape) {
-    body { zoom: 0.3; }
+    body {
+      background: #516678;
+      zoom: 0.3;
+    }
 
     section {
       margin: 5px;
@@ -71,6 +78,7 @@ input {
   font-size: 16px;
 }
 
+.font-size-16 { font-size: 16px; }
 .display_flex { display: flex; }
 .display-inline-block { display: inline-block; }
 .position_relative { position: relative; }
@@ -95,6 +103,7 @@ input {
 .margin_left { margin-right: -20%;}
 .margin_left_5_per { margin-left: 5%; }
 .margin_left_minus_20_per { margin-right: -20%;}
+.width25 { width: 25px; }
 .width50 { width: 50px; }
 .width75 { width: 75px; }
 .width100 { width: 100px; }
