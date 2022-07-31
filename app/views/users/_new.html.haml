@@ -5,21 +5,7 @@
 
     %div{ style: "margin-left: 2%;" }
     %br
-      - unless flash['alert'].blank?
-        %div.position_relative.display-inline-block
-          %div{ style: 'color: red;'}
-            - flash[:alert].each do |key, value|
-              #{key}:
-              - value.each do |v|
-                %p
-                -
-                &nbsp  &nbsp  &nbsp #{v}
-              %br
-              %br
-
-      - unless flash['success'].blank?
-        %div{ style: 'color:green; left: 45%; position: absolute;'}
-          = flash['success']
+    = render "shared/flash"
 
     =form_for "", remote: true, url: { controller: 'users/users', action: 'create' } do |f|
       %table.table-new-user-form{:border => "0", :cellpadding => "0", :cellspacing => "0"}
@@ -146,5 +132,3 @@
           %tr
             %th
               =f.submit t('create_user'), class: 'btn btn-primary'
-
-- flash[:alert] = ''

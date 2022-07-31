@@ -1,5 +1,6 @@
 %article
   - if current_user.present?
+    = render "shared/flash"
     %section.position_relative.display-inline-block
 
       %h1
@@ -47,21 +48,6 @@
                 %td
                   = f.submit "Save", class: "btn btn-sm btn-primary"
 
-          %h4
-            - if !flash[:alert].nil?
-              %div{style: 'color:red;'}
-                %br
-                %h3
-                  =flash[:alert]
-
-            -unless flash[:success].nil?
-              %div{style: 'color:green;'}
-                %br
-                %h3
-                  =flash[:success]
-
-            - flash[:success] = ""
-            - flash[:alert] = ""
 
 
 :css

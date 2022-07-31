@@ -7,18 +7,7 @@
 
     %section.position_relative.display-inline-block
       =form_for "", remote: true, url: { controller: 'users', action: 'update' } do |f|
-        - if !flash[:alert].nil?
-          %div{style: 'color:red;'}
-            %h3
-              =flash[:alert]
-
-        -unless flash[:success].nil?
-          %div{style: 'color:green;'}
-            %h3
-              =flash[:success]
-
-        - flash[:success] = ""
-        - flash[:alert] = ""
+        = render "shared/flash"
 
         %table.table.position_relative.display-inline-block
           =f.hidden_field :id, value: u.id

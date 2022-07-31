@@ -1,19 +1,7 @@
 %article
-  %h1 WorkSheet
   - if current_user.present?
-    - if !flash[:alert].nil?
-      %div.text-center{style: 'color:red;'}
-        %h5
-          =flash[:alert]
-
-    -unless flash[:success].nil?
-      %div.text-center{style: 'color:green;'}
-        %h5
-          =flash[:success]
-
-    - flash[:success] = ""
-    - flash[:alert] = ""
-
+    %h1 WorkSheet
+    = render "shared/flash"
     %section.position_relative.display-inline-block
       / for demo wrap
       .tbl-header

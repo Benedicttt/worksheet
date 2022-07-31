@@ -8,6 +8,22 @@
 @import "worksheet";
 @debug '________ applciation compiled______';
 @import "bootstrap-datepicker";
+@import "toastr";
+
+// css
+#toast-container{
+  top: 25px;
+}
+
+.toast-error {
+  border-radius: 15px !important;
+  background: #b2410c;
+}
+
+.toast-success {
+  border-radius: 15px !important;
+  background: black;
+}
 
 body {
   background: #516678;

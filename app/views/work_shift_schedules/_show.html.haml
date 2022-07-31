@@ -1,5 +1,7 @@
 %article
   - if current_user.present?
+    = render "shared/flash"
+
     %section.position_relative.display-inline-block
       - wss = WorkShiftSchedule.find(params[:id])
       - period = Period.find(wss.period_id)
@@ -48,20 +50,4 @@
 
                 %td
                   = f.submit "Update", class: "btn btn-sm btn-primary"
-
-          %h4
-            - if !flash[:alert].nil?
-              %div{style: 'color:red;'}
-                %br
-                %h3
-                  =flash[:alert]
-
-            -unless flash[:success].nil?
-              %div{style: 'color:green;'}
-                %br
-                %h3
-                  =flash[:success]
-
-            - flash[:success] = ""
-            - flash[:alert] = ""
 

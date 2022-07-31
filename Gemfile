@@ -88,6 +88,6 @@ group :development, :production, :test do
   gem 'bindex', '~> 0.8.1'
   gem 'kaminari'
   gem 'bootstrap-datepicker-rails'
-
+  gem 'toastr-rails'
 end
 

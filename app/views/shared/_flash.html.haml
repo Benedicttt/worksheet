@@ -1,0 +1,22 @@
+- if flash[:alert].class == Array
+  - flash[:alert].map do |key, value|
+    - value.each do |v|
+      :javascript
+        toastr.error("#{v.to_s}")
+
+  - flash[:alert] = ""
+  - flash[:success] = ""
+
+- if !flash[:alert].blank?
+  :javascript
+    toastr.error("#{flash[:alert]}")
+
+  - flash[:alert] = ""
+  - flash[:success] = ""
+
+- if !flash[:success].blank?
+  :javascript
+    toastr.success("#{flash[:success]}")
+
+  - flash[:alert] = ""
+  - flash[:success] = ""

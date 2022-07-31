@@ -3,19 +3,7 @@
     = t('list_users')
 
   - if current_user.present?
-
-    - if !flash[:alert].nil?
-      %div.text-center{style: 'color:red;'}
-        %h3
-          =flash[:alert]
-
-    -unless flash[:success].nil?
-      %div.text-center{style: 'color:green;'}
-        %h3
-          =flash[:success]
-
-    - flash[:success] = ""
-    - flash[:alert] = ""
+    = render "shared/flash"
 
     %section.position_relative.display-inline-block
       %table.position_relative.display-inline-block.table
