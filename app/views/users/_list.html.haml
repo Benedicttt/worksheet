@@ -66,7 +66,7 @@
             %th= u.email
             %th= u.phone
             %th= u.telegram
-            %th= u.is_available.nil? ? "🛠" : u.is_available ? "✅" : "❌"
+            %th.font-size-16= u.is_available.nil? ? "🛠" : u.is_available ? "✅" : "❌"
             - if !u.rule.nil?
               %th.font-size-16.text-center= u.rule.worker.nil? ? "🛠" : u.rule.worker ? "✅" : "❌"
               %th.font-size-16.text-center= u.rule.manager.nil? ? "🛠" : u.rule.manager ? "✅" : "❌"
