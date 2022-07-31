@@ -44,17 +44,17 @@ class Users::UsersController < ApplicationController
 
       flash[:success] = t('success_create_user')
 
-      File.open("./app/channels/channel_" + User.last.id.to_s + ".rb", 'w') do |f|
-        f.puts("
-          class Channel_" + User.last.id.to_s + " < ApplicationCable::Channel
-            def subscribed
-              stream_from self.class
-            end
-
-            def unsubscribed; end
-          end
-        ")
-      end
+      # File.open("./app/channels/channel_" + User.last.id.to_s + ".rb", 'w') do |f|
+      #   f.puts("
+      #     class Channel_" + User.last.id.to_s + " < ApplicationCable::Channel
+      #       def subscribed
+      #         stream_from self.class
+      #       end
+      #
+      #       def unsubscribed; end
+      #     end
+      #   ")
+      # end
 
       # @users = User.all.order("users.id desc").limit(10).page(params[:page])
       @users = User.where(is_available: true).order("users.id desc")
