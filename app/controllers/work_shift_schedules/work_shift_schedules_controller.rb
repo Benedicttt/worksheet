@@ -22,10 +22,8 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
       period_id = if !conditions_period.empty?
                   conditions_period[0].id
                 else
-                  p = Period.new(params_period).save!
-                  puts "p"
-                  puts p
-                  p.id
+                  per = Period.new(params_period).save!
+                  per.id
                 end
 
       //
@@ -52,8 +50,9 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
       name = "#{u.first_name} #{u.last_name}"
       flash['success'] = "New worksheet for user #{name} created"
 
-      rescue
+      rescue  Exception => e
         flash['alert'] = "New worksheet for user #{name} NOT created\n"
+        puts "#{e.message}"
       end
 
       render "work_shift_schedules/new"

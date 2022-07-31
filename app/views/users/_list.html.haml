@@ -5,12 +5,12 @@
   - if current_user.present?
 
     - if !flash[:alert].nil?
-      %div{style: 'color:red;'}
+      %div.text-center{style: 'color:red;'}
         %h3
           =flash[:alert]
 
     -unless flash[:success].nil?
-      %div{style: 'color:green;'}
+      %div.text-center{style: 'color:green;'}
         %h3
           =flash[:success]
 
