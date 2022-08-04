@@ -231,7 +231,7 @@ GEM
     net-ssh (7.0.1)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.8-aarch64-linux)
+    nokogiri (1.13.8-arm64-darwin)
       racc (~> 1.4)
     nori (2.6.0)
     ox (2.14.11)
@@ -434,7 +434,7 @@ GEM
     will_paginate (3.3.1)
     will_paginate-bootstrap4 (0.2.2)
       will_paginate (~> 3.0, >= 3.0.0)
-    xmlhasher (1.0.6)
+    xmlhasher (1.0.7)
       escape_utils (~> 1.2)
       ox (~> 2.11)
     yard (0.9.28)
@@ -446,7 +446,7 @@ GEM
       rubyzip (>= 1.0.0)
 
 PLATFORMS
-  aarch64-linux
+  arm64-darwin-21
 
 DEPENDENCIES
   actionpack-action_caching
@@ -525,4 +525,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   2.3.18
+   2.3.7
