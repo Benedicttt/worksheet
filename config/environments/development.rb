@@ -1,8 +1,8 @@
 require "active_support/core_ext/integer/time"
+require "prawn"
 
 Rails.application.configure do
-  config.hosts << "worksheet.rb"
-
+  config.hosts << "worksheet"
 
   config.exception_handler = {
     dev: true,

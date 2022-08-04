@@ -10,7 +10,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'web-console', group: :development
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'bootsnap', require: false
+gem 'bootsnap'
 
 group :development, :production, :test do
   gem 'pry'
@@ -66,7 +66,6 @@ group :development, :production, :test do
 
   gem 'listen'
   gem 'spring'
-  gem 'rack-cors'
   gem 'rexml'
   gem 'autosize-rails'
 
@@ -84,10 +83,14 @@ group :development, :production, :test do
   gem "tabs_on_rails"
   gem "railties"
   gem 'rails-highlightjs'
-  gem 'clipboard-rails'
   gem 'bindex', '~> 0.8.1'
   gem 'kaminari'
   gem 'bootstrap-datepicker-rails'
   gem 'toastr-rails'
+
+  gem 'prawn'
+  gem 'prawn-table'
+  gem "matrix"
 end
+
 

@@ -26,7 +26,7 @@ class Users < ActiveRecord::Migration[7.0]
     create_table :work_shift_schedules do |t|
       t.integer :user_id
       t.string :comment
-      t.string :period_id
+      t.integer :period_id
       t.string :monday
       t.float :monday_hours, default: 0.0
       t.string :tuesday

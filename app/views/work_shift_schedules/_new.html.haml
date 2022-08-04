@@ -24,27 +24,26 @@
                   %br
                   = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]  }, { selected: params[:user_id] }, { class: "form-select" }
                 %td.text-center
-                  = f.text_area :monday, value: params[:monday], class: "border-radius-15px width200 height100", placeholder: "Monday"
+                  = f.text_area :monday, value: params[:monday], class: "border-radius-15px width175 height100", placeholder: "Monday"
                   = f.number_field :monday_hours, value: params[:monday_hours], class: "border-radius-15px width100", placeholder: "Hours"
                 %td.text-center
-                  = f.text_area :tuesday, value: params[:tuesday], class: "border-radius-15px width200 height100", placeholder: "Tuesday"
+                  = f.text_area :tuesday, value: params[:tuesday], class: "border-radius-15px width175 height100", placeholder: "Tuesday"
                   = f.number_field :tuesday_hours, value: params[:tuesday_hours], class: "border-radius-15px width100", placeholder: "Hours"
                 %td.text-center
-                  = f.text_area :wednesday, value: params[:wednesday], class: "border-radius-15px width200 height100", placeholder: "Wednesday"
+                  = f.text_area :wednesday, value: params[:wednesday], class: "border-radius-15px width175 height100", placeholder: "Wednesday"
                   = f.number_field :wednesday_hours, value: params[:wednesday_hours], class: "border-radius-15px width100", placeholder: "Hours"
                 %td.text-center
-                  = f.text_area :thursday, value: params[:thursday], class: "border-radius-15px width200 height100", placeholder: "Thursday"
+                  = f.text_area :thursday, value: params[:thursday], class: "border-radius-15px width175 height100", placeholder: "Thursday"
                   = f.number_field :thursday_hours, value: params[:thursday_hours], class: "border-radius-15px width100", placeholder: "Hours"
                 %td.text-center
-                  = f.text_area :friday, value: params[:friday], class: "border-radius-15px width200 height100", placeholder: "Friday"
+                  = f.text_area :friday, value: params[:friday], class: "border-radius-15px width175 height100", placeholder: "Friday"
                   = f.number_field :friday_hours, value: params[:friday_hours], class: "border-radius-15px width100", placeholder: "Hours"
                 %td.text-center
-                  = f.text_area :saturday, value: params[:saturday], class: "border-radius-15px width200 height100", placeholder: "Saturday"
+                  = f.text_area :saturday, value: params[:saturday], class: "border-radius-15px width175 height100", placeholder: "Saturday"
                   = f.number_field :saturday_hours, value: params[:saturday_hours], class: "border-radius-15px width100", placeholder: "Hours"
                 %td.text-center
-                  = f.text_area :sunday, value: params[:sunday], class: "border-radius-15px width200 height100", placeholder: "Sunday"
+                  = f.text_area :sunday, value: params[:sunday], class: "border-radius-15px width175 height100", placeholder: "Sunday"
                   = f.number_field :sunday_hours, value: params[:sunday_hours], class: "border-radius-15px width100", placeholder: "Hours"
-
                 %td
                   = f.submit "Save", class: "btn btn-sm btn-primary"
 

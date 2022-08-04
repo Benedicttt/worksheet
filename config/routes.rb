@@ -6,10 +6,13 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /fi|en/ do
     root 'index#index'
 
-    get    'sessions/new'
-    get    'login'   => 'sessions#new'
-    post   'login'   => 'sessions#create'
-    post   'logout'  => 'sessions#destroy'
+    get "show_all" => "index#show_all"
+    get "show" => "index#show"
+
+    get  'sessions/new'
+    get  'login'   => 'sessions#new'
+    post 'login'   => 'sessions#create'
+    post 'logout'  => 'sessions#destroy'
 
 
     namespace :users do
@@ -30,7 +33,7 @@ Rails.application.routes.draw do
     namespace :work_shift_schedules do
       post   'new'             => 'work_shift_schedules#new'
       post   'create'          => 'work_shift_schedules#create'
-      post   'show/:id'        => 'work_shift_schedules#show'
+      post   'show'        => 'work_shift_schedules#show'
       post   'update/:id'      => 'work_shift_schedules#update'
       post   'destroy'         => 'work_shift_schedules#destroy'
     end
