@@ -15,30 +15,32 @@ class IndexController < ApplicationController
   private
   def template(id_wss = nil)
     periods = id_wss.nil? ?  Period.all : Period.where(id: id_wss)
+    data = [[""]]
 
     respond_to do |format|
       format.html
       format.pdf do
         Prawn::Document.new(page_size: 'A4', layout: :landscape, rotate: 180) do |pdf|
+
           periods.each_with_index do |period|
-            data = [["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]]
-            WorkShiftSchedule.all.each_with_index do |w, index|
-              user   = User.find(w.user_id)
-              data += [
-                [
-                  { content: "#{user.first_name}",                   align: :center},
-                  { content: "#{w.monday_hours}\n#{w.monday}",       align: :center},
-                  { content: "#{w.tuesday_hours}\n#{w.tuesday}",     align: :center},
-                  { content: "#{w.wednesday_hours}\n#{w.wednesday}", align: :center},
-                  { content: "#{w.thursday_hours}\n#{w.thursday}",   align: :center},
-                  { content: "#{w.friday_hours}\n#{w.friday}",       align: :center},
-                  { content: "#{w.saturday_hours}\n#{w.saturday}",   align: :center},
-                  { content: "#{w.sunday_hours}\n#{w.sunday}",       align: :center}
+
+            period.work_shift_schedules.each_with_index do |w, index|
+                user   = User.find(w.user_id)
+                data += [
+                  [
+                    { content: "#{user.first_name}",                   align: :center},
+                    { content: "#{w.monday_hours}\n#{w.monday}",       align: :center},
+                    { content: "#{w.tuesday_hours}\n#{w.tuesday}",     align: :center},
+                    { content: "#{w.wednesday_hours}\n#{w.wednesday}", align: :center},
+                    { content: "#{w.thursday_hours}\n#{w.thursday}",   align: :center},
+                    { content: "#{w.friday_hours}\n#{w.friday}",       align: :center},
+                    { content: "#{w.saturday_hours}\n#{w.saturday}",   align: :center},
+                    { content: "#{w.sunday_hours}\n#{w.sunday}",       align: :center}
+                  ]
                 ]
-              ]
 
               if index == 0
-                pdf.text "\n__________________\n\n"
+                pdf.text "\n\n\n\n"
                 pdf.text "vk #{period.week_number}   #{period.to} - #{period.from}.#{period.month}.#{period.year}", :size => 12
               end
 
@@ -64,10 +66,14 @@ class IndexController < ApplicationController
               t.rows(0..-1).column(0..-1).padding_bottom = 10
               t.rows(0..-1).column(0..-1).padding_top = 10
 
-              t.rows(1..-1).columns(0).background_color = "09b43a"
-              t.rows(1..-1).columns(0).size = 10
-              t.rows(0).columns(1..-1).background_color = "09b43a"
+              if !t.rows(1).empty?
+                t.rows(1..-1).columns(0).background_color = "09b43a"
+                t.rows(1..-1).columns(0).size = 10
+                t.rows(0).columns(1..-1).background_color = "09b43a"
+              end
             end
+
+            data = [["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]]
           end
 
           send_data pdf.render, filename: "all.pdf", type: "application/pdf", disposition: "inline"

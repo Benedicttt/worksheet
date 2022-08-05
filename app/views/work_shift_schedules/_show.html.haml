@@ -16,6 +16,7 @@
             %tbody
               %tr.display_flex
                 %td.width175
+                  = f.hidden_field :id, value: "#{params[:id]}"
                   = f.text_field :to, value: "#{period.to}-#{period.month}-#{period.year}", class: "datepicker", placeholder: "To"
                   %br
                   %br
@@ -47,6 +48,7 @@
                 %td.text-center
                   = f.text_area :sunday, value: wss.sunday, class: "border-radius-15px width200 height100", placeholder: "Sunday"
                   = f.number_field :sunday_hours, value: wss.sunday_hours, class: "border-radius-15px width100", placeholder: "Hours"
+
 
                 %td
                   = f.submit "Update", class: "btn btn-sm btn-primary"

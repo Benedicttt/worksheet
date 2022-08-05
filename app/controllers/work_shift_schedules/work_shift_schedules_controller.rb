@@ -4,7 +4,7 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
   end
 
   def create
-    begin
+    # begin
       wss = WorkShiftSchedule.new
 
       date_to   = params[:to].split("-")
@@ -22,7 +22,7 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
       period_id = if !conditions_period.empty?
                   conditions_period[0].id
                 else
-                  per = Period.new(params_period).save!
+                  per = Period.create(params_period)
                   per.id
                 end
 
@@ -50,10 +50,9 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
       name = "#{u.first_name} #{u.last_name}"
       flash['success'] = "New worksheet for user #{name} created"
 
-      rescue  Exception => e
-        flash['alert'] = "New worksheet for user #{name} NOT created\n"
-        puts "#{e.message}"
-      end
+      # rescue  Exception => e
+      #   flash['alert'] = "New worksheet for user #{name} NOT created\n" + "#{e.message}"
+      # end
 
       render "work_shift_schedules/new"
   end
@@ -79,12 +78,13 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
       period_id = if !conditions_period.empty?
                     conditions_period[0].id
                   else
-                    p = Period.new(params_period).save!
+                    p = Period.create(params_period)
                     p.id
                   end
 
       //
-    WorkShiftSchedule.update(
+    wss = WorkShiftSchedule.find(params[:id])
+    wss.update(
       user_id: params[:user_id],
       period_id: period_id,
       monday: params[:monday],
@@ -105,10 +105,11 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
 
       u = User.find(params[:user_id])
       name = "#{u.first_name} #{u.last_name}"
-      flash[:success] = "Update worksheet for user #{name} complete"
+      puts "Update worksheet for user #{name} #{params[:user_id]} complete"
+      flash[:success] = "Update worksheet for user #{name} #{params[:user_id]} complete"
 
-    # rescue
-    #   flash[:alert] = "Update worksheet for user #{name} complete"
+    # rescue Exception => e
+    #   flash[:alert] = "Update worksheet for user #{name} complete\n #{e.message}"
     # end
 
     render "index/index"

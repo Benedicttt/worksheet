@@ -33,8 +33,8 @@ Rails.application.routes.draw do
     namespace :work_shift_schedules do
       post   'new'             => 'work_shift_schedules#new'
       post   'create'          => 'work_shift_schedules#create'
-      post   'show'        => 'work_shift_schedules#show'
-      post   'update/:id'      => 'work_shift_schedules#update'
+      post   'show'            => 'work_shift_schedules#show'
+      post   'update'          => 'work_shift_schedules#update'
       post   'destroy'         => 'work_shift_schedules#destroy'
     end
 
