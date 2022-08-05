@@ -70,13 +70,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.integer "years"
     t.integer "month"
     t.integer "day"
-    t.integer "week"
     t.string "work_start"
     t.string "work_stop"
     t.string "break_start"
     t.string "break_stop"
     t.string "hours"
-    t.string "work_list"
+    t.string "comment"
   end
 
   create_table "work_shift_schedules", force: :cascade do |t|

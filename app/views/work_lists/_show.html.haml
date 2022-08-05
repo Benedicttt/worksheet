@@ -3,28 +3,38 @@
     %h1 Work lists
 
     = render "shared/flash"
-    %div.display-inline-block
+    %div.display_flex
       %div
         = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "search"} do |f|
-          .margin_left_30_per
-            - if current_user.rule.worker && current_user.is_available
-              = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]}, { selected: current_user.id }, { class: "form-select width200" }
-            - else
-              = f.hidden_field :user_id, value: current_user.id
-            %br
-            = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m, i| [m, i]}, { selected: params[:month].nil? ? Date.today.month : params[:month] }, { class: "form-select width250" }
-            %br
-            = f.select :year, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width250" }
-            %br
-            = f.submit "", class: "btn btn-sm btn-primary icon-search width100"
-            %br
-            %br
+          - if current_user.rule.worker && current_user.is_available
+            = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]}, { selected: params[:user_id].nil? ? current_user.id : params[:user_id] }, { class: "form-select width200" }
+          - else
+            = f.hidden_field :user_id, value: current_user.id
+          %br
+            = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m, i| [m, i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width250" }
+          = f.select :year, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width250" }
+          %br
+          = f.submit "", class: "btn btn-sm btn-primary icon-search width100"
+          %br
+
+      %div.margin_left_5_per
         - if params[:hide] == false
-          - if @work_list.nil?
+          - if @work_list.blank?
             = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "new"} do |f|
               = f.hidden_field :month, value: params[:month]
               = f.hidden_field :year, value: params[:year]
               = f.hidden_field :user_id, value: params[:user_id]
-              = f.submit "", class: "icon-new-worklist btn margin_left_30_per"
+              = f.submit "", class: "icon-new-worklist btn"
           - else
-            Day
+            %table
+              %tbody
+              - @work_list.map(&:month).uniq.each do |month|
+                %tr
+                  %th.text-center.width250
+                    Month #{month}, #{params[:year]}
+                  %th.text-center.width125
+                    = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "new"} do |f|
+                      = f.hidden_field :month, value: month
+                      = f.hidden_field :year, value: params[:year]
+                      = f.hidden_field :user_id, value: params[:user_id]
+                      = f.submit "", class: "icon-edit-worksheet btn"

@@ -56,13 +56,14 @@ class Users < ActiveRecord::Migration[7.0]
       t.integer :years
       t.integer :month
       t.integer :day
-      t.integer :week
+      # t.integer :week
       t.string  :work_start
       t.string  :work_stop
       t.string  :break_start
       t.string  :break_stop
       t.string  :hours
-      t.string  :work_list
+      # t.string  :work_list
+      t.string  :comment
     end
 
     create_table :eggs_collections do |t|
