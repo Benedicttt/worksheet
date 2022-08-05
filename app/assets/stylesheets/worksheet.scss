@@ -81,6 +81,12 @@ td:hover, td:focus {
   background: #516678 !important;
 }
 
+.style_for_empty_td_2 {
+  border-left: 0px !important;
+  border-right: 0px!important;
+  border-bottom: 0px!important;
+}
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 article, header, footer, aside{
   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
