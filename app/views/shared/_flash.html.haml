@@ -6,6 +6,7 @@
 
   - flash[:alert] = ""
   - flash[:success] = ""
+  - flash[:warning] = ""
 
 - if !flash[:alert].blank?
   :javascript
@@ -13,6 +14,7 @@
 
   - flash[:alert] = ""
   - flash[:success] = ""
+  - flash[:warning] = ""
 
 - if !flash[:success].blank?
   :javascript
@@ -20,3 +22,13 @@
 
   - flash[:alert] = ""
   - flash[:success] = ""
+  - flash[:warning] = ""
+
+
+- if !flash[:warning].blank?
+  :javascript
+    toastr.warning("#{flash[:warning]}")
+
+  - flash[:alert] = ""
+  - flash[:success] = ""
+  - flash[:warning] = ""

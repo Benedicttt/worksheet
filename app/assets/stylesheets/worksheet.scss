@@ -55,7 +55,7 @@ td, tr {
   font-weight: 400;
   font-size: 14px;
   color: #fff;
-  border: 1px solid;
+  border: 0.5px solid;
 }
 
 tr {
@@ -72,6 +72,13 @@ td {
 
 td:hover, td:focus {
   outline: none;
+}
+
+.style_for_empty_td {
+  border-left: 0px !important;
+  border-right: 0px!important;
+  border-bottom: 0px!important;
+  background: #516678 !important;
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);

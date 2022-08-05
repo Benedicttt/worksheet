@@ -1,0 +1,159 @@
+%article
+  - if current_user.present?
+    = render "shared/flash"
+    %section.position_relative.display-inline-block
+
+      %h1
+        New Worksheet
+
+      %div{ style: "margin-left: 15%; max-width: 600px;" }
+      = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "create"} do |f|
+        .tbl-content-form
+          %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+            %tbody
+              %tr.display_flex
+                %td.width175
+                  = f.text_field :to, value: params[:to], class: "datepicker", placeholder: "To"
+                  %br
+                  %br
+                  = f.text_field :from, value: params[:from], class: "datepicker ", placeholder: "From"
+                  %br
+                  %br
+                  = f.text_field :week_number, value: params[:week_number], placeholder: "Week"
+                  %br
+                  %br
+                  = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]  }, { selected: params[:user_id] }, { class: "form-select" }
+                %td.text-center
+                  = f.text_area :monday, value: params[:monday], class: "border-radius-15px width175 height100", placeholder: "Monday"
+                  = f.number_field :monday_hours, value: params[:monday_hours], class: "border-radius-15px width100", placeholder: "Hours"
+                %td.text-center
+                  = f.text_area :tuesday, value: params[:tuesday], class: "border-radius-15px width175 height100", placeholder: "Tuesday"
+                  = f.number_field :tuesday_hours, value: params[:tuesday_hours], class: "border-radius-15px width100", placeholder: "Hours"
+                %td.text-center
+                  = f.text_area :wednesday, value: params[:wednesday], class: "border-radius-15px width175 height100", placeholder: "Wednesday"
+                  = f.number_field :wednesday_hours, value: params[:wednesday_hours], class: "border-radius-15px width100", placeholder: "Hours"
+                %td.text-center
+                  = f.text_area :thursday, value: params[:thursday], class: "border-radius-15px width175 height100", placeholder: "Thursday"
+                  = f.number_field :thursday_hours, value: params[:thursday_hours], class: "border-radius-15px width100", placeholder: "Hours"
+                %td.text-center
+                  = f.text_area :friday, value: params[:friday], class: "border-radius-15px width175 height100", placeholder: "Friday"
+                  = f.number_field :friday_hours, value: params[:friday_hours], class: "border-radius-15px width100", placeholder: "Hours"
+                %td.text-center
+                  = f.text_area :saturday, value: params[:saturday], class: "border-radius-15px width175 height100", placeholder: "Saturday"
+                  = f.number_field :saturday_hours, value: params[:saturday_hours], class: "border-radius-15px width100", placeholder: "Hours"
+                %td.text-center
+                  = f.text_area :sunday, value: params[:sunday], class: "border-radius-15px width175 height100", placeholder: "Sunday"
+                  = f.number_field :sunday_hours, value: params[:sunday_hours], class: "border-radius-15px width100", placeholder: "Hours"
+                %td
+                  = f.submit "Save", class: "btn btn-sm btn-primary"
+
+
+
+:css
+    input {
+      border: none;
+      border-bottom: 0.125rem solid rgba(19, 19, 21, 0.6);;
+      width: 100%;
+      height: 2rem;
+      font-size: 1.0625rem;
+      padding-left: 0.875rem;
+      line-height: 147.6%;
+      padding-top: 0.825rem;
+      padding-bottom: 0.5rem;
+    }
+
+    td, tr {
+      padding: 15px;
+      text-align: left;
+      vertical-align: middle;
+      font-weight: 400;
+      font-size: 14px;
+      color: #fff;
+      border: 0px;
+    }
+
+    .table {
+      width: auto;
+      table-layout: fixed;
+      overflow: auto;
+    }
+
+    .dropdown-menu {
+      --bs-dropdown-min-width: 10rem;
+      --bs-dropdown-padding-x: 0;
+      --bs-dropdown-padding-y: 0.5rem;
+      --bs-dropdown-spacer: 0.125rem;
+      --bs-dropdown-font-size: 1rem;
+      --bs-dropdown-color: #212529;
+      --bs-dropdown-bg: #1c1816;
+      --bs-dropdown-border-radius: 0.375rem;
+      --bs-dropdown-border-width: 1px;
+      --bs-dropdown-inner-border-radius: calc(0.375rem - 1px);
+      --bs-dropdown-divider-margin-y: 0.5rem;
+      --bs-dropdown-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      --bs-dropdown-link-color: #212529;
+      --bs-dropdown-link-hover-color: #1e2125;
+      --bs-dropdown-link-hover-bg: #e9ecef;
+      --bs-dropdown-link-active-color: #fff;
+      --bs-dropdown-link-active-bg: #0d6efd;
+      --bs-dropdown-link-disabled-color: #adb5bd;
+      --bs-dropdown-item-padding-x: 1rem;
+      --bs-dropdown-item-padding-y: 0.25rem;
+      --bs-dropdown-header-color: #6c757d;
+      --bs-dropdown-header-padding-x: 1rem;
+      --bs-dropdown-header-padding-y: 0.5rem;
+      position: absolute;
+      z-index: 1000;
+      display: none;
+      text-align: left;
+      list-style: none;
+      background-clip: padding-box;
+    }
+
+    .datepicker table tr td.day:hover, .datepicker table tr td.focused {
+      background: #3d342f;
+      cursor: pointer;
+    }
+
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+      width: 125px;
+    }
+
+:javascript
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: "dd-mm-yyyy",
+      autoclose: true,
+      todayBtn: "linked",
+      todayHighlight: true,
+      showWeek: true,
+      calendarWeeks: true,
+      language: "#{params[:locale].to_s}",
+    })
+
+    Date.prototype.getWeek = function () {
+    var target  = new Date(this.valueOf());
+    var dayNr   = (this.getDay() + 6) % 7;
+    target.setDate(target.getDate() - dayNr + 3);
+    var firstThursday = target.valueOf();
+    target.setMonth(0, 1);
+    if (target.getDay() != 4) {
+        target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+    }
+        return 1 + Math.ceil((firstThursday - target) / 604800000);
+    }
+
+    $("#to").on("change", function() {
+      let date = $("#to").val().split("-")
+      var current_week = new Date(date[2],date[1] - 1,date[0]); // month number starts from 0
+
+      $("#week_number").val(current_week.getWeek())
+    })
+
+    $("#from").on("change", function() {
+      let date = $("#from").val().split("-")
+      var current_week = new Date(date[2],date[1] - 1,date[0]); // month number starts from 0
+
+      $("#week_number").val(current_week.getWeek())
+    })
+  });

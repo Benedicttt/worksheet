@@ -6,13 +6,13 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /fi|en/ do
     root 'index#index'
 
-    get "show_all" => "index#show_all"
-    get "show" => "index#show"
+    get "show_all"             => "index#show_all"
+    get "show"                 => "index#show"
 
     get  'sessions/new'
-    get  'login'   => 'sessions#new'
-    post 'login'   => 'sessions#create'
-    post 'logout'  => 'sessions#destroy'
+    get  'login'               => 'sessions#new'
+    post 'login'               => 'sessions#create'
+    post 'logout'              => 'sessions#destroy'
 
 
     namespace :users do
@@ -23,11 +23,11 @@ Rails.application.routes.draw do
       post   'update'          => 'users#update'
       post   'destroy'         => 'users#destroy'
 
-      post 'select_language' => 'steps#select_language'
-      post 'authorization'   => 'steps#authorization'
-      post 'create_user'     => 'steps#create_user'
-      post 'go_to_main'      => 'steps#go_to_main'
-      post 'list'            => 'steps#list'
+      post 'select_language'   => 'steps#select_language'
+      post 'authorization'     => 'steps#authorization'
+      post 'create_user'       => 'steps#create_user'
+      post 'go_to_main'        => 'steps#go_to_main'
+      post 'list'              => 'steps#list'
     end
 
     namespace :work_shift_schedules do
@@ -41,14 +41,10 @@ Rails.application.routes.draw do
     namespace :work_lists do
       post   'new'             => 'work_lists#new'
       post   'create'          => 'work_lists#create'
+      post   'search'          => 'work_lists#search'
       post   'show'            => 'work_lists#show'
       post   'edit/:id'        => 'work_lists#edit'
       post   'update'          => 'work_lists#update'
-    end
-
-    namespace :examples do
-      get  'users_for_example', to: "users_for_example#index"
-      post 'user_new', to: "users_for_example#user_new"
     end
   end
 end

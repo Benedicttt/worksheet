@@ -1,0 +1,53 @@
+%article
+  - if current_user.present?
+    - days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
+    - u = User.find(params[:user_id])
+    %h1 New work list for user: #{u.first_name} #{u.last_name}, month: #{params[:month]}, year: #{params[:year]}
+
+    = render "shared/flash"
+    %section.position_relative.display-inline-block
+      = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "create"} do |f|
+        .tbl-header
+          %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+            %thead
+              %tr
+                %th.text-center.width50  Day
+                %th.text-center.width80  Work start
+                %th.text-center.width80  Break start
+                %th.text-center.width80  Break stop
+                %th.text-center.width80  Work stop
+                %th.text-center.width80  Common hours
+                %th.text-center.width125 Comment
+                %th.text-center.width125
+
+        .tbl-content-form
+          %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+            %tbody
+              - days.times do |index|
+                %tr
+                  %th.text-center.width50
+                    = index + 1
+                    = f.hidden_field :day, value: index + 1
+                  %th.text-center.width80
+                    = f.number_field :work_start_hour, value: params[:work_start_hour], class: "border-radius-15px width50", placeholder: "hours"
+                    = ":"
+                    = f.number_field :work_start_min, value: params[:work_start_min], class: "border-radius-15px width50", placeholder: "min"
+                  %th.text-center.width80
+                    = f.number_field :break_start_hour, value: params[:break_start_hour], class: "border-radius-15px width50", placeholder: "hours"
+                    = ":"
+                    = f.number_field :break_start_min, value: params[:break_start_min], class: "border-radius-15px width50", placeholder: "min"
+                  %th.text-center.width80
+                    = f.number_field :break_stop_hour, value: params[:break_stop_hour], class: "border-radius-15px width50", placeholder: "hours"
+                    = ":"
+                    = f.number_field :break_stop_min, value: params[:break_stop_min], class: "border-radius-15px width50", placeholder: "min"
+                  %th.text-center.width80
+                    = f.number_field :work_stop_hour, value: params[:work_stop_hour], class: "border-radius-15px width50", placeholder: "hours"
+                    = ":"
+                    = f.number_field :work_stop_min, value: params[:work_stop_min], class: "border-radius-15px width50", placeholder: "min"
+                  %th.text-center.width80
+                    = f.number_field :common_hours, value: params[:common_hours], class: "border-radius-15px width70", placeholder: "hours"
+                  %th.text-center.width125
+                    = f.text_area :comment, value: params[:comment], class: "border-radius-15px width200", placeholder: "Thursday"
+
+                  %th.text-center.width125
+                    = f.submit "ADD", class: 'btn btn-success'
