@@ -36,34 +36,63 @@
                 - break_stop_min   = wl.nil? ? "" : wl.break_stop.split(":")[1]
                 - common_hours     = wl.nil? ? "" : wl.hours
                 - comment          = wl.nil? ? "" : wl.comment
-
+                - condition_disabled = !work_start_hour.blank? || !work_start_min.blank? || !work_stop_hour.blank? || !work_stop_min.blank? || !break_start_hour.blank? || !break_start_min.blank? || !break_stop_hour.blank? || !break_stop_min.blank? || !common_hours.blank? || !comment.blank? ? true : false
                 = f.hidden_field :day, value: index + 1
                 = f.hidden_field :month, value: params[:month]
                 = f.hidden_field :year, value: params[:year]
                 = f.hidden_field :user_id, value: params[:user_id].nil? ? current_user.id : params[:user_id]
-                %th.text-center.width50.font-size-16
-                  = index + 1
-                %th.text-center.width80
-                  = f.number_field "work_start_hour", value: work_start_hour, class: "border-radius-15px width50", placeholder: "hours"
-                  = ":"
-                  = f.number_field "work_start_min", value: work_start_min, class: "border-radius-15px width50", placeholder: "min"
-                %th.text-center.width80
-                  = f.number_field "break_start_hour", value: break_start_hour, class: "border-radius-15px width50", placeholder: "hours"
-                  = ":"
-                  = f.number_field "break_start_min", value: break_start_min, class: "border-radius-15px width50", placeholder: "min"
-                %th.text-center.width80
-                  = f.number_field "break_stop_hour", value: break_stop_hour, class: "border-radius-15px width50", placeholder: "hours"
-                  = ":"
-                  = f.number_field "break_stop_min", value: break_stop_min, class: "border-radius-15px width50", placeholder: "min"
-                %th.text-center.width80
-                  = f.number_field "work_stop_hour", value: work_stop_hour, class: "border-radius-15px width50", placeholder: "hours"
-                  = ":"
-                  = f.number_field "work_stop_min", value: work_stop_min, class: "border-radius-15px width50", placeholder: "min"
-                %th.text-center.width80
-                  = f.number_field "common_hours", value: common_hours, class: "border-radius-15px width70", placeholder: "hours"
-                %th.text-center.width125
-                  = f.text_area :comment, value: comment, class: "border-radius-15px width200", placeholder: "Comment"
 
-                %th.text-center.width125
-                  = f.submit "ADD", class: 'btn btn-success'
+                %tr{ class: "tr_#{index + 1}"}
+                  %th.text-center.width50.font-size-16
+                    = index + 1
+                  %th.text-center.width80
+                    = f.number_field "work_start_hour", value: work_start_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
+                    = ":"
+                    = f.number_field "work_start_min", value: work_start_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                  %th.text-center.width80
+                    = f.number_field "break_start_hour", value: break_start_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
+                    = ":"
+                    = f.number_field "break_start_min", value: break_start_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                  %th.text-center.width80
+                    = f.number_field "break_stop_hour", value: break_stop_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
+                    = ":"
+                    = f.number_field "break_stop_min", value: break_stop_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                  %th.text-center.width80
+                    = f.number_field "work_stop_hour", value: work_stop_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
+                    = ":"
+                    = f.number_field "work_stop_min", value: work_stop_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                  %th.text-center.width80
+                    = f.number_field "common_hours", value: common_hours, class: "border-radius-15px width70 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
+                  %th.text-center.width125
+                    = f.text_area :comment, value: comment, class: "border-radius-15px width200 " + (condition_disabled ? "opacity_05" : ""), placeholder: "Comment", readonly: condition_disabled
 
+                  %th.text-center.width125
+                    - if  condition_disabled
+                      = button_tag 'EDIT', type: "button", class: "btn btn-warning width200", id: "edit_#{index + 1}"
+                      :javascript
+                        $(document).ready(function(){
+
+                           $("#edit_#{index + 1}.btn-warning").on("click", function() {
+                              console.log("click btn warning #edit_#{index + 1}")
+
+
+                              if ($(this).attr('class') == 'btn width200 btn-primary click_#{index + 1}') {
+                                $(this).find("button").removeAttr('type');
+                                $(this).attr('type', 'submit');
+
+                              } else {
+                                  $(".tr_#{index + 1}").each(function(index, tr) {
+                                     $(tr).find("input").removeAttr('readonly').removeClass("opacity_05")
+                                     $(tr).find("textarea").removeAttr('readonly').removeClass("opacity_05")
+                                  })
+
+                                 $(this).removeClass('btn-warning')
+                                 $(this).addClass('btn-primary')
+                                 $(this).addClass('click_#{index + 1}')
+                               }
+                             })
+                          })
+
+
+                    - else
+                      = f.submit "ADD", class: 'btn btn-success'
