@@ -38,3 +38,5 @@
                       = f.hidden_field :year, value: params[:year]
                       = f.hidden_field :user_id, value: params[:user_id]
                       = f.submit "", class: "icon-edit-worksheet btn"
+                  %th.text-center
+                    = link_to "", work_lists_show_pdf_path(month: month, year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"

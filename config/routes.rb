@@ -43,8 +43,7 @@ Rails.application.routes.draw do
       post   'create'          => 'work_lists#create'
       post   'search'          => 'work_lists#search'
       post   'show'            => 'work_lists#show'
-      post   'edit/:id'        => 'work_lists#edit'
-      post   'update'          => 'work_lists#update'
+      get    'show_pdf'        => "work_lists#work_list_pdf"
     end
   end
 end

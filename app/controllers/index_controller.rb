@@ -25,6 +25,7 @@ class IndexController < ApplicationController
 
             period.work_shift_schedules.each_with_index do |w, index|
               user   = User.find(w.user_id)
+
               data += [[
                          "",
                          { content: "Mon", text_color: "e9e9e9" },
