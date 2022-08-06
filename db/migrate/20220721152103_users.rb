@@ -108,7 +108,7 @@ class Users < ActiveRecord::Migration[7.0]
     drop_table :users
     drop_table :work_lists
     drop_table :work_shift_schedules
-    # drop_table :work_shift_schedule_days
+    drop_table :work_shift_schedule_days
     drop_table :periods
     drop_table :rules
     drop_table :eggs_collections
