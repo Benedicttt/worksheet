@@ -39,11 +39,14 @@
                 - common_hours_min = wl.nil? ? "" : wl.hours.split(":")[1]
 
                 - wss_comment      = WorkShiftSchedule.find_by(user_id: params[:user_id])
-                - day_from_wss     = JSON.parse(wss_comment.work_shift_schedule_day.to_json, symbolize_names: true).tap { |hs| hs.delete(:work_shift_schedule_id) &&  hs.delete(:id) }
 
                 - comment = ""
-                - day_from_wss.each { |k, v| (v == day && v != nil) ? comment = k.to_s.sub("_number_day", "")  : "" }
-                - comment          = wl.nil? ?  wss_comment[comment]  : wl.comment
+                - if !wss_comment.nil?
+                  - day_from_wss     = JSON.parse(wss_comment.work_shift_schedule_day.to_json, symbolize_names: true).tap { |hs| hs.delete(:work_shift_schedule_id) &&  hs.delete(:id) }
+
+                  - comment = ""
+                  - day_from_wss.each { |k, v| (v == day && v != nil) ? comment = k.to_s.sub("_number_day", "")  : "" }
+                  - comment          = wl.nil? ?  wss_comment[comment]  : wl.comment
 
                 - condition_disabled = !work_start_hour.blank? || !work_start_min.blank? || !work_stop_hour.blank? || !work_stop_min.blank? || !break_start_hour.blank? || !break_start_min.blank? || !break_stop_hour.blank? || !break_stop_min.blank? || !common_hours.blank? || !comment.blank? ? true : false
                 = f.hidden_field :day, value: index + 1
