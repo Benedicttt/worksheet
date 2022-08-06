@@ -1,0 +1,2 @@
+class WorkShiftScheduleDay < ApplicationRecord
+end

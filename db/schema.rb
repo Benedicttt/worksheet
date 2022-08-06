@@ -78,6 +78,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_152103) do
     t.string "comment"
   end
 
+  create_table "work_shift_schedule_days", force: :cascade do |t|
+    t.integer "work_shift_schedule_id"
+    t.integer "monday_number_day"
+    t.integer "tuesday_number_day"
+    t.integer "wednesday_number_day"
+    t.integer "thursday_number_day"
+    t.integer "friday_number_day"
+    t.integer "saturday_number_day"
+    t.integer "sunday_number_day"
+  end
+
   create_table "work_shift_schedules", force: :cascade do |t|
     t.integer "user_id"
     t.string "comment"

@@ -5,7 +5,7 @@ services:
     build:
       context: .
     image: worksheet:v1
-    container_name: worksheet.rb
+    container_name: worksheet
     hostname: worksheet.rb
     command: bash container/inst.sh
     environment:

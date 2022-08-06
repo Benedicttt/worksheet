@@ -10,51 +10,75 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
       date_to   = params[:to].split("-")
       date_from = params[:from].split("-")
 
-      params_period = {
-        to: date_to[0],
-        from: date_from[0],
-        month: date_from[1],
-        year: date_from[2],
-        week_number: params[:week_number]
-      }
+      date_time       = DateTime.new(date_to[2].to_i,   date_to[1].to_i,   date_to[0].to_i)
+      date_time_limit = DateTime.new(date_from[2].to_i, date_from[1].to_i, date_from[0].to_i)
 
-      conditions_period = Period.where(params_period)
-      period_id = if !conditions_period.empty?
-                  conditions_period[0].id
-                else
-                  per = Period.create(params_period)
-                  per.id
-                end
 
-      //
-      wss.id = params[:id]
-      wss.user_id = params[:user_id]
-      wss.period_id = period_id
-      wss.monday = params[:monday]
-      wss.monday_hours = params[:monday_hours]
-      wss.tuesday = params[:tuesday]
-      wss.tuesday_hours = params[:tuesday_hours]
-      wss.wednesday = params[:wednesday]
-      wss.wednesday_hours = params[:wednesday_hours]
-      wss.thursday = params[:thursday]
-      wss.thursday_hours = params[:thursday_hours]
-      wss.friday = params[:friday]
-      wss.friday_hours = params[:friday_hours]
-      wss.saturday = params[:saturday]
-      wss.saturday_hours = params[:saturday_hours]
-      wss.sunday = params[:sunday]
-      wss.sunday_hours = params[:sunday_hours]
-      wss.save
+      if (date_time_limit - date_time).to_i != 6
 
-      u = User.find(params[:user_id])
-      name = "#{u.first_name} #{u.last_name}"
-      flash['success'] = "New worksheet for user #{name} created"
+        string = "Your interval more #{(date_time_limit - date_time).to_i} days. The interval between dates must be no more than 7 days"
+        flash['alert'] = string
+      else
 
-      # rescue  Exception => e
-      #   flash['alert'] = "New worksheet for user #{name} NOT created\n" + "#{e.message}"
-      # end
+        params_period = {
+          to: date_to[0],
+          from: date_from[0],
+          month: date_from[1],
+          year: date_from[2],
+          week_number: params[:week_number]
+        }
 
-      render "work_shift_schedules/new"
+        conditions_period = Period.where(params_period)
+          period_id = if !conditions_period.empty?
+                      conditions_period[0].id
+                    else
+                      per = Period.create(params_period)
+                      per.id
+                    end
+
+          //
+          wss.user_id = params[:user_id]
+          wss.period_id = period_id
+          wss.monday = params[:monday]
+          wss.monday_hours = params[:monday_hours]
+          wss.tuesday = params[:tuesday]
+          wss.tuesday_hours = params[:tuesday_hours]
+          wss.wednesday = params[:wednesday]
+          wss.wednesday_hours = params[:wednesday_hours]
+          wss.thursday = params[:thursday]
+          wss.thursday_hours = params[:thursday_hours]
+          wss.friday = params[:friday]
+          wss.friday_hours = params[:friday_hours]
+          wss.saturday = params[:saturday]
+          wss.saturday_hours = params[:saturday_hours]
+          wss.sunday = params[:sunday]
+          wss.sunday_hours = params[:sunday_hours]
+          wss.save!
+
+          wss_day = WorkShiftScheduleDay.new
+          wss_day.work_shift_schedule_id = wss.id
+
+          date_time.step(date_time_limit, 1).each_with_index do |e, index|
+            wss_day.monday_number_day    = e.day if index == 0
+            wss_day.tuesday_number_day   = e.day if index == 1
+            wss_day.wednesday_number_day = e.day if index == 2
+            wss_day.thursday_number_day  = e.day if index == 3
+            wss_day.friday_number_day    = e.day if index == 4
+            wss_day.saturday_number_day  = e.day if index == 5
+            wss_day.sunday_number_day    = e.day if index == 6
+          end
+
+          wss_day.save!
+
+          u = User.find(params[:user_id])
+          name = "#{u.first_name} #{u.last_name}"
+          flash['success'] = "New worksheet for user #{name} created"
+      end
+    # rescue Exception => e
+    #   flash['alert'] = "#{e.message}"
+    # end
+
+    render "work_shift_schedules/new"
   end
 
   def show

@@ -11,7 +11,7 @@
           - else
             = f.hidden_field :user_id, value: current_user.id
           %br
-            = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m, i| [m, i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width250" }
+            = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width250" }
           = f.select :year, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width250" }
           %br
           = f.submit "", class: "btn btn-sm btn-primary icon-search width100"

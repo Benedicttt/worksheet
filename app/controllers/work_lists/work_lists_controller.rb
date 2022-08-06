@@ -23,7 +23,7 @@ class WorkLists::WorkListsController < ApplicationController
         work_stop:   "#{params[:work_stop_hour]}:#{params[:work_stop_min]}",
         break_start: "#{params[:break_start_hour]}:#{params[:break_start_min]}",
         break_stop:  "#{params[:break_stop_hour]}:#{params[:break_stop_min]}",
-        hours:       params[:common_hours],
+        hours:       "#{params[:common_hours]}:#{params[:common_hours_min]}",
         comment:     params[:comment]
       )
 
@@ -38,7 +38,7 @@ class WorkLists::WorkListsController < ApplicationController
         work_stop:   "#{params[:work_stop_hour]}:#{params[:work_stop_min]}",
         break_start: "#{params[:break_start_hour]}:#{params[:break_start_min]}",
         break_stop:  "#{params[:break_stop_hour]}:#{params[:break_stop_min]}",
-        hours:       params[:common_hours],
+        hours:       "#{params[:common_hours]}:#{params[:common_hours_min]}",
         comment:     params[:comment]
       )
 
@@ -102,7 +102,7 @@ class WorkLists::WorkListsController < ApplicationController
                      { content: "Comment", align: :center },
              ]]
 
-            31.times do |day|
+            days.times do |day|
               day += 1
               wl_line = WorkList.find_by(user_id: user_id, month: month, years: year, day: day)
 
@@ -119,17 +119,20 @@ class WorkLists::WorkListsController < ApplicationController
 
             pdf.table(
               data,
-              cell_style: { size: 10 },
-              column_widths: [45, 50, 50, 50, 50, 50, 200]
+              cell_style: { font: "Courier", :size => 12, :style => :normal },
+              column_widths: [45, 50, 50, 50, 50, 50, 200],
+
             ) do |t|
               t.rows(0).align =  :center
+              t.rows(0).font_style = :bold
               t.rows(0).border_top_width =  0
               t.rows(0).border_right_width =  0
               t.rows(0).border_left_width = 0
 
               t.rows(0..-1).column(0..-1).padding_bottom = 4
               t.rows(0..-1).column(0..-1).padding_top = 4
-              t.rows(0..-1).column(0..-1)
+              t.rows(0..-1).column(0..-1).border_widths = 0.3
+
               #
               if !t.rows(1).empty?
                 t.rows(1..-1).columns(0).background_color = "beb9b9"
