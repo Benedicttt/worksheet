@@ -19,6 +19,8 @@
               %th.text-center.width80  Common hours
               %th.text-center.width125 Comment
               %th.text-center.width125
+                = link_to "", work_lists_show_pdf_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
+
 
       .tbl-content-form
         - days.times do |index|

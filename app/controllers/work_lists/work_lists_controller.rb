@@ -147,6 +147,7 @@ class WorkLists::WorkListsController < ApplicationController
               end
             end
             data = [[""]]
+            pdf.text "\n\n\n\n#{user.first_name} #{user.last_name} _____________"
 
             send_data pdf.render, filename: "all.pdf", type: "application/pdf", disposition: "inline"
           end
