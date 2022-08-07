@@ -38,7 +38,10 @@
                 - common_hours     = wl.nil? ? "" : wl.hours.split(":")[0]
                 - common_hours_min = wl.nil? ? "" : wl.hours.split(":")[1]
 
-                - wss_comment      = WorkShiftSchedule.find_by(user_id: params[:user_id])
+                - wss              = WorkShiftSchedule.find_by(user_id: params[:user_id])
+                - if !wss.nil?
+                  - period           = Period.find_by(id: WorkShiftSchedule.find_by(user_id: params[:user_id]).period_id, month: params[:month], year: params[:year])
+                  - wss_comment      = period.nil? ? nil : period.work_shift_schedules[0]
 
                 - comment = ""
                 - if !wss_comment.nil?
