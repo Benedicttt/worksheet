@@ -46,7 +46,9 @@
 
                   - comment = ""
                   - day_from_wss.each { |k, v| (v == day && v != nil) ? comment = k.to_s.sub("_number_day", "")  : "" }
-                  - comment          = wl.nil? ?  wss_comment[comment]  : wl.comment
+                  - comment = wl.nil? ?  wss_comment[comment]  : wl.comment
+                - else
+                  - comment = wl.nil? ?  ""  : wl.comment
 
                 - condition_disabled = !work_start_hour.blank? || !work_start_min.blank? || !work_stop_hour.blank? || !work_stop_min.blank? || !break_start_hour.blank? || !break_start_min.blank? || !break_stop_hour.blank? || !break_stop_min.blank? || !common_hours.blank? || !comment.blank? ? true : false
                 = f.hidden_field :day, value: index + 1
@@ -78,7 +80,7 @@
                     = ":"
                     = f.number_field "common_hours_min", value: common_hours_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
                   %th.text-center.width125
-                    = f.text_area :comment, value: comment, class: "border-radius-15px width200  " + (condition_disabled && (!wss_comment.nil? || !wss_comment.monday.nil?) ? "opacity_05" : ""), placeholder: "Comment"
+                    = f.text_area :comment, value: comment, class: "border-radius-15px width200  " + (condition_disabled && (!wss_comment.nil? ) ? "opacity_05" : ""), placeholder: "Comment"
 
                   %th.text-center.width125
                     - if  condition_disabled

@@ -29,7 +29,7 @@ class WorkLists::WorkListsController < ApplicationController
 
       flash[:success] = "Added new data to work day #{params[:day]}.#{params[:month]}.#{params[:year]}"
     else
-      condition.update(
+      condition.update!(
         day:         params[:day],
         month:       params[:month],
         years:        params[:year],
@@ -119,8 +119,8 @@ class WorkLists::WorkListsController < ApplicationController
 
             pdf.table(
               data,
-              cell_style: { font: "Courier", :size => 12, :style => :normal },
-              column_widths: [45, 50, 50, 50, 50, 50, 200],
+              cell_style: { font: "Courier", :size => 9, :style => :normal },
+              column_widths: [55, 55, 55, 55, 55, 55, 190],
 
             ) do |t|
               t.rows(0).align =  :center
