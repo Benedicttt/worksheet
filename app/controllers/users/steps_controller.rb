@@ -20,7 +20,7 @@ class Users::StepsController < ApplicationController
   end
 
   def create_user
-    param[:head] = "Create user"
+    params[:head] = "Create user"
     render "shared/create_user"
   end
 end
