@@ -1,5 +1,7 @@
 class WorkLists::WorkListsController < ApplicationController
   def new
+    params[:head] = "Work List"
+
     if params[:month] == "0"
       flash[:alert] = "Please select MONTH"
       render "work_lists/show"
@@ -49,10 +51,14 @@ class WorkLists::WorkListsController < ApplicationController
   end
 
   def show
+    params[:head] = "Work List"
+
     render "work_lists/show"
   end
 
   def search
+    params[:head] = "Work List"
+
     @work_list = if params[:month] == "0" || params[:month].nil?
                    WorkList.where(user_id: params[:user_id], years: params[:year]).sort_by &:month
                  else
@@ -80,6 +86,14 @@ class WorkLists::WorkListsController < ApplicationController
         format.html
         format.pdf do
           Prawn::Document.new(page_size: 'A4', layout: :landscape, rotate: 180) do |pdf|
+            pdf.font_families.update("Monaco" => {
+              :normal => Rails.root.join("app/assets/fonts/Monaco Regular.otf"),
+              :italic => Rails.root.join("app/assets/fonts/Monaco Regular.otf"),
+              :bold => Rails.root.join("app/assets/fonts/Monaco Regular.otf"),
+              :bold_italic => Rails.root.join("app/assets/fonts/Monaco Regular.otf")
+            })
+            pdf.font "Monaco"
+
             data += [[
                        { content: "Month\n#{Date::MONTHNAMES[month.to_i]}", align: :center },
                        "",
@@ -119,7 +133,7 @@ class WorkLists::WorkListsController < ApplicationController
 
             pdf.table(
               data,
-              cell_style: { font: "Courier", :size => 9, :style => :normal },
+              cell_style: { font: "Monaco", :size => 9, :style => :normal },
               column_widths: [55, 55, 55, 55, 55, 55, 190],
 
             ) do |t|

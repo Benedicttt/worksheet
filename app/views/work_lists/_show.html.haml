@@ -1,7 +1,5 @@
 - if current_user.present?
   %article
-    %h1 Work lists
-
     = render "shared/flash"
     = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "search"} do |f|
       - if current_user.rule.worker && current_user.is_available

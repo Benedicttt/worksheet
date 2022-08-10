@@ -2,9 +2,6 @@
   - u = @user
 
   %article
-    %h1
-      = t('edit_user')
-
     %section.position_relative.display-inline-block
       =form_for "", remote: true, url: { controller: 'users', action: 'update' } do |f|
         = render "shared/flash"

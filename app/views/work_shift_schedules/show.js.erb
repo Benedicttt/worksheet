@@ -1,4 +1,5 @@
 $("article").replaceWith('<%= j  render partial: "work_shift_schedules/show", params: params %>');
+$("header").replaceWith('<%= j  render partial: "index/header", params: params %>');
 $('body').remove('modify')
 document.body.appendChild(document.createElement('modify'));
 $("modify").replaceWith('<%= j  render partial: "work_shift_schedules/css_show_wss", params: params %>');

@@ -1,4 +1,5 @@
 $("article").replaceWith('<%= j  render partial: "users/list", params: params %>');
+$("header").replaceWith('<%= j  render partial: "index/header", params: params %>');
 $("modify").replaceWith('<%= j  render "shared/css_article", params: params %>');
 
 console.log("list")

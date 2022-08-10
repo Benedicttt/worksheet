@@ -1,4 +1,5 @@
 $("article").replaceWith('<%= j  render partial: "users/edit", params: params %>');
+$("header").replaceWith('<%= j  render "index/header"%>');
 $("modify").replaceWith('<%= j  render "shared/css_article", params: params %>');
 
 console.log('references results <%=params[:file_name] %>')

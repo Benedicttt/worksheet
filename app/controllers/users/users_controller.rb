@@ -1,10 +1,12 @@
 class Users::UsersController < ApplicationController
   def list
+    params[:head] = "Users list"
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
-        @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
+    @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
   end
 
   def new
+    params[:head] = "New user"
     flash[:alert] = ''
     flash[:success] = ''
 
@@ -57,7 +59,7 @@ class Users::UsersController < ApplicationController
       # end
 
       # @users = User.all.order("users.id desc").limit(10).page(params[:page])
-          @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
+      @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
       if !current_user.nil?
         render "users/list"
@@ -76,15 +78,18 @@ class Users::UsersController < ApplicationController
 
   def destroy
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
-        @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
+    @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
     User.find(params[:id]).update_attribute(:is_available, false)
     flash[:alert] = "User delete"
+
+    params[:head] = "User #{params[:id]} is available FALSE"
 
     render 'users/list'
   end
 
   def edit
+    params[:head] = "Edit user #{params[:id]}"
     @user = User.find(params[:id])
     flash[:alert] = ''
     flash[:success] = ''
@@ -93,6 +98,7 @@ class Users::UsersController < ApplicationController
   end
 
   def update
+    params[:head] = "User #{params[:id]} updated"
     flash[:alert] = ''
     flash[:success] = ''
 

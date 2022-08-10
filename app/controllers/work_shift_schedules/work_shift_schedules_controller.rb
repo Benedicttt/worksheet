@@ -1,5 +1,6 @@
 class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
   def new
+    params[:head] = "New WorkSheet"
     render "work_shift_schedules/new"
   end
 
@@ -82,6 +83,8 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
   end
 
   def show
+    params[:head] = "WorkSheet"
+
     render "work_shift_schedules/show"
   end
 

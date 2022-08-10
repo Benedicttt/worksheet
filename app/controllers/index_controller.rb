@@ -1,5 +1,7 @@
 class IndexController < ApplicationController
   def index
+    params[:head] = "WorkSheet"
+
     redirect_to sessions_new_path if !logged_in?
   end
 

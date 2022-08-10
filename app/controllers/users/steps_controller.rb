@@ -7,6 +7,8 @@ class Users::StepsController < ApplicationController
   end
 
   def list
+    params[:head] = "Users list"
+
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
     @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
@@ -18,6 +20,7 @@ class Users::StepsController < ApplicationController
   end
 
   def create_user
+    param[:head] = "Create user"
     render "shared/create_user"
   end
 end
