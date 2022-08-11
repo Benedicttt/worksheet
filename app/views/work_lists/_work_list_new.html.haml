@@ -70,13 +70,11 @@
                   %th.text-center.width80
                     = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onfocus: "some_#{day}()"
                     :javascript
-                        $(document).ready(function(){
-                          function some_#{day}() {
-                            $(".common_hours_#{day}").val(
-                              recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
-                            )
-                          }
-                        })
+                        function some_#{day}() {
+                          $(".common_hours_#{day}").val(
+                            recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
+                          )
+                        }
                   %th.text-center.width125
                     = f.text_area :comment, value: comment, class: "border-radius-15px width200  " + (condition_disabled && (!wss_comment.nil? ) ? "opacity_05" : ""), placeholder: "Comment"
 
