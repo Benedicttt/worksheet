@@ -11,41 +11,73 @@ class WorkLists::WorkListsController < ApplicationController
   end
 
   def create
-    condition = WorkList.find_by(day:         params[:day],
-                                 month:       params[:month],
-                                 years:        params[:year],
-                                 user_id:     params[:user_id])
+    # begin
+      condition = WorkList.find_by(day:         params[:day],
+                                   month:       params[:month],
+                                   years:       params[:year],
+                                   user_id:     params[:user_id])
+
+    work_start_hour  = params[:work_start].split(":")
+    work_stop_hour   = params[:work_stop].split(":")
+    break_start_hour = params[:break_start].split(":")
+    break_stop_hour  = params[:break_stop].split(":")
+    common_hours     = params[:common_hours].split(":")
+
+    work_start  = work_start_hour.blank? ? "00:00" : "#{work_start_hour[0]}:#{work_start_hour[1]}"
+    work_stop   = work_stop_hour.blank? ? "00:00" : "#{work_stop_hour[0]}:#{work_stop_hour[1]}"
+    break_start = break_start_hour.blank? ? "00:00" : "#{break_start_hour[0]}:#{break_start_hour[1]}"
+    break_stop  = break_stop_hour.blank? ? "00:00" : "#{break_stop_hour[0]}:#{break_stop_hour[1]}"
+    hours       = common_hours.blank? ? "00:00" : "#{common_hours[0]}:#{common_hours[1]}"
+
     if condition.nil?
-      WorkList.create(
-        day:         params[:day],
-        month:       params[:month],
-        years:        params[:year],
-        user_id:     params[:user_id],
-        work_start:  "#{params[:work_start_hour]}:#{params[:work_start_min]}",
-        work_stop:   "#{params[:work_stop_hour]}:#{params[:work_stop_min]}",
-        break_start: "#{params[:break_start_hour]}:#{params[:break_start_min]}",
-        break_stop:  "#{params[:break_stop_hour]}:#{params[:break_stop_min]}",
-        hours:       "#{params[:common_hours]}:#{params[:common_hours_min]}",
-        comment:     params[:comment]
-      )
+        WorkList.create(
+          day:         params[:day],
+          month:       params[:month],
+          years:       params[:year],
+          user_id:     params[:user_id],
+          comment:     params[:comment],
 
-      flash[:success] = "Added new data to work day #{params[:day]}.#{params[:month]}.#{params[:year]}"
-    else
-      condition.update!(
-        day:         params[:day],
-        month:       params[:month],
-        years:        params[:year],
-        user_id:     params[:user_id],
-        work_start:  "#{params[:work_start_hour]}:#{params[:work_start_min]}",
-        work_stop:   "#{params[:work_stop_hour]}:#{params[:work_stop_min]}",
-        break_start: "#{params[:break_start_hour]}:#{params[:break_start_min]}",
-        break_stop:  "#{params[:break_stop_hour]}:#{params[:break_stop_min]}",
-        hours:       "#{params[:common_hours]}:#{params[:common_hours_min]}",
-        comment:     params[:comment]
-      )
+          work_start:  work_start,
+          work_stop:  work_stop,
+          break_start: break_start,
+          break_stop:  break_stop,
+          hours:  hours,
 
-      flash[:success] = "Updated new data to work day #{params[:day]}.#{params[:month]}.#{params[:year]}"
-    end
+          work_start_minutes:  get_minutes_from_full_time(work_start),
+          work_stop_minutes:   get_minutes_from_full_time(work_stop),
+          break_start_minutes: get_minutes_from_full_time(break_start),
+          break_stop_minutes:  get_minutes_from_full_time(break_stop),
+          hours_minutes:       get_minutes_from_full_time(hours)
+        )
+
+        flash[:success] = "Added new data to work day #{params[:day]}.#{params[:month]}.#{params[:year]}"
+      else
+        condition.update!(
+          day:         params[:day],
+          month:       params[:month],
+          years:        params[:year],
+          user_id:     params[:user_id],
+          comment:     params[:comment],
+
+          work_start:  work_start,
+          work_stop:  work_stop,
+          break_start: break_start,
+          break_stop:  break_stop,
+          hours:  hours,
+
+          work_start_minutes:  get_minutes_from_full_time(work_start),
+          work_stop_minutes:   get_minutes_from_full_time(work_stop),
+          break_start_minutes: get_minutes_from_full_time(break_start),
+          break_stop_minutes:  get_minutes_from_full_time(break_stop),
+          hours_minutes:       get_minutes_from_full_time(hours)
+        )
+
+        flash[:success] = "Updated new data to work day #{params[:day]}.#{params[:month]}.#{params[:year]}"
+      end
+
+    # rescue Exception => ss
+    #   flash[:alert] = "Internal server error "
+    # end
 
     render "work_lists/work_list_new"
   end
@@ -109,12 +141,14 @@ class WorkLists::WorkListsController < ApplicationController
             data += [[
                      { content: "Day", align: :center },
                      { content: "Work start", align: :center },
-                     { content: "Work stop", align: :center },
                      { content: "Break start", align: :center },
                      { content: "Break stop", align: :center },
+                     { content: "Work stop", align: :center },
                      { content: "Hours", align: :center },
                      { content: "Comment", align: :center },
              ]]
+
+            total_hours = 0.0;
 
             days.times do |day|
               day += 1
@@ -123,13 +157,25 @@ class WorkLists::WorkListsController < ApplicationController
               data += [[
                  { content: "#{day}", align: :center },
                  { content: wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start, align: :center },
-                 { content: wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop, align: :center },
                  { content: wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : wl_line.break_start, align: :center },
                  { content: wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : wl_line.break_stop, align: :center },
+                 { content: wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop, align: :center },
                  { content: wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours, align: :center },
                  { content: wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment, align: :center }
               ]]
+
+              total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f ;
             end
+
+            data += [[
+                       { content: "", align: :center },
+                       { content: "", align: :center },
+                       { content: "", align: :center },
+                       { content: "", align: :center },
+                       { content: "Total hours", align: :center },
+                       { content: "#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })", align: :center },
+                       { content: "", align: :center },
+                     ]]
 
             pdf.table(
               data,

@@ -2,7 +2,7 @@
   %article
     = render "shared/flash"
     = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "search"} do |f|
-      - if current_user.rule.worker && current_user.is_available
+      - if current_user.rule.worker && current_user.is_available && current_user.rule.manager
         = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]}, { selected: params[:user_id].nil? ? current_user.id : params[:user_id] }, { class: "form-select width200" }
       - else
         = f.hidden_field :user_id, value: current_user.id

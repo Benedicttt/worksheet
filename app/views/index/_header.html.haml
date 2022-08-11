@@ -1,4 +1,22 @@
 %header
-  %h1.margin_top_5_per
-    #{params[:head]}
-  -#    -#.float-right{ style: "text-shadow: 2px 2px #0f110c;" } WorkSheet
+  %div.display_flex
+    %div
+      %h1.margin_top_5_per
+        #{params[:head]}
+    %div.user
+      - u = current_user
+      - if !u.nil?
+        #{u.first_name} #{u.last_name}
+      -#    -#.float-right{ style: "text-shadow: 2px 2px #0f110c;" } WorkSheet
+
+:css
+  .user {
+    color: white;
+    display: block;
+    position: absolute;
+    right: 0%;
+    width: 200px;
+    font-size: 12px;
+    height: 120px;
+    margin-top: 10px;
+  }

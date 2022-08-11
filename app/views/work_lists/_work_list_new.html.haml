@@ -29,16 +29,11 @@
             %table.table
               %tbody
                 - wl = WorkList.find_by(day: index + 1, month: params[:month], years: params[:year], user_id: params[:user_id])
-                - work_start_hour  = wl.nil? ? "" : wl.work_start.split(":")[0]
-                - work_start_min   = wl.nil? ? "" : wl.work_start.split(":")[1]
-                - work_stop_hour   = wl.nil? ? "" : wl.work_stop.split(":")[0]
-                - work_stop_min    = wl.nil? ? "" : wl.work_stop.split(":")[1]
-                - break_start_hour = wl.nil? ? "" : wl.break_start.split(":")[0]
-                - break_start_min  = wl.nil? ? "" : wl.break_start.split(":")[1]
-                - break_stop_hour  = wl.nil? ? "" : wl.break_stop.split(":")[0]
-                - break_stop_min   = wl.nil? ? "" : wl.break_stop.split(":")[1]
-                - common_hours     = wl.nil? ? "" : wl.hours.split(":")[0]
-                - common_hours_min = wl.nil? ? "" : wl.hours.split(":")[1]
+                - work_start_hour  = wl.nil? ? "" : wl.work_start
+                - work_stop_hour   = wl.nil? ? "" : wl.work_stop
+                - break_start_hour = wl.nil? ? "" : wl.break_start
+                - break_stop_hour  = wl.nil? ? "" : wl.break_stop
+                - common_hours     = wl.nil? ? "" : wl.hours
 
                 - wss              = WorkShiftSchedule.find_by(user_id: params[:user_id])
                 - if !wss.nil?
@@ -55,7 +50,7 @@
                 - else
                   - comment = wl.nil? ?  ""  : wl.comment
 
-                - condition_disabled = !work_start_hour.blank? || !work_start_min.blank? || !work_stop_hour.blank? || !work_stop_min.blank? || !break_start_hour.blank? || !break_start_min.blank? || !break_stop_hour.blank? || !break_stop_min.blank? || !common_hours.blank? || !comment.blank? ? true : false
+                - condition_disabled = !work_start_hour.blank? || !work_stop_hour.blank? || !break_start_hour.blank? || !break_stop_hour.blank? || !common_hours.blank? || !comment.blank? ? true : false
                 = f.hidden_field :day, value: index + 1
                 = f.hidden_field :month, value: params[:month]
                 = f.hidden_field :year, value: params[:year]
@@ -65,25 +60,23 @@
                   %th.text-center.width50.font-size-16
                     = index + 1
                   %th.text-center.width80
-                    = f.number_field "work_start_hour", value: work_start_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
-                    = ":"
-                    = f.number_field "work_start_min", value: work_start_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                    = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
                   %th.text-center.width80
-                    = f.number_field "break_start_hour", value: break_start_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
-                    = ":"
-                    = f.number_field "break_start_min", value: break_start_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                    = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
                   %th.text-center.width80
-                    = f.number_field "break_stop_hour", value: break_stop_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
-                    = ":"
-                    = f.number_field "break_stop_min", value: break_stop_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                    = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
                   %th.text-center.width80
-                    = f.number_field "work_stop_hour", value: work_stop_hour, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
-                    = ":"
-                    = f.number_field "work_stop_min", value: work_stop_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                    = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
                   %th.text-center.width80
-                    = f.number_field "common_hours", value: common_hours, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "hours", readonly: condition_disabled
-                    = ":"
-                    = f.number_field "common_hours_min", value: common_hours_min, class: "border-radius-15px width50 " + (condition_disabled ? "opacity_05" : ""), placeholder: "min", readonly: condition_disabled
+                    = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onfocus: "some_#{day}()"
+                    :javascript
+                        $(document).ready(function(){
+                          function some_#{day}() {
+                            $(".common_hours_#{day}").val(
+                              recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
+                            )
+                          }
+                        })
                   %th.text-center.width125
                     = f.text_area :comment, value: comment, class: "border-radius-15px width200  " + (condition_disabled && (!wss_comment.nil? ) ? "opacity_05" : ""), placeholder: "Comment"
 
@@ -118,3 +111,23 @@
 
                     - else
                       = f.submit "ADD", class: 'btn btn-dark'
+
+:javascript
+  function timeToMins(time) {
+    var b = time.split(':');
+    return b[0]*60 + +b[1];
+  }
+
+  // Convert minutes to a time in format hh:mm
+  // Returned value is in range 00  to 24 hrs
+  function timeFromMins(mins) {
+    function z(n){return (n<10? '0':'') + n;}
+    var h = (mins/60 |0) % 24;
+    var m = mins % 60;
+    return z(h) + ':' + z(m);
+  }
+
+  // Add two times in hh:mm format
+  function recanculateTime(t1, t0) {
+    return timeFromMins(timeToMins(t1) - timeToMins(t0));
+  }

@@ -5,13 +5,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
-    user_ad = User.find_by(nickname: params[:session][:nickname])
+    user_email = User.find_by(email: params[:session][:email].downcase)
+    user_nick = User.find_by(nickname: params[:session][:nickname])
 
-    session = if user && User.where(:password => params[:session][:password]).first
-                log_in user
-              elsif user_ad && User.where(:password => params[:session][:password]).first
-                log_in user_ad
+    session = if !params[:session][:nickname].blank? && !user_nick.nil?
+                log_in user_nick
+              elsif !params[:session][:email].blank? && !user_email.nil?
+                log_in user_email
               end
 
     if session
