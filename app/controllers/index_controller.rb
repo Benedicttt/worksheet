@@ -23,6 +23,7 @@ class IndexController < ApplicationController
       format.html
       format.pdf do
         Prawn::Document.new(page_size: 'A4', layout: :landscape, rotate: 180) do |pdf|
+
           periods.each_with_index do |period|
 
             period.work_shift_schedules.each_with_index do |w, index|
@@ -38,6 +39,7 @@ class IndexController < ApplicationController
                          { content: "Sat", text_color: "e9e9e9" },
                          { content: "Sun", text_color: "e9e9e9" }
                       ]] if index == 0
+
               if user.is_available && user.rule.worker
                 data += [
                   [
@@ -48,7 +50,8 @@ class IndexController < ApplicationController
                     { content: "#{w.thursday_hours}\n#{w.thursday}",   align: :center},
                     { content: "#{w.friday_hours}\n#{w.friday}",       align: :center},
                     { content: "#{w.saturday_hours}\n#{w.saturday}",   align: :center},
-                    { content: "#{w.sunday_hours}\n#{w.sunday}",       align: :center}
+                    { content: "#{w.sunday_hours}\n#{w.sunday}",       align: :center},
+                    { content: "#{w.monday_hours  + w.tuesday_hours  + w.wednesday_hours  + w.thursday_hours  + w.friday_hours  + w.saturday_hours  + w.sunday_hours}", align: :center}
                   ]
                 ]
               end
@@ -58,14 +61,12 @@ class IndexController < ApplicationController
                 pdf.text "vk #{period.week_number}   #{period.to} - #{period.from}.#{period.month}.#{period.year}", :size => 12
               end
 
-              puts "TABLE"
-              puts data
             end
 
             pdf.table(
               data,
               cell_style: { size: 8 },
-              column_widths: [65, 65, 65, 65, 65, 65, 65, 65]
+              column_widths: [62, 62, 62, 62, 62, 62, 62, 62]
             ) do |t|
               t.rows(0).align =  :center
               t.rows(0).border_top_width =  0
@@ -89,6 +90,12 @@ class IndexController < ApplicationController
                 t.rows(1).border_top_width =  0
                 t.rows(1).border_right_width =  0
                 t.rows(1).border_left_width = 0
+
+                t.columns(-1).align =  :center
+                t.columns(-1).border_top_width =  0
+                t.columns(-1).border_bottom_width =  0
+                t.columns(-1).border_right_width =  0
+                t.columns(-1).border_left_width = 0
               end
             end
             data = [[""]]
