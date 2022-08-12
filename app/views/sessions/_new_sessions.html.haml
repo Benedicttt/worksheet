@@ -32,15 +32,19 @@
         %br
         = f.submit t('sign_in'), class: "col-md-12 btn btn-primary"
 
-      %br
-      %br
-      .text-center
-        = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
-          = f.submit t('sign_up'), class: "col-md-12 btn btn-primary"
+      -#%br
+      -#%br
+      -#.text-center
+      -#  = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
+      -#    = f.submit t('sign_up'), class: "col-md-12 btn btn-primary"
 
 - flash['success'] = ''
 - flash['alert'] = ''
 
+:css
+  body {
+    color: white;
+  }
 :javascript
 
   $(document).ready(function(){

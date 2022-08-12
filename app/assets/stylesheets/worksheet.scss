@@ -35,14 +35,14 @@ table.table-new-user-form {
   height:300px;
   overflow-x:auto;
   margin-top: 0px;
-  border: 1px solid rgba(255,255,255,0.3);
+  //border: 1px solid rgba(255,255,255,0.3);
 }
 
 .tbl-content-form {
   height: 55vh;
   overflow-x:auto;
   margin-top: 0px;
-  border: 1px solid rgba(255,255,255,0.3);
+  //border: 1px solid rgba(255,255,255,0.3);
 }
 
 th {
@@ -61,7 +61,7 @@ td, tr {
   font-weight: 400;
   font-size: 14px;
   color: #fff;
-  border: 0.5px solid;
+  //border: 0.5px solid;
 }
 
 tr {
@@ -102,8 +102,6 @@ aside{
   background: linear-gradient(to right, #54565f, #868893);
   font-family: 'Roboto', sans-serif;
 }
-
-
 
 section{
   margin: 50px;

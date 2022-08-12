@@ -5,8 +5,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user_email = User.find_by(email: params[:session][:email].downcase)
-    user_nick = User.find_by(nickname: params[:session][:nickname])
+    user_email = User.find_by(email: params[:session][:email].downcase, password: params[:session][:password])
+    user_nick = User.find_by(nickname: params[:session][:nickname], password: params[:session][:password])
 
     session = if !params[:session][:nickname].blank? && !user_nick.nil?
                 log_in user_nick
