@@ -49,4 +49,11 @@ $(document).ready(function(){
         "hideMethod": "fadeOut"
     };
 
+    $( document ).ajaxStart(function() {
+        $('#overlay').show();
+    });
+
+    $( document ).ajaxStop(function() {
+        $('#overlay').hide();
+    });
 });
