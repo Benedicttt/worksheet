@@ -80,7 +80,7 @@
 
                   %th.text-center.width125
                     - if  condition_disabled
-                      = button_tag 'EDIT', type: "button", class: "btn btn-warning width200", id: "edit_#{index + 1}"
+                      = button_tag 'EDIT', type: "button", class: "btn btn-warning width100", id: "edit_#{index + 1}"
                       :javascript
                         $(document).ready(function(){
 
@@ -88,7 +88,7 @@
                               console.log("click btn warning #edit_#{index + 1}")
 
 
-                              if ($(this).attr('class') == 'btn width200 btn-primary click_#{index + 1}') {
+                              if ($(this).attr('class') == 'btn width100 btn-primary click_#{index + 1}') {
                                 $(this).find("button").removeAttr('type');
                                 $(this).attr('type', 'submit');
 
@@ -101,7 +101,7 @@
                                  $(this).removeClass('btn-warning')
                                  $(this).addClass('btn-primary')
                                  $(this).addClass('click_#{index + 1}')
-                                 $(this).text("ADD")
+                                 $(this).text("UPDATE")
                                }
                              })
                           })

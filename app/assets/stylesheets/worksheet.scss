@@ -31,7 +31,7 @@ h1 {
 
 .table {
   width:100%;
-  min-width: 1215px;
+  min-width: 1015px;
   table-layout: fixed;
   overflow: hidden;
 }
@@ -108,6 +108,7 @@ aside{
 section{
   margin: 50px;
   margin-left: 15px;
+  max-width: 1250px;
 }
 
 
