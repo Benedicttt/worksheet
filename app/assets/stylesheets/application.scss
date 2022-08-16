@@ -97,12 +97,13 @@ input {
   line-height: 32px;
   color: black;
   width: 200px;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .font-size-16 { font-size: 16px; }
 .display_flex { display: flex; }
 .display-inline-block { display: inline-block; }
+.display-flow-root { display: flow-root; }
 .position_relative { position: relative; }
 .position_absolute { position: absolute; }
 .left_85_per { left: 85% }
@@ -159,3 +160,8 @@ input {
 .opacity_05 { opacity: 0.5; }
 
 a, button, input, table, select {   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+
+.form-select {
+  font-size: 12px;
+  height: 32px;
+}

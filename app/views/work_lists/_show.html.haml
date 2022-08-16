@@ -3,12 +3,12 @@
     = render "shared/flash"
     = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "search"} do |f|
       - if current_user.rule.worker && current_user.is_available && current_user.rule.manager
-        = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]}, { selected: params[:user_id].nil? ? current_user.id : params[:user_id] }, { class: "form-select width200" }
+        = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]}, { selected: params[:user_id].nil? ? current_user.id : params[:user_id] }, { class: "form-select width175" }
       - else
         = f.hidden_field :user_id, value: current_user.id
       %br
-        = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width250" }
-      = f.select :year, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width250" }
+        = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width125" }
+      = f.select :year, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125" }
       %br
       = f.submit "", class: "btn btn-sm btn-primary icon-search width100"
       %br

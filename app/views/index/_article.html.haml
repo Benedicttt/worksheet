@@ -28,15 +28,28 @@
 
 
       .tbl-content-form
-        %br
         %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
-          %tbody
+          %tbody.common-table-article
             - Period.all.each do |p|
               - WorkShiftSchedule.where(period_id: p.id).each_with_index do |wss, index|
                 - u = User.find(wss.user_id)
                 - if index == 0
                   %tr
                     %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                    %td.style_for_empty_td
+                - if index == 0
+                  %tr
+                    %td{ style: "border-bottom: 0px!important;" }
+                      %br
                     %td.style_for_empty_td
                     %td.style_for_empty_td
                     %td.style_for_empty_td
@@ -61,7 +74,7 @@
                             %p Week #{p.week_number}
 
                     %td
-                      %strong{ style: "color: #3c2d09;" }
+                      %strong{ style: "color: #ffc949;" }
                         = u.first_name
                         = u.last_name
                         (#{u.id})
@@ -97,12 +110,11 @@
                       = wss.monday_hours.to_i + wss.tuesday_hours.to_i + wss.wednesday_hours.to_i + wss.thursday_hours.to_i + wss.friday_hours.to_i + wss.saturday_hours.to_i + wss.sunday_hours.to_i
 
                     - if !current_user.rule.nil? && current_user.rule.manager
-                      %td.display_flex{style: "border: 0px solid;"}
+                      %td.display-flow-root{ style: "border: 0px solid;" }
                         = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "show", id: wss.id} do |f|
                           = f.submit "", class: "icon-edit-worksheet btn"
-                        .margin_left_30_per
-                          = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
-                            = f.submit "", class: "icon-delete-worksheet btn"
+                        = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
+                          = f.submit "", class: "icon-delete-worksheet btn"
   - else
     = render "sessions/new_sessions"
 
