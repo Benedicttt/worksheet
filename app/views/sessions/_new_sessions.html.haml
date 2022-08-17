@@ -12,9 +12,9 @@
       .form_sign.position_relative.display-inline-block
       = form_for(:session, url: login_path) do |f|
         %div
-          %div
-            = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
-            = f.label t('login_via')
+          -#%div
+          -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
+          -#  = f.label t('login_via')
           %br
         = f.label t('email'), id: :id_email
         = f.text_field :email, class: 'form-control', onfocus: "this.value=''"
