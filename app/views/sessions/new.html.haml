@@ -1,7 +1,68 @@
-- if !current_user.present?
+- if mobile_device?
+  - if !current_user.present?
+    = form_for "", remote: true, url: { controller: "users/steps", action: "select_language_session"} do |f|
+      .display_flex
+        - klass_fi = params[:locale] == "fi" ? "opacity_1" : "opacity_05"
+        - klass_en = params[:locale] == "en" ? "opacity_1" : "opacity_05"
+
+        .margin_left_2_per
+          = f.button "FI", value: "fi", class: "button_lang_fi #{klass_fi}"
+        .margin_left_5_per
+          = f.button "EN", value: "en", class: "button_lang_en #{klass_en}"
+
+  = render "new_sessions"
+
+  :css
+    @media (max-width: 1024px) {
+      body {
+        background: white;
+      }
+
+      .form-control {
+        font-size: 12px;
+        height: 32px;
+        width: 50%;
+        margin: 0 auto;
+        align: center;
+        width: 50%;
+      }
+
+      .button_lang_fi {
+        border: 0px solid black;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        display: block;
+        position: absolute;
+        right: 80px;
+        top: 20px;
+        font-size: 12px;
+      }
+
+      .button_lang_en {
+        border: 0px solid black;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 12px;
+      }
+  }
+
+  :javascript
+    $(document).ready(function() {
+
+      $('#select_lang, #select_lang_mobile').change(function(){
+        window.location = window.location.origin + "/" + $(this).val()
+      });
+
+    })
+- else
   .wrapper
     = render "index/header"
     = render "index/aside"
     = render "new_sessions"
     = render "index/footer"
-

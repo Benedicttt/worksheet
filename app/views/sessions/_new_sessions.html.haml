@@ -1,42 +1,77 @@
-%article
-  %div
-    - if !flash.empty?
-      - flash.keys.each do |k|
-        -unless flash['success'].blank?
-          %div{style: 'color:green;'}
+- if mobile_device?
+  %article
+    .text-center
+      %strong
+        WorkSheet
+    %div
+      - if !flash.empty?
+        - flash.keys.each do |k|
+          -unless flash['success'].blank?
+            %div{style: 'color:green;'}
+              %br
+              %h1=flash[k]
+
+    %div.container.text-center.margin_top_20_per
+      %div.col-md-3
+        .form_sign.position_relative.display-inline-block
+        = form_for(:session, url: login_path) do |f|
+          %div
+            -#%div
+            -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
+            -#  = f.label t('login_via')
             %br
-            %h1=flash[k]
+          = f.text_field :email, class: 'form-control', onfocus: "this.value=''", placeholder: t('email')
 
-  %div.container.text-center
-    %div.col-md-3
-      .form_sign.position_relative.display-inline-block
-      = form_for(:session, url: login_path) do |f|
-        %div
-          -#%div
-          -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
-          -#  = f.label t('login_via')
+          = f.text_field :nickname, class: 'form-control'
           %br
-        = f.label t('email'), id: :id_email
-        = f.text_field :email, class: 'form-control', onfocus: "this.value=''"
+          = f.password_field :password, class: 'form-control', placeholder: t('password')
+          - if !flash.empty?
+            - flash.keys.each do |k|
+              -unless flash['alert'].blank?
+                %div{style: 'color:red;'}
+                  =flash[k]
 
-        = f.text_field :nickname, class: 'form-control'
-        %br
-        = f.label t('password')
-        = f.password_field :password, class: 'form-control'
-        - if !flash.empty?
-          - flash.keys.each do |k|
-            -unless flash['alert'].blank?
-              %div{style: 'color:red;'}
-                =flash[k]
+          %br
+          = f.submit t('sign_in'), class: "col-6 btn btn-sm btn-dark"
 
-        %br
-        = f.submit t('sign_in'), class: "col-md-12 btn btn-primary"
+- else
+  %article
+    %div
+      - if !flash.empty?
+        - flash.keys.each do |k|
+          -unless flash['success'].blank?
+            %div{style: 'color:green;'}
+              %br
+              %h1=flash[k]
 
-      -#%br
-      -#%br
-      -#.text-center
-      -#  = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
-      -#    = f.submit t('sign_up'), class: "col-md-12 btn btn-primary"
+    %div.container.text-center.width250
+      %div
+        .form_sign.position_relative.display-inline-block
+        = form_for(:session, url: login_path) do |f|
+          %div
+            -#%div
+            -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
+            -#  = f.label t('login_via')
+            %br
+          = f.text_field :email, class: 'form-control', onfocus: "this.value=''", placeholder: t('email')
+
+          = f.text_field :nickname, class: 'form-control'
+          %br
+          = f.password_field :password, class: 'form-control', placeholder: t('password')
+          - if !flash.empty?
+            - flash.keys.each do |k|
+              -unless flash['alert'].blank?
+                %div{style: 'color:red;'}
+                  =flash[k]
+
+          %br
+          = f.submit t('sign_in'), class: "col-md-12 btn btn-sm btn-light"
+
+        -#%br
+        -#%br
+        -#.text-center
+        -#  = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
+        -#    = f.submit t('sign_up'), class: "col-md-12 btn btn-primary"
 
 - flash['success'] = ''
 - flash['alert'] = ''

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       post   'destroy'         => 'users#destroy'
 
       post 'select_language'   => 'steps#select_language'
+      post 'select_language_session'   => 'steps#select_language_session'
       post 'authorization'     => 'steps#authorization'
       post 'create_user'       => 'steps#create_user'
       post 'go_to_main'        => 'steps#go_to_main'

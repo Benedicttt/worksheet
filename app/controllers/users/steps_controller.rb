@@ -16,7 +16,13 @@ class Users::StepsController < ApplicationController
   end
 
   def select_language
+    params[:locale] = !params[:button].blank? ? params[:button] : params[:locale]
     render "shared/select_language"
+  end
+
+  def select_language_session
+    params[:locale] = !params[:button].blank? ? params[:button] : params[:locale]
+    render "shared/select_language_session"
   end
 
   def create_user
