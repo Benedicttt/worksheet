@@ -56,4 +56,23 @@ $(document).ready(function(){
     $( document ).ajaxStop(function() {
         $('#overlay').hide();
     });
+
+    $(document).ready(function () {
+        var $containerHeight = $(window).height();
+        if ($containerHeight <= 818) {
+            $('body').css({
+                position: 'static',
+                bottom: 'auto',
+                left: 'auto',
+                zoom: 0.9
+            });
+        }
+        if ($containerHeight > 819) {
+            $('body').css({
+                position: 'absolute',
+                bottom: '3px',
+                left: '0px'
+            });
+        }
+    });
 });
