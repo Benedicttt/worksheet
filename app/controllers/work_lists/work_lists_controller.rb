@@ -41,6 +41,8 @@ class WorkLists::WorkListsController < ApplicationController
           work_stop:  work_stop,
           break_start: break_start,
           break_stop:  break_stop,
+
+
           hours:  hours,
 
           work_start_minutes:  get_minutes_from_full_time(work_start),
@@ -79,7 +81,7 @@ class WorkLists::WorkListsController < ApplicationController
     #   flash[:alert] = "Internal server error "
     # end
 
-    render "work_lists/work_list_new"
+    render "work_lists/work_list_new", day: params[:day]
   end
 
   def show

@@ -23,6 +23,17 @@
 
 
       .tbl-content-form
+        - if !params[:day].blank? || !params[:day].nil?
+          :javascript
+            $(document).ready(function(){
+              document.querySelectorAll(".tr_#{params[:day]}")[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: "nearest"
+              });
+            })
+
+
         - days.times do |index|
           - day = index + 1
           = form_for "", remote: true, url: work_lists_create_path(day: day) do |f|
@@ -81,6 +92,7 @@
                   %th.text-center.width125
                     - if  condition_disabled
                       = button_tag 'EDIT', type: "button", class: "btn btn-warning width100", id: "edit_#{index + 1}"
+
                       :javascript
                         $(document).ready(function(){
 
