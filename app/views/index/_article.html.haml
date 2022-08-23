@@ -107,7 +107,14 @@
                       %br
                       #{wss.sunday}
                     %td.text-center
-                      = wss.monday_hours.to_i + wss.tuesday_hours.to_i + wss.wednesday_hours.to_i + wss.thursday_hours.to_i + wss.friday_hours.to_i + wss.saturday_hours.to_i + wss.sunday_hours.to_i
+                      - monday = (wss.monday.include?("LOMA") || wss.monday.include?("loma")) ? 0 : wss.monday_hours.to_i
+                      - tuesday = (wss.tuesday.include?("LOMA") || wss.tuesday.include?("loma")) ? 0 : wss.tuesday_hours.to_i
+                      - wednesday = (wss.wednesday.include?("LOMA") || wss.wednesday.include?("loma")) ? 0 : wss.wednesday_hours.to_i
+                      - thursday = (wss.thursday.include?("LOMA") || wss.thursday.include?("loma")) ? 0 : wss.thursday_hours.to_i
+                      - friday = (wss.friday.include?("LOMA") || wss.friday.include?("loma")) ? 0 : wss.friday_hours.to_i
+                      - saturday = (wss.saturday.include?("LOMA") || wss.saturday.include?("loma")) ? 0 : wss.saturday_hours.to_i
+                      - sunday = (wss.sunday.include?("LOMA") || wss.sunday.include?("loma")) ? 0 : wss.sunday_hours.to_i
+                      = monday + tuesday + wednesday + thursday + friday + saturday + sunday
 
                     - if !current_user.rule.nil? && current_user.rule.manager
                       %td.display-flow-root{ style: "border: 0px solid;" }
