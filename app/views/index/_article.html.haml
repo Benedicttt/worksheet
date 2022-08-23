@@ -30,7 +30,7 @@
       .tbl-content-form
         %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %tbody.common-table-article
-            - Period.all.each do |p|
+            - Period.all.order("week_number desc").each do |p|
               - WorkShiftSchedule.where(period_id: p.id).each_with_index do |wss, index|
                 - u = User.find(wss.user_id)
                 - if index == 0
