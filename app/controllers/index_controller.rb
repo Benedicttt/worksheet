@@ -40,6 +40,15 @@ class IndexController < ApplicationController
                          { content: "Sun", text_color: "e9e9e9" }
                       ]] if index == 0
 
+
+              monday = (w.monday.include?("LOMA") || w.monday.include?("loma")) ? 0 : w.monday_hours.to_i
+              tuesday = (w.tuesday.include?("LOMA") || w.tuesday.include?("loma")) ? 0 : w.tuesday_hours.to_i
+              wednesday = (w.wednesday.include?("LOMA") || w.wednesday.include?("loma")) ? 0 : w.wednesday_hours.to_i
+              thursday = (w.thursday.include?("LOMA") || w.thursday.include?("loma")) ? 0 : w.thursday_hours.to_i
+              friday = (w.friday.include?("LOMA") || w.friday.include?("loma")) ? 0 : w.friday_hours.to_i
+              saturday = (w.saturday.include?("LOMA") || w.saturday.include?("loma")) ? 0 : w.saturday_hours.to_i
+              sunday = (w.sunday.include?("LOMA") || w.sunday.include?("loma")) ? 0 : w.sunday_hours.to_i
+
               if user.is_available && user.rule.worker
                 data += [
                   [
@@ -51,7 +60,7 @@ class IndexController < ApplicationController
                     { content: "#{w.friday_hours}\n#{w.friday}",       align: :center},
                     { content: "#{w.saturday_hours}\n#{w.saturday}",   align: :center},
                     { content: "#{w.sunday_hours}\n#{w.sunday}",       align: :center},
-                    { content: "#{w.monday_hours  + w.tuesday_hours  + w.wednesday_hours  + w.thursday_hours  + w.friday_hours  + w.saturday_hours  + w.sunday_hours}", align: :center}
+                    { content: "#{monday + tuesday + wednesday + thursday + friday + saturday + sunday}", align: :center}
                   ]
                 ]
               end
