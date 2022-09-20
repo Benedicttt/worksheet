@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       post   'search'          => 'work_lists#search'
       post   'show'            => 'work_lists#show'
       get    'show_pdf'        => "work_lists#work_list_pdf"
+      get    'show_excel'      => "work_lists#work_list_excel"
     end
   end
 end

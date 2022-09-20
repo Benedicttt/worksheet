@@ -93,6 +93,9 @@ group :development, :production, :test do
   gem 'prawn'
   gem 'prawn-table'
   gem "matrix"
+
+  gem 'axlsx', '= 2.0.1'
+  gem 'axlsx_rails'
 end
 
 

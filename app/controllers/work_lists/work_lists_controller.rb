@@ -105,6 +105,68 @@ class WorkLists::WorkListsController < ApplicationController
     render "work_lists/show"
   end
 
+  def work_list_excel
+    user = User.find(params[:user_id])
+    days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
+
+    respond_to do |format|
+      col_widths = [20, 25, 25, 25, 25, 25, 25, 60]
+
+      format.html
+      format.xlsx do
+        p = Axlsx::Package.new
+        wb = p.workbook
+        wb.add_worksheet(name: "Work List") do |sheet|
+          item_style = wb.styles.add_style :b => false, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_2 = wb.styles.add_style :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_3 = wb.styles.add_style :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
+
+          sheet.add_row []
+          sheet.add_row ["", "Work List"], :style => item_style
+          sheet.add_row ["", "Month \n#{params[:month]}", "Year \n#{params[:year]}", "#{user.first_name} #{user.last_name}"], :style => item_style_2
+          sheet.add_row []
+          sheet.add_row ["", "Day", "Work start", "Break start", "Break stop", "Work stop", "Hours", "Comment"], :style => item_style_2
+          total_hours = 0.0;
+
+          days.times do |day|
+            day += 1
+            wl_line = WorkList.find_by(user_id: params[:user_id], month: params[:month], years: params[:year], day: day)
+            name_day = Time.at((day - 1) * 86400 ).utc.strftime '%A'
+
+            sheet.add_row [] if name_day == "Monday"
+            sheet.add_row ["",
+                           "(#{day}) #{name_day}",
+                            wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start,
+                            wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : wl_line.break_start,
+                            wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : wl_line.break_stop,
+                            wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop,
+                            wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours,
+                            wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment
+
+            ], :style => item_style
+            total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f
+          end
+
+          sheet.add_row []
+          sheet.add_row ["", "","","","","","#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })"], :style => item_style
+
+          sheet.rows.each {|row| row.height = 35}
+          # sheet.col_style(1,item_style_3)
+          35.times { |i| !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
+
+          start_col = 4
+          end_col = 0
+
+          # sheet.merge_cells "A1:A50"
+
+          sheet.column_widths *col_widths
+        end
+
+        send_data p.to_stream.read, type: "application/xlsx", filename: "work_list_#{user.first_name}_#{user.last_name}.xlsx"
+      end
+    end
+  end
+
   def work_list_pdf
     template(params[:user_id], params[:month], params[:year])
   end
@@ -156,14 +218,17 @@ class WorkLists::WorkListsController < ApplicationController
               day += 1
               wl_line = WorkList.find_by(user_id: user_id, month: month, years: year, day: day)
 
+              name_day = Time.at((day - 1) * 86400 ).utc.strftime '%A'
+
               data += [[
-                 { content: "#{day}", align: :center },
-                 { content: wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start, align: :center },
-                 { content: wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : wl_line.break_start, align: :center },
-                 { content: wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : wl_line.break_stop, align: :center },
-                 { content: wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop, align: :center },
-                 { content: wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours, align: :center },
-                 { content: wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment, align: :center }
+                   { content: "(#{day}) #{name_day}", align: :left },
+                   { content: wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start, align: :center },
+                   { content: wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : wl_line.break_start, align: :center },
+                   { content: wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : wl_line.break_stop, align: :center },
+                   { content: wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop, align: :center },
+                   { content: wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours, align: :center },
+                   { content: wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment, align: :center }
+
               ]]
 
               total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f ;
@@ -182,7 +247,7 @@ class WorkLists::WorkListsController < ApplicationController
             pdf.table(
               data,
               cell_style: { font: "Monaco", :size => 9, :style => :normal },
-              column_widths: [55, 55, 55, 55, 55, 55, 190],
+              column_widths: [85, 55, 55, 55, 55, 55, 140],
 
             ) do |t|
               t.rows(0).align =  :center
@@ -198,7 +263,7 @@ class WorkLists::WorkListsController < ApplicationController
               #
               if !t.rows(1).empty?
                 t.rows(1..-1).columns(0).background_color = "beb9b9"
-                t.rows(1..-1).columns(0).size = 10
+                t.rows(1..-1).columns(0).size = 9
                 t.rows(1).columns(1..-1).background_color = "beb9b9"
                 t.rows(2).columns(0).background_color = "ffffff"
 

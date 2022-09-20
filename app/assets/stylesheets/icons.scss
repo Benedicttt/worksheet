@@ -219,6 +219,24 @@
 }
 
 //
+.icon-excel {
+  background: url(excel.png);
+  background-size: 100%;
+  height: 34px;
+  width: 35px !important;
+  border: 0px;
+}
+
+.icon-excel:hover {
+  transition: 0.02s case;
+  transform: translate(-5%, -5%) scale(1.1, 1.1);
+}
+
+.icon-excel:hover + .cursor {
+  transform: translate(-50%, -50%) scale(8);
+}
+
+//
 .icon-search {
   background: url(search.png);
   background-size: 100%;

@@ -2,7 +2,7 @@
   - if current_user.present?
     - days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
     - u = User.find(params[:user_id])
-    %h1 New work list for user: #{u.first_name} #{u.last_name}, month: #{params[:month]}, year: #{params[:year]}
+    %h1 New work list for user:  #{u.first_name} #{u.last_name},  month: #{params[:month]},  year: #{params[:year]}
 
     = render "shared/flash"
 
@@ -20,6 +20,7 @@
               %th.text-center.width125 Comment
               %th.text-center.width125
                 = link_to "", work_lists_show_pdf_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
+                = link_to "", work_lists_show_excel_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: :xlsx), class: 'btn icon-excel'
 
 
       .tbl-content-form
@@ -67,9 +68,19 @@
                 = f.hidden_field :year, value: params[:year]
                 = f.hidden_field :user_id, value: params[:user_id].nil? ? current_user.id : params[:user_id]
 
+                - if (Time.at((day) * 86400 ).utc.strftime '%A') == "Tuesday"
+                  %th.text-center.width50
+                  %th.text-center.width80
+                  %th.text-center.width80
+                  %th.text-center.width80
+                  %th.text-center.width80
+                  %th.text-center.width80
+                  %th.text-center.width125
+                  %th.text-center.width125
+
                 %tr{ class: "tr_#{index + 1}"}
-                  %th.text-center.width50.font-size-16
-                    = index + 1
+                  %th.text-center.width50.font-size-12
+                    = "#{index + 1} - #{Time.at((index) * 86400 ).utc.strftime '%A'}"
                   %th.text-center.width80
                     = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
                   %th.text-center.width80
