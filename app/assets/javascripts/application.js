@@ -64,7 +64,7 @@ $(document).ready(function(){
                 position: 'static',
                 bottom: 'auto',
                 left: 'auto',
-                zoom: 0.9
+                zoom: 0.3
             });
         }
         if ($containerHeight > 819) {
