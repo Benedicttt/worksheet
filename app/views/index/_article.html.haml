@@ -18,13 +18,13 @@
               %th.text-center Sat
               %th.text-center Sun
               %th.text-center Total hours
-              - if !current_user.rule.nil?
-                %th.text-center
-                  = link_to "", show_all_path(format: "pdf"), class: 'btn icon-pdf', target: "_blank"
-              - if !current_user.rule.nil? && current_user.rule.manager
-                %th.text-center
-                  = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "new"} do |f|
-                    = f.submit "", class: "icon-new-worksheet btn"
+              %th.text-center
+                %div.display_flex
+                  - if !current_user.rule.nil?
+                    = link_to "", show_all_path(format: "pdf"), class: 'btn icon-pdf', target: "_blank"
+                  - if !current_user.rule.nil? && current_user.rule.manager
+                    = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "new"} do |f|
+                      = f.submit "", class: "icon-new-worksheet btn"
 
 
       .tbl-content-form
@@ -35,35 +35,35 @@
                 - u = User.find(wss.user_id)
                 - if index == 0
                   %tr
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
                 - if index == 0
                   %tr
                     %td{ style: "border-bottom: 0px!important;" }
                       %br
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
-                    %td.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
+                    %th.style_for_empty_td
 
                 - if  u.rule.worker && u.is_available
                   %tr
-                    %td.width175{ style: "border-left: 0px !important; border-right: 0px !important; border-bottom: 0px !important;" }
+                    %td{ style: "border-left: 0px !important; border-right: 0px !important; border-bottom: 0px !important;" }
                       - if index == 0
                         %div.display_flex
                           %div.padding-5-per
@@ -117,11 +117,12 @@
                       = monday + tuesday + wednesday + thursday + friday + saturday + sunday
 
                     - if !current_user.rule.nil? && current_user.rule.manager
-                      %td.display-flow-root{ style: "border: 0px solid;" }
-                        = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "show", id: wss.id} do |f|
-                          = f.submit "", class: "icon-edit-worksheet btn"
-                        = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
-                          = f.submit "", class: "icon-delete-worksheet btn"
+                      %td{ style: "border: 0px solid;" }
+                        %div.display_flex
+                          = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "show", id: wss.id} do |f|
+                            = f.submit "", class: "icon-edit-worksheet btn"
+                          = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
+                            = f.submit "", class: "icon-delete-worksheet btn"
   - else
     = render "sessions/new_sessions"
 

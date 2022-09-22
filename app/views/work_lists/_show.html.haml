@@ -22,18 +22,18 @@
           .margin_top_5_px
             = f.submit "", class: "icon-new-worklist btn"
       - else
-        %table.margin_top_2_per
-          %tbody
-          - @work_list.map(&:month).uniq.each do |month|
-            %tr
-              %th.text-center.width250
-                Month #{month}, #{params[:year]}
-              %th.text-center.width125
-                = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "new"} do |f|
-                  = f.hidden_field :month, value: month
-                  = f.hidden_field :year, value: params[:year]
-                  = f.hidden_field :user_id, value: params[:user_id]
-                  = f.submit "", class: "icon-edit-worksheet btn"
-              %th.text-center
-                = link_to "", work_lists_show_pdf_path(month: month, year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
-                = link_to "", work_lists_show_excel_path(month: month, year: params[:year], user_id: params[:user_id], format: :xlsx), class: 'btn icon-excel'
+        - @work_list.map(&:month).uniq.each do |month|
+          %table.margin_top_2_per
+            %tbody
+              %tr
+                %th.text-center.width250
+                  Month #{month}, #{params[:year]}
+                %th.text-center.width125
+                  = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "new"} do |f|
+                    = f.hidden_field :month, value: month
+                    = f.hidden_field :year, value: params[:year]
+                    = f.hidden_field :user_id, value: params[:user_id]
+                    = f.submit "", class: "icon-edit-worksheet btn"
+                %th.text-center
+                  = link_to "", work_lists_show_pdf_path(month: month, year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
+                  = link_to "", work_lists_show_excel_path(month: month, year: params[:year], user_id: params[:user_id], format: :xlsx), class: 'btn icon-excel'
