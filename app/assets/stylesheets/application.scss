@@ -25,12 +25,12 @@
 }
 
 body {
-  background: #1e1f22;
+  background: #2C3446;
 }
 
 header {
   grid-area: header;
-  background: #1e1f22;
+  background: #2C3446;
   //padding: 20px;
   border-radius: 15px;
   width: 15%;
@@ -157,7 +157,7 @@ input {
 .opacity_05 { opacity: 0.5; }
 .opacity_1 { opacity: 1; }
 
-a, button, input, table, select {   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
 
 .form-select {
   font-size: 12px;

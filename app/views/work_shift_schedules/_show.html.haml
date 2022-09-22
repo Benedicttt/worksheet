@@ -2,11 +2,11 @@
   - if current_user.present?
     = render "shared/flash"
 
-    %section.position_relative.display-inline-block
+    %section.position_relative.display-inline-block{ style: "max-width: 1800px;" }
       - wss = WorkShiftSchedule.find(params[:id])
       - period = Period.find(wss.period_id)
       - user = User.find(wss.user_id)
-      %h1
+      %h3
         Edit Worksheet from period #{period.week_number}, user #{user.first_name} #{user.last_name}
 
       %div{ style: "margin-left: 15%; max-width: 600px;" }

@@ -2,23 +2,23 @@
   - if current_user.present?
     - days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
     - u = User.find(params[:user_id])
-    %h1 New work list for user:  #{u.first_name} #{u.last_name},  month: #{params[:month]},  year: #{params[:year]}
+    %h3 New work list for user:  #{u.first_name} #{u.last_name},  month: #{params[:month]},  year: #{params[:year]}
 
     = render "shared/flash"
 
     %section.position_relative.display-inline-block
       .tbl-header
-        %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %table.container.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %thead
             %tr
-              %th.text-center.width50  Day
-              %th.text-center.width80  Work start
-              %th.text-center.width80  Break start
-              %th.text-center.width80  Break stop
-              %th.text-center.width80  Work stop
-              %th.text-center.width80  Common hours
-              %th.text-center.width125 Comment
-              %th.text-center.width125
+              %td.text-center.width50  Day
+              %td.text-center.width80  Work start
+              %td.text-center.width80  Break start
+              %td.text-center.width80  Break stop
+              %td.text-center.width80  Work stop
+              %td.text-center.width80  Common hours
+              %td.text-center.width125 Comment
+              %td.text-center.width125
                 = link_to "", work_lists_show_pdf_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
                 = link_to "", work_lists_show_excel_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: :xlsx), class: 'btn icon-excel'
 
@@ -38,7 +38,7 @@
         - days.times do |index|
           - day = index + 1
           = form_for "", remote: true, url: work_lists_create_path(day: day) do |f|
-            %table.table
+            %table.table.container
               %tbody
                 - wl = WorkList.find_by(day: index + 1, month: params[:month], years: params[:year], user_id: params[:user_id])
                 - work_start_hour  = wl.nil? ? "" : wl.work_start
@@ -69,27 +69,27 @@
                 = f.hidden_field :user_id, value: params[:user_id].nil? ? current_user.id : params[:user_id]
 
                 - if (Time.at((day) * 86400 ).utc.strftime '%A') == "Tuesday"
-                  %th.text-center.width50
-                  %th.text-center.width80
-                  %th.text-center.width80
-                  %th.text-center.width80
-                  %th.text-center.width80
-                  %th.text-center.width80
-                  %th.text-center.width125
-                  %th.text-center.width125
+                  %td.text-center.width50
+                  %td.text-center.width80
+                  %td.text-center.width80
+                  %td.text-center.width80
+                  %td.text-center.width80
+                  %td.text-center.width80
+                  %td.text-center.width125
+                  %td.text-center.width125
 
                 %tr{ class: "tr_#{index + 1}"}
-                  %th.text-center.width50.font-size-12
+                  %td.text-center.width50.font-size-12
                     = "#{index + 1} - #{Time.at((index) * 86400 ).utc.strftime '%A'}"
-                  %th.text-center.width80
+                  %td.text-center.width80
                     = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
-                  %th.text-center.width80
+                  %td.text-center.width80
                     = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
-                  %th.text-center.width80
+                  %td.text-center.width80
                     = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
-                  %th.text-center.width80
+                  %td.text-center.width80
                     = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
-                  %th.text-center.width80
+                  %td.text-center.width80
                     = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onfocus: "some_#{day}()"
                     :javascript
                         function some_#{day}() {
@@ -97,10 +97,10 @@
                             recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
                           )
                         }
-                  %th.text-center.width125
+                  %td.text-center.width125
                     = f.text_area :comment, value: comment, class: "border-radius-15px width200  " + (condition_disabled && (!wss_comment.nil? ) ? "opacity_05" : ""), placeholder: "Comment"
 
-                  %th.text-center.width125
+                  %td.text-center.width125
                     - if  condition_disabled
                       = button_tag 'EDIT', type: "button", class: "btn btn-warning width100", id: "edit_#{index + 1}"
 

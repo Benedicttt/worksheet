@@ -118,14 +118,18 @@ class WorkLists::WorkListsController < ApplicationController
         wb = p.workbook
         wb.add_worksheet(name: "Work List") do |sheet|
           item_style = wb.styles.add_style :b => false, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_2 = wb.styles.add_style :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_3 = wb.styles.add_style :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
+          item_style_2 = wb.styles.add_style :bg_color => "3ea03e", :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_3 = wb.styles.add_style :bg_color => "3ea03e", :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
 
           sheet.add_row []
           sheet.add_row ["", "Work List"], :style => item_style
-          sheet.add_row ["", "Month \n#{params[:month]}", "Year \n#{params[:year]}", "#{user.first_name} #{user.last_name}"], :style => item_style_2
+          sheet.add_row ["", "Month \n#{params[:month]}", "Year \n#{params[:year]}", "#{user.first_name} #{user.last_name}"]
+          3.times { |i| sheet.rows[2].cells[i + 1].style = item_style_3 }
+
           sheet.add_row []
-          sheet.add_row ["", "Day", "Work start", "Break start", "Break stop", "Work stop", "Hours", "Comment"], :style => item_style_2
+          sheet.add_row ["", "Day", "Work start", "Break start", "Break stop", "Work stop", "Hours", "Comment"]
+          7.times { |i| sheet.rows[4].cells[i + 1].style = item_style_3 }
+
           total_hours = 0.0;
 
           days.times do |day|
@@ -152,7 +156,8 @@ class WorkLists::WorkListsController < ApplicationController
 
           sheet.rows.each {|row| row.height = 35}
           # sheet.col_style(1,item_style_3)
-          35.times { |i| !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
+
+          35.times { |i| !sheet.rows[i + 5].nil? && !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
 
           start_col = 4
           end_col = 0
