@@ -6,7 +6,7 @@
       - wss = WorkShiftSchedule.find(params[:id])
       - period = Period.find(wss.period_id)
       - user = User.find(wss.user_id)
-      %h3
+      %h6
         Edit Worksheet from period #{period.week_number}, user #{user.first_name} #{user.last_name}
 
       %div{ style: "margin-left: 15%; max-width: 600px;" }
