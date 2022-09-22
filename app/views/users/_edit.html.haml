@@ -44,55 +44,55 @@
               = t('is_available')
             %th
               .form-check.form-switch
-                = f.check_box :is_available, checked: u.is_available, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :is_available, checked: u.is_available, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Worker
             %th
               .form-check.form-switch
-                = f.check_box :worker, checked: u.rule.worker, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :worker, checked: u.rule.worker, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Manager
             %th
               .form-check.form-switch
-                = f.check_box :manager, checked: u.rule.manager, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :manager, checked: u.rule.manager, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Create user
             %th
               .form-check.form-switch
-                = f.check_box :create_user, checked: u.rule.create_user, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :create_user, checked: u.rule.create_user, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Edit_user
             %th
               .form-check.form-switch
-                = f.check_box :edit_user, checked: u.rule.edit_user, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :edit_user, checked: u.rule.edit_user, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Edit all work list
             %th
               .form-check.form-switch
-                = f.check_box :edit_all_work_list, checked: u.rule.edit_all_work_list, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :edit_all_work_list, checked: u.rule.edit_all_work_list, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Edit work list
             %th
               .form-check.form-switch
-                = f.check_box :edit_work_list, checked: u.rule.edit_work_list, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :edit_work_list, checked: u.rule.edit_work_list, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Edit all eggs collection
             %th
               .form-check.form-switch
-                = f.check_box :edit_all_eggs_collection, checked: u.rule.edit_all_eggs_collection, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :edit_all_eggs_collection, checked: u.rule.edit_all_eggs_collection, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               Edit eggs collection
             %th
               .form-check.form-switch
-                = f.check_box :edit_eggs_collection, checked: u.rule.edit_eggs_collection, class: 'form-check-input transform-1-3 mx-5',  type: 'checkbox', id: 'flexSwitchCheckDefault'
+                = f.check_box :edit_eggs_collection, checked: u.rule.edit_eggs_collection, onclick: !current_user.nil? && current_user.rule.manager ? "" : "return false;", class: !current_user.nil? && current_user.rule.manager ? 'form-check-input transform-1-3 mx-5' : 'form-check-input transform-1-3 mx-5 opacity_05',  type: 'checkbox', id: 'flexSwitchCheckDefault'
           %tr
             %th
               = f.submit "Save", class: "btn-primary btn"
