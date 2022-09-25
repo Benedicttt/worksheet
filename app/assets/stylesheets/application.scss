@@ -102,6 +102,7 @@ input {
 .display_content { display: contents; }
 .display-inline-block { display: inline-block; }
 .display-flow-root { display: flow-root; }
+.display-table-caption {     display: table-caption; }
 .position_relative { position: relative; }
 .position_absolute { position: absolute; }
 .left_85_per { left: 85% }
@@ -164,4 +165,10 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
 .form-select {
   font-size: 12px;
   height: 32px;
+}
+
+.display_for_shift {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
