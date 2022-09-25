@@ -59,7 +59,7 @@ $(document).ready(function(){
 
     $(document).ready(function () {
         var $containerHeight = $(window).height();
-        if ($containerHeight <= 632) {
+        if ($containerHeight <= 818) {
             $('body').css({
                 position: 'static',
                 bottom: 'auto',
@@ -67,7 +67,7 @@ $(document).ready(function(){
                 zoom: 0.5
             });
         }
-        if ($containerHeight > 632) {
+        if ($containerHeight > 819) {
             $('body').css({
                 position: 'absolute',
                 bottom: '3px',
