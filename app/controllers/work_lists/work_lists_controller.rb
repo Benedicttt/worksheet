@@ -92,8 +92,7 @@ class WorkLists::WorkListsController < ApplicationController
 
   def search
     params[:head] = "Work List"
-
-    @work_list = if params[:month] == "0" || params[:month].nil?
+    @work_list = if params[:month] == "0"
                    WorkList.where(user_id: params[:user_id], years: params[:year]).sort_by &:month
                  else
                    WorkList.where(user_id: params[:user_id], month: params[:month], years: params[:year]).sort_by &:month
