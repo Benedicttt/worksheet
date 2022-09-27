@@ -143,10 +143,10 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
   end
 
   def destroy
-    wss = WorkShiftSchedule.find(params[:id])
-    wss.destroy
-    flash[:alert] = "Work shift schedule - delete"
+    # wss = WorkShiftSchedule.find(params[:id])
+    # wss.destroy
+    # flash[:alert] = "Work shift schedule - delete"
 
-    render "index/index"
+    # render "shared/modal_success"
   end
 end

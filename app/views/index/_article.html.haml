@@ -122,10 +122,10 @@
                           = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "show", id: wss.id} do |f|
                             = f.submit "", class: "icon-edit-worksheet btn"
                           = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
-                            = f.submit "", class: "icon-delete-worksheet btn"
+                            = f.submit "", class: "icon-delete-worksheet btn", data: { confirm: 'Are you sure?' }
+
                     - else
                       %td.text-center
 
   - else
     = render "sessions/new_sessions"
-
