@@ -139,28 +139,34 @@ class WorkLists::WorkListsController < ApplicationController
           sheet.add_row ["Week","Day number", "Day", "Work start", "Break start", "Break stop", "Work stop", "Washing hours", "Hours", "Comment"]
           9.times { |i| sheet.rows[4].cells[i].style = item_style_3 }
 
+           # variable
           total_hours = 0.0
           total_hours_without_lunch = 0.0
           total_hours_washing = 0.0
 
           number_week_day = {}
 
+          # days
+
           days.times do |day|
             day += 1
             date = Date.parse("#{params[:year]}-#{params[:month]}-#{day}")
             week = date.strftime("%W").to_i
 
-            number_week_day.merge!(day => {week: week})
+            number_week_day.merge!(day => {week: week, wday: date.wday})
           end
+
 
           days.times do |day|
             day += 1
             wl_line = WorkList.find_by(user_id: params[:user_id], month: params[:month], years: params[:year], day: day)
             name_day = Time.at((day - 1) * 86400 ).utc.strftime '%A'
 
+            #
             sheet.add_row [] if name_day == "Monday"
 
-            sheet.add_row [
+
+            content = sheet.add_row [
                             !number_week_day[day + 1].nil? && (number_week_day[day][:week] == number_week_day[day + 1][:week]) ? "" : number_week_day[day][:week],
                             day,
                             name_day,
@@ -173,10 +179,40 @@ class WorkLists::WorkListsController < ApplicationController
                             wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment
 
             ], :style => item_style
+
+            number_week_day[day].merge!(row: sheet.rows.index(content) + 1)
+
             total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f
             total_hours_washing += wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? 0.0 : wl_line.washing_time_minutes.to_f
             total_hours_without_lunch += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f - 30.0
+
           end
+
+          //
+          week_new = { }
+
+          number_week_day.each do |day|
+            week_new.merge! day[1][:week] => []
+          end
+
+          number_week_day.each do |day|
+            week_new[day[1][:week]] << [day[0], day[1][:row]]
+          end
+
+          week_new.each do |key, value|
+            puts key
+            puts value[0][1]
+            puts value[-1][1]
+            puts ""
+
+            sheet.rows[value[0][1] - 1].cells[0].value = key.to_s + " "
+            sheet.merge_cells "A#{value[0][1]}:A#{value[-1][1]}"
+          end
+
+          # puts number_week_day
+          # puts week_new
+          //
+          # sheet.merge_cells "A#{s}:A#{n}" if number_week_day[day][:wday] == 6
 
           sheet.add_row []
           sheet.add_row ["", "","","","","All the time with lunch","#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })"], :style => item_style
@@ -186,7 +222,7 @@ class WorkLists::WorkListsController < ApplicationController
           sheet.rows.each {|row| row.height = 35}
           35.times { |i| !sheet.rows[i + 5].nil? && !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
 
-          10.times { |i| sheet.rows[4].cells[i].style = item_style_2 }
+          10.times { |i| sheet.rows[4].style = item_style_2 }
           # sheet.merge_cells "A6:A9"
           # sheet.merge_cells "A11:A17"
 
