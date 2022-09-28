@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_11_191255) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_28_172335) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_11_191255) do
     t.float "break_start_minutes"
     t.float "break_stop_minutes"
     t.float "hours_minutes"
+    t.float "washing_time_minutes"
+    t.string "washing_time"
   end
 
   create_table "work_shift_schedule_days", force: :cascade do |t|

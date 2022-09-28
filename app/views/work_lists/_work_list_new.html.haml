@@ -16,6 +16,7 @@
               %td.text-center.width80  Break start
               %td.text-center.width80  Break stop
               %td.text-center.width80  Work stop
+              %td.text-center.width80  Washing time
               %td.text-center.width80  Common hours
               %td.text-center.width125 Comment
               %td.text-center.width125
@@ -41,6 +42,7 @@
             %table.table.container
               %tbody
                 - wl = WorkList.find_by(day: index + 1, month: params[:month], years: params[:year], user_id: params[:user_id])
+                - washing_time     = wl.nil? ? "" : wl.washing_time
                 - work_start_hour  = wl.nil? ? "" : wl.work_start
                 - work_stop_hour   = wl.nil? ? "" : wl.work_stop
                 - break_start_hour = wl.nil? ? "" : wl.break_start
@@ -75,6 +77,7 @@
                   %td.text-center.width80
                   %td.text-center.width80
                   %td.text-center.width80
+                  %td.text-center.width80
                   %td.text-center.width125
                   %td.text-center.width125
 
@@ -89,6 +92,8 @@
                     = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
                   %td.text-center.width80
                     = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
+                  %td.text-center.width80
+                    = f.time_field :washing_time, :format=>"%H:%M", value: washing_time, class: "washing_time_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
                   %td.text-center.width80
                     = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onfocus: "some_#{day}()"
                     :javascript
