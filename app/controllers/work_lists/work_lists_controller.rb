@@ -115,7 +115,7 @@ class WorkLists::WorkListsController < ApplicationController
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
-      col_widths = [20, 25, 25, 25, 25, 25, 25, 25, 60]
+      col_widths = [15, 20, 20, 20, 20, 20, 20, 20, 20, 60]
 
       format.html
       format.xlsx do
@@ -127,6 +127,7 @@ class WorkLists::WorkListsController < ApplicationController
 
           item_style = wb.styles.add_style :b => false, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
           item_style_2 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ECECEC", :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_4 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ffffff", :b => false, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
           item_style_3 = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 14,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
 
 
@@ -163,8 +164,10 @@ class WorkLists::WorkListsController < ApplicationController
             name_day = Time.at((day - 1) * 86400 ).utc.strftime '%A'
 
             #
-            sheet.add_row [] if name_day == "Monday"
-
+            if name_day == "Monday"
+              monday = sheet.add_row []
+              sheet.merge_cells "A#{sheet.rows.index(monday) + 1}:J#{sheet.rows.index(monday) + 1}"
+            end
 
             content = sheet.add_row [
                             !number_week_day[day + 1].nil? && (number_week_day[day][:week] == number_week_day[day + 1][:week]) ? "" : number_week_day[day][:week],
@@ -177,6 +180,7 @@ class WorkLists::WorkListsController < ApplicationController
                             wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? "" : wl_line.washing_time,
                             wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours,
                             wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment
+
 
             ], :style => item_style
 
@@ -206,7 +210,13 @@ class WorkLists::WorkListsController < ApplicationController
             puts ""
 
             sheet.rows[value[0][1] - 1].cells[0].value = key.to_s + " "
+
+            ((value[0][1] - 1)..(value[-1][1] - 1)).to_a.map do |m|
+              sheet.rows[m].style = item_style_4
+            end
+
             sheet.merge_cells "A#{value[0][1]}:A#{value[-1][1]}"
+
           end
 
           # puts number_week_day
