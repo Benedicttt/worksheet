@@ -126,10 +126,20 @@ class WorkLists::WorkListsController < ApplicationController
           3.times { |i| sheet.rows[2].cells[i + 1].style = item_style_3 }
 
           sheet.add_row []
-          sheet.add_row ["", "Day", "Work start", "Break start", "Break stop", "Work stop", "Hours", "Comment"]
-          7.times { |i| sheet.rows[4].cells[i + 1].style = item_style_3 }
+          sheet.add_row ["Week","Day number", "Day", "Work start", "Break start", "Break stop", "Work stop", "Hours", "Comment"]
+          9.times { |i| sheet.rows[4].cells[i].style = item_style_3 }
 
-          total_hours = 0.0;
+          total_hours = 0.0
+
+          number_week_day = {}
+
+          days.times do |day|
+            day += 1
+            date = Date.parse("#{params[:year]}-#{params[:month]}-#{day}")
+            week = date.strftime("%W").to_i
+
+            number_week_day.merge!(day => {week: week})
+          end
 
           days.times do |day|
             day += 1
@@ -137,8 +147,11 @@ class WorkLists::WorkListsController < ApplicationController
             name_day = Time.at((day - 1) * 86400 ).utc.strftime '%A'
 
             sheet.add_row [] if name_day == "Monday"
-            sheet.add_row ["",
-                           "(#{day}) #{name_day}",
+
+            sheet.add_row [
+                            !number_week_day[day + 1].nil? && (number_week_day[day][:week] == number_week_day[day + 1][:week]) ? "" : number_week_day[day][:week],
+                            day,
+                            name_day,
                             wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start,
                             wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : wl_line.break_start,
                             wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : wl_line.break_stop,
@@ -154,14 +167,13 @@ class WorkLists::WorkListsController < ApplicationController
           sheet.add_row ["", "","","","","","#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })"], :style => item_style
 
           sheet.rows.each {|row| row.height = 35}
-          # sheet.col_style(1,item_style_3)
 
           35.times { |i| !sheet.rows[i + 5].nil? && !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
 
           start_col = 4
           end_col = 0
 
-          # sheet.merge_cells "A1:A50"
+          # sheet.merge_cells "A21:A28"
 
           sheet.column_widths *col_widths
         end
