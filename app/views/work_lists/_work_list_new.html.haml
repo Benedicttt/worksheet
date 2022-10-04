@@ -70,7 +70,7 @@
                 = f.hidden_field :year, value: params[:year]
                 = f.hidden_field :user_id, value: params[:user_id].nil? ? current_user.id : params[:user_id]
 
-                - if (Time.at((day) * 86400 ).utc.strftime '%A') == "Tuesday"
+                - if (DateTime.new(params[:year].to_i, params[:month].to_i, day)) == "Tuesday"
                   %td.text-center.width50
                   %td.text-center.width80
                   %td.text-center.width80
@@ -83,7 +83,7 @@
 
                 %tr{ class: "tr_#{index + 1}"}
                   %td.text-center.width50.font-size-12
-                    = "#{index + 1} - #{Time.at((index) * 86400 ).utc.strftime '%A'}"
+                    = "#{index + 1} - #{DateTime.new(params[:year].to_i, params[:month].to_i, day).strftime("%A")}"
                   %td.text-center.width80
                     = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
                   %td.text-center.width80

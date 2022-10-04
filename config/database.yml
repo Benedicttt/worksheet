@@ -19,11 +19,11 @@ test:
 
 production:
   encoding: utf8
-  username: ybzdysaesoovar
-  database: ddtki22t0iqtk5
-  password: fc36010dbf0f8b34514579c5b060d77635d0fbc83405f9c15122d1cea2155a42
+  username: hyfhpkuapmdkcl
+  database: dassigqf8uvqj0
+  password: 27b3e74e6f6468e7a0671f50a31f69a471b6d3a68533ef1da084282eb2ffa380
   adapter:  postgresql
   timeout:  5000
-  host:     ec2-54-228-218-84.eu-west-1.compute.amazonaws.com
+  host:     ec2-54-75-102-122.eu-west-1.compute.amazonaws.com
   port:     5432
   pool:     5

@@ -161,7 +161,7 @@ class WorkLists::WorkListsController < ApplicationController
           days.times do |day|
             day += 1
             wl_line = WorkList.find_by(user_id: params[:user_id], month: params[:month], years: params[:year], day: day)
-            name_day = Time.at((day - 1) * 86400 ).utc.strftime '%A'
+            name_day = DateTime.new(params[:year].to_i, params[:month].to_i, day).utc.strftime '%A'
 
             #
             if name_day == "Monday"
@@ -294,7 +294,7 @@ class WorkLists::WorkListsController < ApplicationController
               day += 1
               wl_line = WorkList.find_by(user_id: user_id, month: month, years: year, day: day)
 
-              name_day = Time.at((day - 1) * 86400 ).utc.strftime '%A'
+              name_day = DateTime.new(params[:year].to_i, params[:month].to_i, day).utc.strftime '%A'
 
               data += [[
                    { content: "(#{day}) #{name_day}", align: :left },
