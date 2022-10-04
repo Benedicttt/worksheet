@@ -9,14 +9,6 @@ default: &default
   pool: 5
   timeout: 5000
 
-development:
-  <<: *default
-  database: db_development
-
-test:
-  <<: *default
-  database: db_test
-
 production:
   encoding: utf8
   username: hyfhpkuapmdkcl
@@ -27,3 +19,11 @@ production:
   host:     ec2-54-75-102-122.eu-west-1.compute.amazonaws.com
   port:     5432
   pool:     5
+
+development:
+  <<: *default
+  database: db_development
+
+test:
+  <<: *default
+  database: db_test
