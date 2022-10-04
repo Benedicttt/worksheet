@@ -115,7 +115,7 @@ class WorkLists::WorkListsController < ApplicationController
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
-      col_widths = [6, 6, 10, 7, 7, 7, 7, 7, 7, 15]
+      col_widths = [3, 4, 8, 6, 6, 6, 6, 6, 6, 30]
 
       format.html
       format.xlsx do
@@ -125,10 +125,10 @@ class WorkLists::WorkListsController < ApplicationController
           sheet.page_setup.fit_to :paper_size => 9
           #  BorderPr.style must be one of [:none, :thin, :medium, :dashed, :dotted, :thick, :double, :hair, :mediumDashed, :dashDot, :mediumDashDot, :dashDotDot, :mediumDashDotDot, :slantDashDot].
 
-          item_style = wb.styles.add_style :b => false, :sz => 7,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_2 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ECECEC", :b => true, :sz => 9,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_4 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ffffff", :b => false, :sz => 9,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_3 = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 9,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
+          item_style = wb.styles.add_style :b => false, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_2 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ECECEC", :b => true, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_4 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ffffff", :b => false, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_3 = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
 
 
           sheet.add_row []
@@ -220,7 +220,7 @@ class WorkLists::WorkListsController < ApplicationController
           # sheet.merge_cells "A#{s}:A#{n}" if number_week_day[day][:wday] == 6
 
           sheet.add_row []
-          sheet.add_row ["", "", 
+          sheet.add_row ["", "",
                          "All washing time","#{get_time_from_minutes(total_hours_washing)[:hours]}h #{get_time_from_minutes(total_hours_washing)[:minutes]}m (#{ '%.2f' % (total_hours_washing/60) })",
                          "All the time without lunch","#{get_time_from_minutes(total_hours_without_lunch)[:hours]}h #{get_time_from_minutes(total_hours_without_lunch)[:minutes]}m (#{ '%.2f' % (total_hours_without_lunch/60) })",
                          "All the time with lunch","#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })"], :style => item_style
