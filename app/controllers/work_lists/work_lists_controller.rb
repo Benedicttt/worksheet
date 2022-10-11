@@ -99,9 +99,9 @@ class WorkLists::WorkListsController < ApplicationController
   def search
     params[:head] = "Work List"
     @work_list = if params[:month] == "0"
-                   WorkList.where(user_id: params[:user_id], years: params[:year]).sort_by &:month
+                   WorkList.where(user_id: params[:user_id], years: params[:year])
                  else
-                   WorkList.where(user_id: params[:user_id], month: params[:month], years: params[:year]).sort_by &:month
+                   WorkList.where(user_id: params[:user_id], month: params[:month], years: params[:year])
                  end
     flash[:warning] = "Work lists not found" if @work_list.blank?
 
@@ -226,7 +226,7 @@ class WorkLists::WorkListsController < ApplicationController
                          "All the time with lunch","#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })"], :style => item_style
 
           # sheet.rows.each {|row| row.height = 10}
-          35.times { |i| !sheet.rows[i + 5].nil? && !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
+          36.times { |i| !sheet.rows[i + 5].nil? && !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
 
           10.times { |i| sheet.rows[4].style = item_style_2 }
           # sheet.merge_cells "A6:A9"
@@ -345,7 +345,7 @@ class WorkLists::WorkListsController < ApplicationController
 
             pdf.table(
               data,
-              cell_style: { font: "Monaco", :size => 9, :style => :normal },
+              cell_style: { font: "Monaco", :size => 8, :style => :normal },
               column_widths: [85, 45, 45, 45, 45, 47, 45, 130],
 
             ) do |t|

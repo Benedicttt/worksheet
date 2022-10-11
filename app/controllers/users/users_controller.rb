@@ -81,9 +81,9 @@ class Users::UsersController < ApplicationController
     @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
     User.find(params[:id]).update_attribute(:is_available, false)
-    flash[:alert] = "User delete"
+    flash[:alert] = "User #{user.first_name} #{user.last_name} set is available FALSE"
 
-    params[:head] = "User #{params[:id]} is available FALSE"
+    params[:head] = "User #{user.first_name} #{user.last_name} set is available FALSE"
 
     render 'users/list'
   end
@@ -128,7 +128,7 @@ class Users::UsersController < ApplicationController
         edit_eggs_collection: params[:edit_eggs_collection]
       )
 
-      flash[:success] = "User updated successful"
+      flash[:success] = "User #{user.first_name} #{user.last_name} updated successful"
 
     rescue
       flash[:alert] = "User not updated"
@@ -136,9 +136,16 @@ class Users::UsersController < ApplicationController
 
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
 
-        @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
+    @users = current_user.rule.manager ? User.all.order("users.id desc") : User.where(is_available: true).order("users.id desc")
 
-    render "users/list"
+    if current_user.rule.manager
+      render "users/list"
+    else
+      @user = current_user
+
+      flash[:success] = "User #{current_user.first_name} #{current_user.last_name} updated successful"
+      render "users/edit"
+    end
   end
 
   def valid_nickname?

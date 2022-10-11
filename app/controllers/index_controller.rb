@@ -24,7 +24,7 @@ class IndexController < ApplicationController
       format.pdf do
         Prawn::Document.new(page_size: 'A4', layout: :landscape, rotate: 180) do |pdf|
 
-          periods.each_with_index do |period|
+          periods.order(week_number: :desc).each_with_index do |period|
 
             period.work_shift_schedules.each_with_index do |w, index|
               user   = User.find(w.user_id)

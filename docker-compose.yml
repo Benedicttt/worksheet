@@ -1,12 +1,12 @@
 version: "3.4"
 
 services:
-  worksheet:
+  worklist:
     build:
       context: .
-    image: worksheet:v1
-    container_name: worksheet
-    hostname: worksheet.rb
+    image: worklist:v1
+    container_name: worklist
+    hostname: worklist
     command: bash container/inst.sh
     environment:
       - LEVEL=dev

@@ -24,7 +24,7 @@
           .margin_top_5_px
             = f.submit "", class: "icon-new-worklist btn"
       - else
-        - @work_list.map(&:month).uniq.each do |month|
+        - @work_list.order(month: :desc).map(&:month).uniq.each do |month|
           %br
           %table.margin_left_2_per
             %tbody

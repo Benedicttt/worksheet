@@ -1,0 +1,1 @@
+# pg_dump -h ec2-54-75-102-122.eu-west-1.compute.amazonaws.com -U hyfhpkuapmdkcl dassigqf8uvqj0  > backup.sql
