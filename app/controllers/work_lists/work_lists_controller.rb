@@ -103,6 +103,7 @@ class WorkLists::WorkListsController < ApplicationController
                  else
                    WorkList.where(user_id: params[:user_id], month: params[:month], years: params[:year])
                  end
+
     flash[:warning] = "Work lists not found" if @work_list.blank?
 
     params[:hide] = false

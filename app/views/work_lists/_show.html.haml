@@ -15,7 +15,9 @@
         = f.submit "", class: "btn btn-sm btn-primary icon-search width100 margin_left_2_per"
         %br
 
+
     - if params[:hide] == false
+
       - if @work_list.blank?
         = form_for "", remote: true, url: { controller: "work_lists/work_lists", action: "new"} do |f|
           = f.hidden_field :month, value: params[:month]
@@ -25,6 +27,15 @@
             = f.submit "", class: "icon-new-worklist btn"
       - else
         - @work_list.order(month: :desc).map(&:month).uniq.each do |month|
+          - full_work_time = 0.0
+          - full_work_time_with_lunch = 0.0
+          - full_work_time_with_washing = 0.0
+
+          - WorkList.where(user_id: params[:user_id], month: month).each do |wl|
+            - full_work_time += wl.hours_minutes.to_f
+            - full_work_time_with_washing += wl.washing_time_minutes.to_f
+            - full_work_time_with_lunch += wl.hours_minutes.nil? ? 0.0 : wl.hours_minutes.to_f - 30.0
+
           %br
           %table.margin_left_2_per
             %tbody
@@ -40,3 +51,14 @@
                 %th.text-center
                   = link_to "", work_lists_show_pdf_path(month: month, year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
                   = link_to "", work_lists_show_excel_path(month: month, year: params[:year], user_id: params[:user_id], format: :xlsx), class: 'btn icon-excel'
+                %th
+                  %div.text-left
+                    = "#{get_time_from_minutes(full_work_time)[:hours]}h #{get_time_from_minutes(full_work_time)[:minutes]}m -- time work "
+                  %div.text-left
+                    = "#{get_time_from_minutes(full_work_time_with_washing)[:hours]}h #{get_time_from_minutes(full_work_time_with_washing)[:minutes]}m -- Washing "
+                  %div.text-left
+                    = "#{get_time_from_minutes(full_work_time_with_lunch)[:hours]}h #{get_time_from_minutes(full_work_time_with_lunch)[:minutes]}m -- time work without lunch"
+
+            - full_work_time = 0.0
+            - full_work_time_with_lunch = 0.0
+            - full_work_time_with_washing = 0.0
