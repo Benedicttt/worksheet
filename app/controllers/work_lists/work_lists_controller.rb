@@ -72,12 +72,12 @@ class WorkLists::WorkListsController < ApplicationController
           washing_time: washing_time,
           hours:  hours,
 
-          work_start_minutes:  get_minutes_from_full_time(work_start),
-          work_stop_minutes:   get_minutes_from_full_time(work_stop),
-          break_start_minutes: get_minutes_from_full_time(break_start),
-          break_stop_minutes:  get_minutes_from_full_time(break_stop),
+          work_start_minutes:   get_minutes_from_full_time(work_start),
+          work_stop_minutes:    get_minutes_from_full_time(work_stop),
+          break_start_minutes:  get_minutes_from_full_time(break_start),
+          break_stop_minutes:   get_minutes_from_full_time(break_stop),
           washing_time_minutes: get_minutes_from_full_time(washing_time),
-          hours_minutes:       get_minutes_from_full_time(hours)
+          hours_minutes:        get_minutes_from_full_time(hours)
         )
 
         flash[:success] = "Updated new data to work day #{params[:day]}.#{params[:month]}.#{params[:year]}"
@@ -116,7 +116,7 @@ class WorkLists::WorkListsController < ApplicationController
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
-      col_widths = [3, 4, 8, 6, 6, 6, 6, 6, 6, 30]
+      col_widths = [4, 4, 8, 6, 6, 6, 6, 6, 6, 29]
 
       format.html
       format.xlsx do
@@ -132,14 +132,12 @@ class WorkLists::WorkListsController < ApplicationController
           item_style_3 = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
 
 
-          sheet.add_row []
-          sheet.add_row ["", "Work List"], :style => item_style
           sheet.add_row ["", "Month \n#{params[:month]}", "Year \n#{params[:year]}", "#{user.first_name} #{user.last_name}"]
-          3.times { |i| sheet.rows[2].cells[i + 1].style = item_style_3 }
+          3.times { |i| sheet.rows[0].cells[i + 1].style = item_style_3 }
 
           sheet.add_row []
           sheet.add_row ["Week","Day number", "Day", "Work start", "Break start", "Break stop", "Work stop", "Washing hours", "Hours", "Comment"]
-          9.times { |i| sheet.rows[4].cells[i].style = item_style_3 }
+          10.times { |i| sheet.rows[2].cells[i].style = item_style_3 }
 
            # variable
           total_hours = 0.0
@@ -227,9 +225,9 @@ class WorkLists::WorkListsController < ApplicationController
                          "All the time with lunch","#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })"], :style => item_style
 
           # sheet.rows.each {|row| row.height = 10}
-          36.times { |i| !sheet.rows[i + 5].nil? && !sheet.rows[i + 5].cells[1].nil? ? sheet.rows[i + 5].cells[1].style = item_style_3 : ""}
+          36.times { |i| !sheet.rows[i + 3].nil? && !sheet.rows[i + 3].cells[1].nil? ? sheet.rows[i + 3].cells[1].style = item_style_3 : ""}
 
-          10.times { |i| sheet.rows[4].style = item_style_2 }
+          # 10.times { |i| sheet.rows[4].style = item_style_2 }
           # sheet.merge_cells "A6:A9"
           # sheet.merge_cells "A11:A17"
 
