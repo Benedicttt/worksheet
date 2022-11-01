@@ -116,28 +116,45 @@ class WorkLists::WorkListsController < ApplicationController
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
-      col_widths = [4, 4, 8, 6, 6, 6, 6, 6, 6, 29]
+      col_widths = [4, 6, 8, 6, 6, 6, 6, 6, 6, 34]
 
       format.html
       format.xlsx do
         p = Axlsx::Package.new
         wb = p.workbook
-        wb.add_worksheet(name: "Work List", :page_setup => { paper_size: 9 } ) do |sheet|
-          sheet.page_setup.fit_to :paper_size => 9
+
+
+        wb.add_worksheet(
+            name: "Work List",
+            :page_margins => {
+              :left => 0.5,
+              :right =>  0.5,
+              :top => 0.1,
+              :bottom => 0.1,
+              :header => 0.0,
+              :footer => 0.0
+            },
+            :paper_size => 9
+        ) do |sheet|
+          sheet.page_setup.fit_to :paper_size => 9, :fit_to_width => 2
+
           #  BorderPr.style must be one of [:none, :thin, :medium, :dashed, :dotted, :thick, :double, :hair, :mediumDashed, :dashDot, :mediumDashDot, :dashDotDot, :mediumDashDotDot, :slantDashDot].
 
-          item_style = wb.styles.add_style :b => false, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_2 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ECECEC", :b => true, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_4 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ffffff", :b => false, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-          item_style_3 = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 6,  :font_name => 'Monaco', :alignment => { :horizontal => :left, :vertical => :center, :wrap_text => true}
+          item_style = wb.styles.add_style :b => false, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, alignment: { horizontal: :center, :vertical => :center, :wrap_text => true } }
+          style_for_footer = wb.styles.add_style :bg_color => "ECECEC", :b => false, :sz => 7,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          item_style_4 = wb.styles.add_style :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }, :bg_color => "ffffff", :b => false, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+          name_header_user_info = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
 
 
-          sheet.add_row ["", "Month \n#{params[:month]}", "Year \n#{params[:year]}", "#{user.first_name} #{user.last_name}"]
-          3.times { |i| sheet.rows[0].cells[i + 1].style = item_style_3 }
+          header = sheet.add_row ["", "Month \n#{params[:month]}", "", "Year \n#{params[:year]}", "", "#{user.first_name} #{user.last_name}"], :height => 24
+          5.times { |i| sheet.rows[0].cells[i + 1].style = name_header_user_info }
+          sheet.merge_cells('B%i:C%i' % [sheet.rows.index(header) + 1, sheet.rows.index(header) + 1])
+          sheet.merge_cells('D%i:E%i' % [sheet.rows.index(header) + 1, sheet.rows.index(header) + 1])
+          sheet.merge_cells('F%i:G%i' % [sheet.rows.index(header) + 1, sheet.rows.index(header) + 1])
 
           sheet.add_row []
           sheet.add_row ["Week","Day number", "Day", "Work start", "Break start", "Break stop", "Work stop", "Washing hours", "Hours", "Comment"]
-          10.times { |i| sheet.rows[2].cells[i].style = item_style_3 }
+          10.times { |i| sheet.rows[2].cells[i].style = name_header_user_info }
 
            # variable
           total_hours = 0.0
@@ -181,7 +198,7 @@ class WorkLists::WorkListsController < ApplicationController
                             wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment
 
 
-            ], :style => item_style
+            ], :style => item_style, :height => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 26 : 18 : 18
 
             number_week_day[day].merge!(row: sheet.rows.index(content) + 1)
 
@@ -219,13 +236,23 @@ class WorkLists::WorkListsController < ApplicationController
           # sheet.merge_cells "A#{s}:A#{n}" if number_week_day[day][:wday] == 6
 
           sheet.add_row []
-          sheet.add_row ["", "",
-                         "All washing time","#{get_time_from_minutes(total_hours_washing)[:hours]}h #{get_time_from_minutes(total_hours_washing)[:minutes]}m (#{ '%.2f' % (total_hours_washing/60) })",
-                         "All the time without lunch","#{get_time_from_minutes(total_hours_without_lunch)[:hours]}h #{get_time_from_minutes(total_hours_without_lunch)[:minutes]}m (#{ '%.2f' % (total_hours_without_lunch/60) })",
-                         "All the time with lunch","#{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })"], :style => item_style
+          result_hours = sheet.add_row [
+                         "All washing time #{get_time_from_minutes(total_hours_washing)[:hours]}h #{get_time_from_minutes(total_hours_washing)[:minutes]}m (#{ '%.2f' % (total_hours_washing/60) })", "",
+                         "All the time without lunch #{get_time_from_minutes(total_hours_without_lunch)[:hours]}h #{get_time_from_minutes(total_hours_without_lunch)[:minutes]}m (#{ '%.2f' % (total_hours_without_lunch/60) })", "",
+                         "All the time with lunch #{get_time_from_minutes(total_hours)[:hours]}h #{get_time_from_minutes(total_hours)[:minutes]}m (#{ '%.2f' % (total_hours/60) })", ""
+                         ],
+                        :style => style_for_footer
+          sheet.add_row []
+
+
+          sheet.merge_cells('A%i:B%i' % [sheet.rows.index(result_hours) + 1, sheet.rows.index(result_hours) + 2])
+          sheet.merge_cells('C%i:D%i' % [sheet.rows.index(result_hours) + 1, sheet.rows.index(result_hours) + 2])
+          sheet.merge_cells('E%i:F%i' % [sheet.rows.index(result_hours) + 1, sheet.rows.index(result_hours) + 2])
+          
+          # sheet.merge_cells "A#{value[0][1]}:A#{value[-1][1]}"
 
           # sheet.rows.each {|row| row.height = 10}
-          36.times { |i| !sheet.rows[i + 3].nil? && !sheet.rows[i + 3].cells[1].nil? ? sheet.rows[i + 3].cells[1].style = item_style_3 : ""}
+          36.times { |i| !sheet.rows[i + 3].nil? && !sheet.rows[i + 3].cells[1].nil? ? sheet.rows[i + 3].cells[1].style = name_header_user_info : ""}
 
           # 10.times { |i| sheet.rows[4].style = item_style_2 }
           # sheet.merge_cells "A6:A9"
@@ -234,7 +261,7 @@ class WorkLists::WorkListsController < ApplicationController
           sheet.column_widths *col_widths
         end
 
-        send_data p.to_stream.read, type: "application/xlsx", filename: "work_list_#{user.first_name}_#{user.last_name}.xlsx"
+        send_data p.to_stream.read, type: "application/xlsx", filename: "#{user.first_name}_#{user.last_name}_#{params[:month]}_#{params[:year]}.xlsx"
       end
     end
   end
