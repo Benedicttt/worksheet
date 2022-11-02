@@ -9,7 +9,7 @@
         - else
           = f.hidden_field :user_id, value: current_user.id
         %br
-          = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width125 margin_left_2_per" }
+          = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width200 margin_left_2_per" }
         = f.select :year, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per" }
         %br
         = f.submit "", class: "btn btn-sm btn-primary icon-search width100 margin_left_2_per"
@@ -62,3 +62,8 @@
             - full_work_time = 0.0
             - full_work_time_with_lunch = 0.0
             - full_work_time_with_washing = 0.0
+:css
+  .form-select {
+    font-size: 10px;
+    height: 44px;
+  }

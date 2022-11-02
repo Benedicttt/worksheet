@@ -65,11 +65,11 @@
                   %tr
                     %td{ style: "border-left: 0px !important; border-right: 0px !important; border-bottom: 0px !important;" }
                       - if index == 0
-                        %div.display_flex
+                        %div
                           %div.padding-5-per
                             = link_to "", show_path(id_wss: p.id, format: "pdf"), class: 'btn icon-pdf', target: "_blank"
                           %div
-                            %strong{ style: "color: #a46811; font-size: 12px;" }
+                            %strong{ style: "color: #a46811; font-size: 8px;" }
                               #{p.to} - #{p.from} .#{p.month}.#{p.year}
                             %p Week #{p.week_number}
 

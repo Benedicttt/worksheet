@@ -2,7 +2,7 @@
   %article
     .text-center
       %strong
-        WorkSheet
+        Welcome!
     %div
       - if !flash.empty?
         - flash.keys.each do |k|
@@ -11,8 +11,8 @@
               %br
               %h1=flash[k]
 
-    %div.container.text-center.margin_top_20_per
-      %div.col-md-3
+    %div.container
+      %div.col-12
         .form_sign.position_relative.display-inline-block
         = form_for(:session, url: login_path) do |f|
           %div
@@ -20,19 +20,28 @@
             -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
             -#  = f.label t('login_via')
             %br
-          = f.text_field :email, class: 'form-control', onfocus: "this.value=''", placeholder: t('email')
+            %div
+              = f.label :email, "e-mail", style: "text-align: left;"
+            %div
+              = f.text_field :email, class: '', onfocus: "this.value=''", style: "line-height: 30px"
 
-          = f.text_field :nickname, class: 'form-control'
-          %br
-          = f.password_field :password, class: 'form-control', placeholder: t('password')
-          - if !flash.empty?
-            - flash.keys.each do |k|
-              -unless flash['alert'].blank?
-                %div{style: 'color:red;'}
-                  =flash[k]
+            = f.text_field :nickname, class: ''
+            %br
 
-          %br
-          = f.submit t('sign_in'), class: "col-6 btn btn-sm btn-dark"
+            %div
+              = f.label :password, "password", style: "text-align: left;"
+            %div
+              = f.password_field :password, class: '', style: "line-height: 30px"
+
+            %div
+              %br
+              = f.submit t('sign_in'), class: "button-center col-8 btn btn-sm btn-dark"
+
+  - if !flash.empty?
+    - flash.keys.each do |k|
+      -unless flash['alert'].blank?
+        %div{style: 'color:red;'}
+          =flash[k]
 
 - else
   %article

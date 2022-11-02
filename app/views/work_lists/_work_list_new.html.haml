@@ -29,10 +29,13 @@
           :javascript
             $(document).ready(function(){
               document.querySelectorAll(".tr_#{params[:day]}")[0].scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
+                behavior: 'auto',
+                block: 'center',
                 inline: "nearest"
-              });
+              }) ;
+
+              $(".tr_#{params[:day]}").css('background-color', '#545454');
+              console.log("1")
             })
 
 
@@ -107,16 +110,16 @@
 
                   %td.text-center.width125
                     - if  condition_disabled
-                      = button_tag 'EDIT', type: "button", class: "btn btn-warning width100", id: "edit_#{index + 1}"
+                      = button_tag 'Edit', type: "button", class: "btn btn-warning btn-sm width60", id: "edit_#{index + 1}"
 
                       :javascript
                         $(document).ready(function(){
 
-                           $("#edit_#{index + 1}.btn-warning").on("click", function() {
+                           $("#edit_#{index + 1}.btn-warning.btn-sm").on("click", function() {
                               console.log("click btn warning #edit_#{index + 1}")
 
 
-                              if ($(this).attr('class') == 'btn width100 btn-primary click_#{index + 1}') {
+                              if ($(this).attr('class') == 'btn width60 btn-primary btn-sm click_#{index + 1}') {
                                 $(this).find("button").removeAttr('type');
                                 $(this).attr('type', 'submit');
 
@@ -126,17 +129,17 @@
                                      $(tr).find("textarea").removeAttr('readonly').removeClass("opacity_05")
                                   })
 
-                                 $(this).removeClass('btn-warning')
-                                 $(this).addClass('btn-primary')
+                                 $(this).removeClass('btn-warning btn-sm')
+                                 $(this).addClass('btn-primary btn-sm')
                                  $(this).addClass('click_#{index + 1}')
-                                 $(this).text("UPDATE")
+                                 $(this).text("Update")
                                }
                              })
                           })
 
 
                     - else
-                      = f.submit "ADD", class: 'btn width100 btn-dark'
+                      = f.submit "Add", class: 'btn width100 btn-dark btn-sm'
 
 :javascript
   function timeToMins(time) {

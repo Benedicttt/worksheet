@@ -27,3 +27,9 @@ development:
 test:
   <<: *default
   database: db_test
+
+# restore
+#  psql -U admin -d db_development < backup.sql
+
+# dump
+# pg_dump -U hyfhpkuapmdkcl -h ec2-54-75-102-122.eu-west-1.compute.amazonaws.com -p 5432  dassigqf8uvqj0 > backup1.sql
