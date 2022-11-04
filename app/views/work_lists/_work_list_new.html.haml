@@ -12,12 +12,12 @@
           %thead
             %tr
               %td.text-center.width50  Day
-              %td.text-center.width80  Work start
-              %td.text-center.width80  Break start
-              %td.text-center.width80  Break stop
-              %td.text-center.width80  Work stop
-              %td.text-center.width80  Washing time
-              %td.text-center.width80  Common hours
+              %td.text-center.width65  Work start
+              %td.text-center.width65  Break start
+              %td.text-center.width65  Break stop
+              %td.text-center.width65  Work stop
+              %td.text-center.width65  Washing time
+              %td.text-center.width65  Common hours
               %td.text-center.width125 Comment
               %td.text-center.width125
                 = link_to "", work_lists_show_pdf_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
@@ -75,30 +75,30 @@
 
                 - if (DateTime.new(params[:year].to_i, params[:month].to_i, day)) == "Tuesday"
                   %td.text-center.width50
-                  %td.text-center.width80
-                  %td.text-center.width80
-                  %td.text-center.width80
-                  %td.text-center.width80
-                  %td.text-center.width80
-                  %td.text-center.width80
+                  %td.text-center.width65
+                  %td.text-center.width65
+                  %td.text-center.width65
+                  %td.text-center.width65
+                  %td.text-center.width65
+                  %td.text-center.width65
                   %td.text-center.width125
                   %td.text-center.width125
 
                 %tr{ class: "tr_#{index + 1}"}
                   %td.text-center.width50.font-size-12
                     = "#{index + 1} - #{DateTime.new(params[:year].to_i, params[:month].to_i, day).strftime("%A")}"
-                  %td.text-center.width80
-                    = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
-                  %td.text-center.width80
-                    = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
-                  %td.text-center.width80
-                    = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
-                  %td.text-center.width80
-                    = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
-                  %td.text-center.width80
-                    = f.time_field :washing_time, :format=>"%H:%M", value: washing_time, class: "washing_time_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
-                  %td.text-center.width80
-                    = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width90 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onfocus: "some_#{day}()"
+                  %td.text-center.width65
+                    = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
+                  %td.text-center.width65
+                    = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
+                  %td.text-center.width65
+                    = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
+                  %td.text-center.width65
+                    = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
+                  %td.text-center.width65
+                    = f.time_field :washing_time, :format=>"%H:%M", value: washing_time, class: "washing_time_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
+                  %td.text-center.width65
+                    = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onfocus: "some_#{day}()"
                     :javascript
                         function some_#{day}() {
                           $(".common_hours_#{day}").val(

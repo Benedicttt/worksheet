@@ -51,8 +51,8 @@ fi
 #
 cd /app
 #
-/root/.rbenv/shims/gem install bundler
-/root/.rbenv/shims/bundle install --jobs 20 --retry 5 --without development
+/root/.rbenv/shims/gem install bundler || gem install bundler
+/root/.rbenv/shims/bundle install --jobs 20 --retry 5 --without development || bundle install --jobs 20 --retry 5 --without development
 
 ##RAILS_ENV=development rake db:migrate
 ##RAILS_ENV=development rake assets:precompile

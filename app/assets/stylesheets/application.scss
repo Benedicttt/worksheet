@@ -9,6 +9,7 @@
 @debug '________ applciation compiled______';
 @import "bootstrap-datepicker";
 @import "toastr";
+@import "time";
 // css
 #toast-container{
   top: 25px;
@@ -139,6 +140,8 @@ input {
 .width35 { width: 35px; }
 .width40 { width: 40px; }
 .width50 { width: 50px; }
+.width60 { width: 60px; }
+.width65 { width: 65px; }
 .width70 { width: 70px; }
 .width75 { width: 75px; }
 .width80 { width: 80px; }

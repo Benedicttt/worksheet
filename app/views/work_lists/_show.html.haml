@@ -34,7 +34,7 @@
           - WorkList.where(user_id: params[:user_id], month: month).each do |wl|
             - full_work_time += wl.hours_minutes.to_f
             - full_work_time_with_washing += wl.washing_time_minutes.to_f
-            - full_work_time_with_lunch += wl.hours_minutes.nil? ? 0.0 : wl.hours_minutes.to_f - 30.0
+            - full_work_time_with_lunch += wl.hours_minutes.nil? || wl.hours_minutes.eql?(0.0) ? 0.0 : wl.hours_minutes.to_f - 30.0
 
           %br
           %table.margin_left_2_per

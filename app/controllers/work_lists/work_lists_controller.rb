@@ -202,9 +202,9 @@ class WorkLists::WorkListsController < ApplicationController
 
             number_week_day[day].merge!(row: sheet.rows.index(content) + 1)
 
-            total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f
+            total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" || wl_line.hours == 0.0 ? 0.0 : wl_line.hours_minutes.to_f
             total_hours_washing += wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? 0.0 : wl_line.washing_time_minutes.to_f
-            total_hours_without_lunch += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f - 30.0
+            total_hours_without_lunch += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" || wl_line.hours == "00:00" || !(wl_line.hours.split(":")[0].to_i >= 6) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
 
           end
 
@@ -335,7 +335,7 @@ class WorkLists::WorkListsController < ApplicationController
               ]]
 
               total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f
-              total_hours_without_lunch += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f - 30.0
+              total_hours_without_lunch += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":"  || wl_line.hours == "00:00" |||| !(wl_line.hours.split(":")[0].to_i >= 6) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
               total_hours_washing += wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? 0.0 : wl_line.washing_time_minutes.to_f
             end
 

@@ -45,4 +45,3 @@ ENV DISPLAY=:99
 ENV RAILS_ENV=development
 CMD ["tail", "-f", "/dev/null"]
 #CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
-
