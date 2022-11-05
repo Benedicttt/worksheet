@@ -30,6 +30,7 @@
 //= require bootstrap-datepicker
 
 //= require toastr
+//= require message
 
 "./app/assets/javascripts/"
 

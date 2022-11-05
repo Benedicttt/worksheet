@@ -13,7 +13,9 @@ $global-color-background: white;
 @import "bootstrap-datepicker";
 @import "toastr";
 @import "time";
-
+label {
+  color: black;
+}
 // css
 #toast-container{
   top: 25px;
@@ -89,7 +91,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate(30%, 0%);
+  transform: translate(10%, 0%);
 }
 
 @media (max-width: 1024px) {
@@ -201,7 +203,14 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
 @media screen and (orientation:portrait) {
   .wrapper { display: none }
   html, body {
-    background: $global-color-background;
+    background: url(vecteezy_white-background1_DI0221.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    margin-left: 0%;
+
     height: 100%;
     width: 100%;
   }
@@ -214,17 +223,18 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
   }
 
   .phone {
-    height: 50px;
-    width: 100px;
-    border: 3px solid white;
+    height: 125px;
+    width: 225px;
+    border: 6px solid black;
+    text-align: center;
     border-radius: 10px;
     animation: rotate 1.5s ease-in-out infinite alternate;
     /* display: none; */
   }
 
   .message {
-    color: white;
-    font-size: 1em;
+    color: black;
+    font-size: 14px;
     margin-top: 40px;
     /* display: none; */
   }
@@ -242,6 +252,7 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
   }
 
   @media only screen and (max-device-width: 812px) and (orientation: landscape) {
+
     .phone, .message {
       display: block;
     }

@@ -6,9 +6,9 @@
         - klass_en = params[:locale] == "en" ? "opacity_1" : "opacity_05"
 
         .margin_left_2_per
-          = f.button "FI", value: "fi", class: "button_lang_fi #{klass_fi}"
+          = f.button "FI", value: "fi", class: "button_lang_fi #{klass_fi} text-dark"
         .margin_left_5_per
-          = f.button "EN", value: "en", class: "button_lang_en #{klass_en}"
+          = f.button "EN", value: "en", class: "button_lang_en #{klass_en} text-dark"
 
   = render "new_sessions"
 

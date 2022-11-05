@@ -1,7 +1,7 @@
 - if mobile_device?
   %article
     .text-center
-      %strong
+      %strong.text-dark
         Welcome!
     %div
       - if !flash.empty?
@@ -23,7 +23,7 @@
             %div
               = f.label :email, "e-mail", style: "text-align: left;"
             %div
-              = f.text_field :email, class: '', onfocus: "this.value=''", style: "line-height: 30px"
+              = f.text_field :email, class: '', style: "line-height: 30px", autocomplete: "email", required: true
 
             = f.text_field :nickname, class: ''
             %br
@@ -35,7 +35,7 @@
 
             %div
               %br
-              = f.submit t('sign_in'), class: "button-center col-8 btn btn-sm btn-dark"
+              = f.submit t('sign_in'), class: "button-center col-10 btn btn-md btn-dark"
 
   - if !flash.empty?
     - flash.keys.each do |k|
@@ -62,7 +62,7 @@
             -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
             -#  = f.label t('login_via')
             %br
-          = f.text_field :email, class: 'form-control', onfocus: "this.value=''", placeholder: t('email')
+          = f.text_field :email, class: 'form-control', placeholder: t('email'), autocomplete: "email", required: true
 
           = f.text_field :nickname, class: 'form-control'
           %br
