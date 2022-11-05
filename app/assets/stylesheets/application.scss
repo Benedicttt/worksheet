@@ -95,8 +95,12 @@ footer {
 @media (max-width: 1024px) {
   body {
     //background: $global-color-background;
-    background: url(vecteezy_white-background1_DI0221.jpg) no-repeat;
+    background: url(vecteezy_white-background1_DI0221.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
+
     margin-left: 0%;
 
   }
