@@ -1,6 +1,6 @@
 class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
   def new
-    params[:head] = "New WorkSheet"
+    params[:head] = "New week schedule"
     render "work_shift_schedules/new"
   end
 
@@ -73,7 +73,7 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
 
           u = User.find(params[:user_id])
           name = "#{u.first_name} #{u.last_name}"
-          flash['success'] = "New worksheet for user #{name} created"
+          flash['success'] = "New week schedule for user #{name} created"
       end
     # rescue Exception => e
     #   flash['alert'] = "#{e.message}"
@@ -83,7 +83,7 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
   end
 
   def show
-    params[:head] = "WorkSheet"
+    params[:head] = "Week schedule"
 
     render "work_shift_schedules/show"
   end
@@ -132,8 +132,8 @@ class WorkShiftSchedules::WorkShiftSchedulesController < ApplicationController
 
       u = User.find(params[:user_id])
       name = "#{u.first_name} #{u.last_name}"
-      puts "Update worksheet for user #{name} #{params[:user_id]} complete"
-      flash[:success] = "Update worksheet for user #{name} #{params[:user_id]} complete"
+      puts "Update week schedule for user #{name} #{params[:user_id]} complete"
+      flash[:success] = "Update week schedule for user #{name} #{params[:user_id]} complete"
 
     # rescue Exception => e
     #   flash[:alert] = "Update worksheet for user #{name} complete\n #{e.message}"

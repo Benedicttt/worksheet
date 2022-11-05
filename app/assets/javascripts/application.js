@@ -30,7 +30,6 @@
 //= require bootstrap-datepicker
 
 //= require toastr
-//= require message
 
 "./app/assets/javascripts/"
 
@@ -78,3 +77,40 @@ $(document).ready(function(){
         }
     });
 });
+
+$(document).ready(function() {
+    var orientation="portrait";
+    if(window.orientation == -90 || window.orientation == 90) orientation = "landscape";
+
+    switch(orientation){
+        case 'portrait':
+            // alert('portrait');
+            $(".message").show();
+            break;
+        case 'landscape':
+            // alert('landscape');
+            $(".message").hide();
+            break;
+        default:
+            break;
+    };
+
+    $(window).bind('orientationchange', function(e){
+        var orientation="portrait";
+        if(window.orientation == -90 || window.orientation == 90) orientation = "landscape";
+
+        switch(orientation){
+            case 'portrait':
+                // alert('portrait');
+                $(".message").show();
+                break;
+            case 'landscape':
+                // alert('landscape');
+                $(".message").hide();
+                break;
+            default:
+                break;
+        };
+    });
+})
+
