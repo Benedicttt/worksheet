@@ -1,3 +1,6 @@
+$global-color-text: black;
+$global-color-background: white;
+
 @debug '________ applciation compile______';
 @import "bootstrap";
 @import 'bootstrap-select';
@@ -10,6 +13,7 @@
 @import "bootstrap-datepicker";
 @import "toastr";
 @import "time";
+
 // css
 #toast-container{
   top: 25px;
@@ -17,21 +21,24 @@
 
 .toast-error {
   border-radius: 15px !important;
-  background: #b2410c;
+  background: #b21212;
 }
 
 .toast-success {
   border-radius: 15px !important;
-  background: black;
+  background: #dc7b47;
 }
 
 body {
-  background: #2C3446;
+  //background: #2C3446;
+  background: $global-color-background;
+  margin-left: 12%;
 }
 
 header {
   grid-area: header;
-  background: #2C3446;
+  //background: #2C3446;
+  background: $global-color-background;
   //padding: 20px;
   border-radius: 15px;
   width: 15%;
@@ -42,7 +49,6 @@ header {
 article {
   grid-area: content;
   padding: 20px;
-  color: black;
   //background-color: #f4f4f4;
   //border-radius: 15px;
   //box-shadow: -3px 3px #68686e;
@@ -50,7 +56,6 @@ article {
 
 aside {
   grid-area: sidebar;
-  color: black;
   margin-top: 115%;
 
   //background-color: #f4f4f4;
@@ -60,7 +65,6 @@ aside {
 
 footer {
   grid-area: footer;
-  color: black;
 
   //background-color: #f4f4f4;
   //border-radius: 15px;
@@ -89,7 +93,9 @@ footer {
 
 @media (max-width: 1024px) {
   body {
-    background: #2C3446;
+    background: $global-color-background;
+    margin-left: 0%;
+
   }
 
   section {
@@ -100,7 +106,7 @@ footer {
 input {
   border-radius: 5px;
   line-height: 32px;
-  color: black;
+  color: $global-color-text;;
   width: 200px;
   font-size: 12px;
 }
@@ -188,7 +194,7 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
 @media screen and (orientation:portrait) {
   .wrapper { display: none }
   html, body {
-    background: black;
+    background: $global-color-background;
     height: 100%;
     width: 100%;
   }

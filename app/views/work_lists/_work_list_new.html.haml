@@ -13,8 +13,8 @@
             %tr
               %td.text-center.width50  Day
               %td.text-center.width65  Work start
-              %td.text-center.width65  Break start
-              %td.text-center.width65  Break stop
+              -#%td.text-center.width65  Break start
+              -#%td.text-center.width65  Break stop
               %td.text-center.width65  Work stop
               %td.text-center.width65  Washing time
               %td.text-center.width65  Common hours
@@ -34,7 +34,7 @@
                 inline: "nearest"
               }) ;
 
-              $(".tr_#{params[:day]}").css('background-color', '#545454');
+              $(".tr_#{params[:day]}").css('background-color', '#a7b5a1');
               console.log("1")
             })
 
@@ -70,14 +70,16 @@
                 - condition_disabled = !work_start_hour.blank? || !work_stop_hour.blank? || !break_start_hour.blank? || !break_stop_hour.blank? || !common_hours.blank? || !comment.blank? ? true : false
                 = f.hidden_field :day, value: index + 1
                 = f.hidden_field :month, value: params[:month]
+                = f.hidden_field :break_start, value: break_start_hour, :format=>"%H:%M"
+                = f.hidden_field :break_stop, value: break_stop_hour, :format=>"%H:%M"
                 = f.hidden_field :year, value: params[:year]
                 = f.hidden_field :user_id, value: params[:user_id].nil? ? current_user.id : params[:user_id]
 
                 - if (DateTime.new(params[:year].to_i, params[:month].to_i, day)) == "Tuesday"
                   %td.text-center.width50
                   %td.text-center.width65
-                  %td.text-center.width65
-                  %td.text-center.width65
+                  -#%td.text-center.width65
+                  -#%td.text-center.width65
                   %td.text-center.width65
                   %td.text-center.width65
                   %td.text-center.width65
@@ -85,14 +87,14 @@
                   %td.text-center.width125
 
                 %tr{ class: "tr_#{index + 1}"}
-                  %td.text-center.width50.font-size-12
+                  %td.text-center.width50.font-size-12{style: "color: brown;"}
                     = "#{index + 1} - #{DateTime.new(params[:year].to_i, params[:month].to_i, day).strftime("%A")}"
                   %td.text-center.width65
                     = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
-                  %td.text-center.width65
-                    = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
-                  %td.text-center.width65
-                    = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
+                  -#%td.text-center.width65
+                  -#  = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
+                  -#%td.text-center.width65
+                  -#  = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
                   %td.text-center.width65
                     = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
                   %td.text-center.width65
@@ -110,7 +112,7 @@
 
                   %td.text-center.width125
                     - if  condition_disabled
-                      = button_tag 'Edit', type: "button", class: "btn btn-warning btn-sm width60", id: "edit_#{index + 1}"
+                      = button_tag 'Edit', type: "button", class: "btn btn-warning btn-sm width100", id: "edit_#{index + 1}"
 
                       :javascript
                         $(document).ready(function(){
@@ -119,7 +121,7 @@
                               console.log("click btn warning #edit_#{index + 1}")
 
 
-                              if ($(this).attr('class') == 'btn width60 btn-primary btn-sm click_#{index + 1}') {
+                              if ($(this).attr('class') == 'btn width100 btn-primary btn-sm click_#{index + 1}') {
                                 $(this).find("button").removeAttr('type');
                                 $(this).attr('type', 'submit');
 
@@ -131,6 +133,7 @@
 
                                  $(this).removeClass('btn-warning btn-sm')
                                  $(this).addClass('btn-primary btn-sm')
+                                 $(this).addClass('width100')
                                  $(this).addClass('click_#{index + 1}')
                                  $(this).text("Update")
                                }
@@ -139,7 +142,7 @@
 
 
                     - else
-                      = f.submit "Add", class: 'btn width100 btn-dark btn-sm'
+                      = f.submit "Add", class: 'btn width75 btn-dark btn-sm'
 
 :javascript
   function timeToMins(time) {

@@ -73,11 +73,12 @@
                               #{p.to} - #{p.from} .#{p.month}.#{p.year}
                             %p Week #{p.week_number}
 
-                    %td
-                      %strong{ style: "color: #ffc949;" }
-                        = u.first_name
-                        = u.last_name
-                        (#{u.id})
+                    %td.text-center
+                      %div{ style: "color: #2b7623; font-size: 10px;" }
+                        %div
+                          = u.first_name
+                        %div
+                          = u.last_name
                     %td.text-center
                       #{wss.monday_hours}
                       %br

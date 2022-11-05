@@ -24,14 +24,14 @@ input[type=time]::-webkit-datetime-edit-text {
 
 /* Hour */
 input[type=time]::-webkit-datetime-edit-hour-field {
-  background-color: #f2f4f5;
+  background-color: $global-color-background;
   border-radius: 15%;
   padding: 1px 1px;
 }
 
 /* Minute */
 input[type=time]::-webkit-datetime-edit-minute-field {
-  background-color: #f2f4f5;
+  background-color: $global-color-background;
   border-radius: 15%;
   padding: 1px 1px;
 }
