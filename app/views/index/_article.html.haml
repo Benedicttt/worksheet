@@ -24,7 +24,8 @@
                     = link_to "", show_all_path(format: "pdf"), class: mobile_device? ? "icon-pdf-sm btn" : "icon-pdf btn" , target: "_blank"
                   - if !current_user.rule.nil? && current_user.rule.manager
                     = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "new"} do |f|
-                      = f.submit "", class: , class: mobile_device? ? "icon-new-worksheet-sm btn" : "icon-new-worksheet btn"
+                      = f.submit "", class: mobile_device? ? "icon-new-worksheet-sm btn" : "icon-new-worksheet btn"
+              %th
 
 
       .tbl-content-form
@@ -46,10 +47,12 @@
                     %th.style_for_empty_td
                     %th.style_for_empty_td
                     %th.style_for_empty_td
+                    %th.style_for_empty_td
                 - if index == 0
                   %tr{ style: "opacity:0;" }
                     %td
                       %br
+                    %th.style_for_empty_td
                     %th.style_for_empty_td
                     %th.style_for_empty_td
                     %th.style_for_empty_td
@@ -121,10 +124,11 @@
                       %td{ style: "border: 0px solid;" }
                         %div.display_flex
                           = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "show", id: wss.id} do |f|
-                            = f.submit "", class: "icon-edit-worksheet btn"
+                            = f.submit "", class: mobile_device? ? "icon-edit-worksheet-sm btn" : "icon-edit-worksheet btn"
                           = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "destroy", id: wss.id} do |f|
-                            = f.submit "", class: "icon-delete-worksheet btn", data: { confirm: 'Are you sure?' }
+                            = f.submit "", class: mobile_device? ? "icon-delete-worksheet-sm btn" : "icon-delete-worksheet btn", data: { confirm: 'Are you sure?' }
 
+                      %td
                     - else
                       %td.text-center
 
