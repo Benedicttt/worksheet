@@ -91,7 +91,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate(10%, 0%);
+  transform: translate(0%, 0%);
 }
 
 @media (max-width: 1024px) {
@@ -257,4 +257,9 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
       display: block;
     }
   }
+}
+
+.container-sign {
+  display: block;
+  margin-left: auto;
 }

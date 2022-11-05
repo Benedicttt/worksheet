@@ -1,5 +1,6 @@
 - if mobile_device?
-  %article
+
+  %article.container-mobile
     .text-center
       %strong.text-dark
         Welcome!
@@ -11,9 +12,8 @@
               %br
               %h1=flash[k]
 
-    %div.container
-      %div.col-12
-        .form_sign.position_relative.display-inline-block
+    %div
+      %div
         = form_for(:session, url: login_path) do |f|
           %div
             -#%div
@@ -35,7 +35,7 @@
 
             %div
               %br
-              = f.submit t('sign_in'), class: "button-center col-10 btn btn-md btn-dark"
+                = f.submit t('sign_in'), class: "button-center btn btn-md btn-dark"
 
   - if !flash.empty?
     - flash.keys.each do |k|
@@ -53,7 +53,7 @@
               %br
               %h1=flash[k]
 
-    %div.container.text-center.width250
+    %div.text-center.width250.container-sign
       %div
         .form_sign.position_relative.display-inline-block
         = form_for(:session, url: login_path) do |f|
@@ -74,13 +74,8 @@
                   =flash[k]
 
           %br
-          = f.submit t('sign_in'), class: "col-md-12 btn btn-sm btn-light"
+          = f.submit t('sign_in'), class: " btn btn-sm btn-dark"
 
-        -#%br
-        -#%br
-        -#.text-center
-        -#  = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
-        -#    = f.submit t('sign_up'), class: "col-md-12 btn btn-primary"
 
 - flash['success'] = ''
 - flash['alert'] = ''
@@ -89,6 +84,27 @@
   body {
     color: white;
   }
+
+  @media screen and (orientation:portrait) {
+    .container-mobile {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  @media screen and (orientation:landscape) {
+    .container-mobile {
+      width: 21% !important;
+      margin: 0 auto !important;
+      display: block !important;
+      float: none !important;
+      margin-top: 8% !important;
+    }
+  }
+
+
+
 :javascript
 
   $(document).ready(function(){
@@ -115,3 +131,4 @@
     });
     $('#session_checkbox_signin_nickname').click()
   });
+
