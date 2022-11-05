@@ -1,0 +1,276 @@
+@media (max-width: 1024px) {
+
+  .icon-main {
+    background: url(main.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-main:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-main:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+  //
+  .icon-auth {
+    background: url(auth.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-auth:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-auth:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+  //
+  .icon-exit {
+    background: url(exit.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-exit:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-exit:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+  //
+  .icon-select-lang {
+    background: url(select-lang.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-select-lang:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-select-lang:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+  //
+  .icon-list-users {
+    background: url(users.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-list-users:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-list-users:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+  //
+  .icon-create-user {
+    background: url(create_user.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-create-user:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-create-user:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-new-worksheet {
+    background: url(new_worksheet.png);
+    background-size: 100%;
+    margin-left: 36%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-new-worksheet:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-new-worksheet:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-edit-worksheet {
+    background: url(edit_worksheet.png);
+    background-size: 100%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-edit-worksheet:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-edit-worksheet:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-delete-worksheet {
+    background: url(delete_worksheet.png);
+    background-size: 100%;
+    //margin-left: 12%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-delete-worksheet:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-delete-worksheet:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-new-user {
+    background: url(new_user.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-new-user:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-new-user:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-work-list {
+    background: url(work_list.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-work-list:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-work-list:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-pdf {
+    background: url(pdf.png);
+    background-size: 100%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-pdf:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-pdf:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-excel {
+    background: url(excel.png);
+    background-size: 100%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-excel:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-excel:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-search {
+    background: url(search.png);
+    background-size: 100%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-search:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-search:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+
+  //
+  .icon-new-worklist {
+    background: url(new_worksheet.png);
+    background-size: 100%;
+    height: 55px;
+    width: 55px !important;
+    border: 0px;
+  }
+
+  .icon-new-worklist:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-new-worklist:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+}

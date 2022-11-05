@@ -38,6 +38,8 @@ class WorkLists::WorkListsController < ApplicationController
           years:       params[:year],
           user_id:     params[:user_id],
           comment:     params[:comment],
+          free_day:    params[:free_day],
+          vacation:    params[:vacation],
 
           work_start:  work_start,
           work_stop:  work_stop,
@@ -64,6 +66,8 @@ class WorkLists::WorkListsController < ApplicationController
           years:        params[:year],
           user_id:     params[:user_id],
           comment:     params[:comment],
+          free_day:    params[:free_day],
+          vacation:    params[:vacation],
 
           work_start:  work_start,
           work_stop:  work_stop,

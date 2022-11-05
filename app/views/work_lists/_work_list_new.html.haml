@@ -17,6 +17,8 @@
               -#%td.text-center.width65  Break stop
               %td.text-center.width65  Work stop
               %td.text-center.width65  Washing time
+              %td.text-center.width40  Free day
+              %td.text-center.width40  Vacation day
               %td.text-center.width65  Common hours
               %td.text-center.width125 Comment
               %td.text-center.width125
@@ -51,6 +53,8 @@
                 - break_start_hour = wl.nil? ? "" : wl.break_start
                 - break_stop_hour  = wl.nil? ? "" : wl.break_stop
                 - common_hours     = wl.nil? ? "" : wl.hours
+                - free_day         = wl.nil? ? false : wl.free_day
+                - vacation         = wl.nil? ? false : wl.vacation
 
                 - wss              = WorkShiftSchedule.find_by(user_id: params[:user_id])
                 - if !wss.nil?
@@ -75,40 +79,82 @@
                 = f.hidden_field :year, value: params[:year]
                 = f.hidden_field :user_id, value: params[:user_id].nil? ? current_user.id : params[:user_id]
 
-                - if (DateTime.new(params[:year].to_i, params[:month].to_i, day)) == "Tuesday"
-                  %td.text-center.width50
-                  %td.text-center.width65
-                  -#%td.text-center.width65
-                  -#%td.text-center.width65
-                  %td.text-center.width65
-                  %td.text-center.width65
-                  %td.text-center.width65
-                  %td.text-center.width125
-                  %td.text-center.width125
 
                 %tr{ class: "tr_#{index + 1}"}
                   %td.text-center.width50.font-size-12{style: "color: brown;"}
                     = "#{index + 1} - #{DateTime.new(params[:year].to_i, params[:month].to_i, day).strftime("%A")}"
                   %td.text-center.width65
-                    = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
+                    = f.time_field :work_start, :format=>"%H:%M", value: work_start_hour, class: "work_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""), onchange: "some_#{day}()"
                   -#%td.text-center.width65
-                  -#  = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
+                  -#  = f.time_field :break_start, :format=>"%H:%M", value: break_start_hour, class: "break_start_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : "")
                   -#%td.text-center.width65
-                  -#  = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled
+                  -#  = f.time_field :break_stop, :format=>"%H:%M", value: break_stop_hour, class: "break_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : "")
                   %td.text-center.width65
-                    = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
+                    = f.time_field :work_stop, :format=>"%H:%M", value: work_stop_hour, class: "work_stop_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""), onchange: "some_#{day}()"
                   %td.text-center.width65
-                    = f.time_field :washing_time, :format=>"%H:%M", value: washing_time, class: "washing_time_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onchange: "some_#{day}()"
+                    = f.time_field :washing_time, :format=>"%H:%M", value: washing_time, class: "washing_time_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""), onchange: "some_#{day}()"
+                  %td.text-center.width40
+                    .form-check.form-switch
+                      = f.check_box :free_day, checked: free_day, class: "free_day_#{day} form-check-input " + (condition_disabled ? "opacity_05" : "") , type: 'checkbox', id: 'flexSwitchCheckDefault', onclick: "return false"
+                  %td.text-center.width40
+                    .form-check.form-switch
+                      = f.check_box :vacation, checked: vacation, class: "vacation_#{day} form-check-input " + (condition_disabled ? "opacity_05" : ""), type: 'checkbox', id: 'flexSwitchCheckDefault', onclick: "return false"
+
                   %td.text-center.width65
-                    = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""),  readonly: condition_disabled, onfocus: "some_#{day}()"
-                    :javascript
-                        function some_#{day}() {
-                          $(".common_hours_#{day}").val(
-                            recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
-                          )
-                        }
+                    = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""), onfocus: "some_#{day}()"
                   %td.text-center.width125
-                    = f.text_area :comment, value: comment, class: "border-radius-15px width200  " + (condition_disabled && (!wss_comment.nil? ) ? "opacity_05" : ""), placeholder: "Comment"
+                    = f.text_area :comment, value: comment, class: "comment_#{day} border-radius-15px width200  " + (condition_disabled  ? "opacity_05" : ""), placeholder: "Comment", onfocus: "some_#{day}()"
+
+                  - if condition_disabled
+                    :javascript
+                      $(".work_start_#{day}").css("pointer-events", "none")
+                      $(".work_stop_#{day}").css("pointer-events", "none")
+                      $(".washing_time_#{day}").css("pointer-events", "none")
+                      $(".common_hours_#{day}").css("pointer-events", "none")
+                      $(".vacation_#{day}").css("pointer-events", "none")
+                      $(".free_day_#{day}").css("pointer-events", "none")
+                      $(".comment_#{day}").css("pointer-events", "none")
+
+                  :javascript
+                    function some_#{day}() {
+                      $(".common_hours_#{day}").val(
+                        recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
+                      )
+                    }
+
+                    $(".free_day_#{day}").on('change', function() {
+                        $(".work_start_#{day}").val("00:00")
+                        $(".work_stop_#{day}").val("00:00")
+                        $(".washing_time_#{day}").val("00:00")
+                        $(".common_hours_#{day}").val("00:00")
+                        $(".vacation_#{day}").attr("checked", false)
+
+                      if ($(this).is(':checked')) {
+                        $(this).attr('value', '1');
+                        $(".comment_#{day}").val("Free day")
+
+                      } else {
+                        $(this).attr('value', '0');
+                        $(".comment_#{day}").val("")
+                      }
+                    })
+
+                    $(".vacation_#{day}").on('change', function() {
+                        $(".work_start_#{day}").val("00:00")
+                        $(".work_stop_#{day}").val("00:00")
+                        $(".washing_time_#{day}").val("00:00")
+                        $(".common_hours_#{day}").val("08:00")
+                        $(".free_day_#{day}").attr("checked", false)
+
+                      if ($(this).is(':checked')) {
+                        $(this).attr('value', '1');
+                        $(".comment_#{day}").val("LOMA")
+
+                      } else {
+                        $(this).attr('value', '0');
+                        $(".comment_#{day}").val("")
+                      }
+                    })
 
                   %td.text-center.width125
                     - if  condition_disabled
@@ -118,10 +164,18 @@
                         $(document).ready(function(){
 
                            $("#edit_#{index + 1}.btn-warning.btn-sm").on("click", function() {
-                              console.log("click btn warning #edit_#{index + 1}")
+
+                              $(".vacation_#{day}, .free_day_#{day}").attr("onclick", "return true")
+                              $(".work_start_#{day}").css("pointer-events", "all")
+                              $(".work_stop_#{day}").css("pointer-events", "all")
+                              $(".washing_time_#{day}").css("pointer-events", "all")
+                              $(".common_hours_#{day}").css("pointer-events", "all")
+                              $(".vacation_#{day}").css("pointer-events", "all")
+                              $(".free_day_#{day}").css("pointer-events", "all")
+                              $(".comment_#{day}").css("pointer-events", "all")
 
 
-                              if ($(this).attr('class') == 'btn width100 btn-primary btn-sm click_#{index + 1}') {
+                          if ($(this).attr('class') == 'btn width100 btn-primary btn-sm click_#{index + 1}') {
                                 $(this).find("button").removeAttr('type');
                                 $(this).attr('type', 'submit');
 
@@ -162,4 +216,17 @@
   // Add two times in hh:mm format
   function recanculateTime(t1, t0) {
     return timeFromMins(timeToMins(t1) - timeToMins(t0));
+  }
+
+:css
+  .form-check .form-check-input {
+    height: 1.2em !important;
+    width: 2.8em !important;
+    float: none !important;
+    margin-left: -2.2em !important;
+  }
+
+  .form-check {
+    min-height: 1.5rem !important;
+    margin-bottom: 0.125rem !important;
   }
