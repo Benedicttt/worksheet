@@ -21,10 +21,10 @@
               %th.text-center
                 %div.display_flex
                   - if !current_user.rule.nil?
-                    = link_to "", show_all_path(format: "pdf"), class: 'btn icon-pdf', target: "_blank"
+                    = link_to "", show_all_path(format: "pdf"), class: mobile_device? ? "icon-pdf-sm btn" : "icon-pdf btn" , target: "_blank"
                   - if !current_user.rule.nil? && current_user.rule.manager
                     = form_for "", remote: true, url: { controller: "work_shift_schedules/work_shift_schedules", action: "new"} do |f|
-                      = f.submit "", class: "icon-new-worksheet btn"
+                      = f.submit "", class: , class: mobile_device? ? "icon-new-worksheet-sm btn" : "icon-new-worksheet btn"
 
 
       .tbl-content-form

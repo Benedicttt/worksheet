@@ -8,7 +8,7 @@
 
     %section.position_relative.display-inline-block
       .tbl-header
-        %table.container.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+        %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %thead
             %tr
               %td.text-center.width50  Day
@@ -104,57 +104,56 @@
                     = f.time_field :common_hours, :format=>"%H:%M", value: common_hours, class: "common_hours_#{day} border-radius-15px width65 " + (condition_disabled ? "opacity_05" : ""), onfocus: "some_#{day}()"
                   %td.text-center.width125
                     = f.text_area :comment, value: comment, class: "comment_#{day} border-radius-15px width200  " + (condition_disabled  ? "opacity_05" : ""), placeholder: "Comment", onfocus: "some_#{day}()"
+                    - if condition_disabled
+                      :javascript
+                        $(".work_start_#{day}").css("pointer-events", "none")
+                        $(".work_stop_#{day}").css("pointer-events", "none")
+                        $(".washing_time_#{day}").css("pointer-events", "none")
+                        $(".common_hours_#{day}").css("pointer-events", "none")
+                        $(".vacation_#{day}").css("pointer-events", "none")
+                        $(".free_day_#{day}").css("pointer-events", "none")
+                        $(".comment_#{day}").css("pointer-events", "none")
 
-                  - if condition_disabled
                     :javascript
-                      $(".work_start_#{day}").css("pointer-events", "none")
-                      $(".work_stop_#{day}").css("pointer-events", "none")
-                      $(".washing_time_#{day}").css("pointer-events", "none")
-                      $(".common_hours_#{day}").css("pointer-events", "none")
-                      $(".vacation_#{day}").css("pointer-events", "none")
-                      $(".free_day_#{day}").css("pointer-events", "none")
-                      $(".comment_#{day}").css("pointer-events", "none")
-
-                  :javascript
-                    function some_#{day}() {
-                      $(".common_hours_#{day}").val(
-                        recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
-                      )
-                    }
-
-                    $(".free_day_#{day}").on('change', function() {
-                        $(".work_start_#{day}").val("00:00")
-                        $(".work_stop_#{day}").val("00:00")
-                        $(".washing_time_#{day}").val("00:00")
-                        $(".common_hours_#{day}").val("00:00")
-                        $(".vacation_#{day}").attr("checked", false)
-
-                      if ($(this).is(':checked')) {
-                        $(this).attr('value', '1');
-                        $(".comment_#{day}").val("Free day")
-
-                      } else {
-                        $(this).attr('value', '0');
-                        $(".comment_#{day}").val("")
+                      function some_#{day}() {
+                        $(".common_hours_#{day}").val(
+                          recanculateTime($(".work_stop_#{day}").val(), $(".work_start_#{day}").val())
+                        )
                       }
-                    })
 
-                    $(".vacation_#{day}").on('change', function() {
-                        $(".work_start_#{day}").val("00:00")
-                        $(".work_stop_#{day}").val("00:00")
-                        $(".washing_time_#{day}").val("00:00")
-                        $(".common_hours_#{day}").val("08:00")
-                        $(".free_day_#{day}").attr("checked", false)
+                      $(".free_day_#{day}").on('change', function() {
+                          $(".work_start_#{day}").val("00:00")
+                          $(".work_stop_#{day}").val("00:00")
+                          $(".washing_time_#{day}").val("00:00")
+                          $(".common_hours_#{day}").val("00:00")
+                          $(".vacation_#{day}").attr("checked", false)
 
-                      if ($(this).is(':checked')) {
-                        $(this).attr('value', '1');
-                        $(".comment_#{day}").val("LOMA")
+                        if ($(this).is(':checked')) {
+                          $(this).attr('value', '1');
+                          $(".comment_#{day}").val("Free day")
 
-                      } else {
-                        $(this).attr('value', '0');
-                        $(".comment_#{day}").val("")
-                      }
-                    })
+                        } else {
+                          $(this).attr('value', '0');
+                          $(".comment_#{day}").val("")
+                        }
+                      })
+
+                      $(".vacation_#{day}").on('change', function() {
+                          $(".work_start_#{day}").val("00:00")
+                          $(".work_stop_#{day}").val("00:00")
+                          $(".washing_time_#{day}").val("00:00")
+                          $(".common_hours_#{day}").val("08:00")
+                          $(".free_day_#{day}").attr("checked", false)
+
+                        if ($(this).is(':checked')) {
+                          $(this).attr('value', '1');
+                          $(".comment_#{day}").val("LOMA")
+
+                        } else {
+                          $(this).attr('value', '0');
+                          $(".comment_#{day}").val("")
+                        }
+                      })
 
                   %td.text-center.width125
                     - if  condition_disabled
