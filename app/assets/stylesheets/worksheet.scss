@@ -8,15 +8,15 @@ $global-color-background: white;
 
 .common-table-article tr {
     &:hover {
-      //background-color: #15181a;
-      background-color: white;
+      background-color: #909798;
+      //background-color: white;
     }
   }
 
 .common-table-article td {
     &:hover {
       //background-color: #2a2f2f;
-      background-color: white;
+      background-color: #cad6d7;
     }
   }
 
@@ -85,6 +85,7 @@ td, tr {
   color: $global-color-text;;
   //border: 0.5px solid;
   border-style: dashed;
+  background: $global-color-background;
 }
 
 td:hover, td:focus {
