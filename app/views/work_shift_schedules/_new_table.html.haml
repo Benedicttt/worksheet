@@ -8,7 +8,7 @@
   = f.text_field :week_number, value: params[:week_number], placeholder: "Week", class: "width175"
   %br
   %br
-  = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]  }, { selected: params[:user_id] }, { class: "form-select width175" }
+  = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]  }, { selected: params[:user_id] }, { class: "form-select width250", style: "height: 60px; " }
 %td.text-center
   = f.text_area :monday, value: params[:monday], class: "border-radius-15px width125 height75", placeholder: "Monday"
   = f.number_field :monday_hours, value: params[:monday_hours], class: "border-radius-15px width100", placeholder: "Hours"

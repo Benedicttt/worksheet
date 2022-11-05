@@ -1,4 +1,4 @@
-%td.width175
+%td
   = f.hidden_field :id, value: "#{params[:id]}"
   = f.text_field :to, value: "#{period.to}-#{period.month}-#{period.year}", class: "datepicker", placeholder: "To"
   %br
@@ -9,7 +9,7 @@
   = f.text_field :week_number, value: period.week_number, placeholder: "Week"
   %br
   %br
-  = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]  }, { selected: wss.user_id }, { class: "form-select width145" }
+  = f.select :user_id, User.all.map { |r| [r[:first_name] + " " + r[:last_name], r.id]  }, { selected: wss.user_id }, { class: "form-select width250", style: "height: 60px; " }
 %td.text-center
   = f.text_area :monday, value: wss.monday, class: "border-radius-15px width125 height75", placeholder: "Monday"
   = f.number_field :monday_hours, value: wss.monday_hours, class: "border-radius-15px width100", placeholder: "Hours"
