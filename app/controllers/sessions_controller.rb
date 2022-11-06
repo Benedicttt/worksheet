@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
 
       params.merge!(head: "New work list for user:  #{current_user.first_name} #{current_user.last_name},  month: #{params[:month]},  year: #{params[:year]}")
 
-      render "work_lists/work_list_new", params: params
+      render "work_lists/show_work_list", params: params
 
     else
       flash[:success] = ""

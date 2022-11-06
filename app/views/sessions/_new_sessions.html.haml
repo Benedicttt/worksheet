@@ -14,7 +14,7 @@
 
     %div
       %div
-        = form_for "", remote: true, url: { controller: "sessions", action: "create" } do |f|
+        = form_for "",  url: { controller: "sessions", action: "create" } do |f|
           %div
             -#%div
             -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'
@@ -56,7 +56,7 @@
     %div.text-center.width250.container-sign
       %div
         .form_sign.position_relative.display-inline-block
-        = form_for "", remote: true, url: { controller: "sessions", action: "create" } do |f|
+        = form_for "",  url: { controller: "sessions", action: "create" } do |f|
           %div
             -#%div
             -#  = f.check_box 'checkbox_signin_nickname', style: 'width: 22px;height: 22px;top: 13px;vertical-align: sub;'

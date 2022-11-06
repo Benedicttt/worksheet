@@ -1,5 +1,5 @@
-$("aside").replaceWith(  '<%= j  render "index/aside"%>');
 $("article").replaceWith('<%= j  render "work_lists/work_list_new", day: params[:day]%>');
+$("aside").replaceWith(  '<%= j  render "index/aside"%>');
 $("footer").replaceWith( '<%= j  render "index/footer"%>');
 $("modify").replaceWith( '<%= j  render "shared/css_article", params: params %>');
 $("header").replaceWith( '<%= j  render "index/header"%>');
