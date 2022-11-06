@@ -19,19 +19,22 @@ class SessionsController < ApplicationController
 
     if session
       logger.info session
-      # redirect_to root_path
 
-      wl = WorkList.where(user_id: current_user.id).last
-      params.merge!(
-        user_id: current_user.id,
-        month: wl.month,
-        year: wl.years,
-      )
+      wl = WorkList.where(user_id: current_user.id)
 
-      params.merge!(head: "New work list for user:  #{current_user.first_name} #{current_user.last_name},  month: #{params[:month]},  year: #{params[:year]}")
+      if wl.empty?
+        redirect_to root_path
+      else
+        params.merge!(
+          user_id: current_user.id,
+          month: wl.last.month,
+          year: wl.last.years,
+        )
 
-      render "work_lists/show_work_list", params: params
+        params.merge!(head: "New work list for user:  #{current_user.first_name} #{current_user.last_name},  month: #{params[:month]},  year: #{params[:year]}")
 
+        render "work_lists/show_work_list", params: params
+      end
     else
       flash[:success] = ""
       flash[:alert] = session.nil? ? t('incorrectly') : ''
