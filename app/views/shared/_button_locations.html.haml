@@ -1,0 +1,5 @@
+- if current_user.present? && !current_user.rule.nil?
+  %div.margin_top_5_px
+    = form_for "", remote: true, url: { controller: "locations/locations", action: "show"} do |f|
+      = f.submit "", class: "icon-locations btn margin_top_30_px"
+

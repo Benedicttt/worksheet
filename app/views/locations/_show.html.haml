@@ -1,0 +1,30 @@
+%article
+  - if current_user.present?
+    - if !current_user.rule.nil? && current_user.rule.manager
+      = form_for "", remote: true, url: { controller: 'locations/locations', action: "add"} do |f|
+        = f.button "", class: "icon-plus margin_left_10_per"
+      %br
+
+    - Location.all.order("locations.id asc").each do |l|
+      %div.margin_left_10_per
+        %table
+          %tbody
+            %tr
+              %td.width250.font-size-16
+                %a{ href: "#{l.link}", class: "link-success"}
+                  = l.name
+              - if !current_user.rule.nil? && current_user.rule.manager
+                %td.display_flex
+                  .margin_left_5_per
+                    = form_for "", remote: true, url: { controller: 'locations/locations', action: "edit"} do |f|
+                      = f.hidden_field :id_location, value: l.id
+                      = f.hidden_field :name, value: l.name
+                      = f.hidden_field :link, value: l.link
+                      = f.button "", class: mobile_device? ? "icon-edit-worksheet-sm" : "icon-edit-worksheet"
+
+                  .margin_left_5_per
+                    = form_for "", remote: true, url: { controller: "locations/locations", action: "delete", id: l.id} do |f|
+                      = f.submit "", class: mobile_device? ? "icon-delete-worksheet-sm btn" : "icon-delete-worksheet btn", data: { confirm: 'Are you sure?' }
+
+
+%modify

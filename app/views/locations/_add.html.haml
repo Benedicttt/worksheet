@@ -1,0 +1,14 @@
+%article
+  - if current_user.present?
+    = form_for "", remote: true, url: { controller: 'locations/locations', action: "create"} do |f|
+      %p
+      = f.label "Name location"
+      %p
+      = f.text_field :name
+      %p
+      = f.label "Location link"
+      %p
+      = f.text_field :link, class: "col-12"
+      %p
+      =f.submit "Create", class: "btn btn-sm btn-dark"
+%modify

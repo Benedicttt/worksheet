@@ -14,6 +14,14 @@ Rails.application.routes.draw do
     post 'login'               => 'sessions#create'
     post 'logout'              => 'sessions#destroy'
 
+    namespace :locations do
+      post 'show'              => "locations#show"
+      post 'add'               => "locations#add"
+      post 'create'            => "locations#create"
+      post 'edit'              => "locations#edit"
+      post 'update'            => "locations#update"
+      post 'delete'            => "locations#delete"
+    end
 
     namespace :users do
       get    'new'             => 'users#new'
