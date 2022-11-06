@@ -208,8 +208,16 @@ class WorkLists::WorkListsController < ApplicationController
 
             total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" || wl_line.hours == 0.0 ? 0.0 : wl_line.hours_minutes.to_f
             total_hours_washing += wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? 0.0 : wl_line.washing_time_minutes.to_f
-            total_hours_without_lunch += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" || wl_line.hours == "00:00" || !(wl_line.hours.split(":")[0].to_i >= 6) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
 
+            if !wl_line.nil?
+              if wl_line.vacation
+                total_hours_without_lunch +=  wl_line.hours_minutes.to_f - 30.0
+              elsif wl_line.hours.split(":")[0].to_i < 6
+                total_hours_without_lunch += wl_line.hours_minutes.to_f
+              else
+                total_hours_without_lunch += wl_line.hours_minutes.nil? || wl_line.hours_minutes.eql?(0.0) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
+              end
+            end
           end
 
           //
@@ -339,8 +347,17 @@ class WorkLists::WorkListsController < ApplicationController
               ]]
 
               total_hours += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? 0.0 : wl_line.hours_minutes.to_f
-              total_hours_without_lunch += wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":"  || wl_line.hours == "00:00" || !(wl_line.hours.split(":")[0].to_i >= 6) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
               total_hours_washing += wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? 0.0 : wl_line.washing_time_minutes.to_f
+
+              if !wl_line.nil?
+                if wl_line.vacation
+                  total_hours_without_lunch +=  wl_line.hours_minutes.to_f - 30.0
+                elsif wl_line.hours.split(":")[0].to_i < 6
+                  total_hours_without_lunch += wl_line.hours_minutes.to_f
+                else
+                  total_hours_without_lunch += wl_line.hours_minutes.nil? || wl_line.hours_minutes.eql?(0.0) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
+                end
+              end
             end
 
             data += [[
@@ -376,7 +393,7 @@ class WorkLists::WorkListsController < ApplicationController
             pdf.table(
               data,
               cell_style: { font: "Monaco", :size => 8, :style => :normal },
-              column_widths: [85, 45, 45, 45, 45, 47, 45, 130],
+              column_widths: [85, 45, 45, 45, 50, 47, 45, 140],
 
             ) do |t|
               t.rows(0).align =  :center
