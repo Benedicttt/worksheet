@@ -2,78 +2,77 @@
   - if current_user.present?
     = render "shared/flash"
 
-    %section.position_relative.display-inline-block
-      %table.position_relative.display-inline-block.table
-        %thead
-          %tr
-            %th
-              Id
-            %th.width75
-              = t('first_name')
-            %th.width75
-              = t('last_name')
-            %th.width75
-              = t('nickname')
-            %th.width200
-              = t('email')
-            %th.width125
-              = t('phone')
-            %th.width125
-              = t('telegram')
-            %th.width75
-              = t('is_available')
-            %th.width75
-              Worker
-            %th.width75
-              Manager
-            %th.width75
-              Create user
-            %th.width75
-              Edit_user
-            %th.width75
-              Edit all work list
-            %th.width75
-              Edit work list
-            %th.width75
-              Edit all eggs collection
-            %th.width75
-              Edit eggs collection
-            %th.width75
-              - if current_user.rule.manager
-                = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
-                  = f.submit "", class: "icon-new-user btn margin_top_15_px"
-        - @users.each do |u|
-          %tr
-            %th= u.id
-            %th= u.first_name
-            %th= u.last_name
-            %th= u.nickname
-            %th= u.email
-            %th= u.phone
-            %th= u.telegram
-            %th.font-size-16= u.is_available.nil? ? "🛠" : u.is_available ? "✅" : "❌"
-            - if !u.rule.nil?
-              %th.font-size-16.text-center= u.rule.worker.nil? ? "🛠" : u.rule.worker ? "✅" : "❌"
-              %th.font-size-16.text-center= u.rule.manager.nil? ? "🛠" : u.rule.manager ? "✅" : "❌"
-              %th.font-size-16.text-center= u.rule.create_user.nil? ? "🛠" : u.rule.create_user ? "✅" : "❌"
-              %th.font-size-16.text-center= u.rule.edit_user.nil? ? "🛠" : u.rule.edit_user ? "✅" : "❌"
-              %th.font-size-16.text-center= u.rule.edit_all_work_list.nil? ? "🛠" : u.rule.edit_all_work_list ? "✅" : "❌"
-              %th.font-size-16.text-center= u.rule.edit_work_list.nil? ? "🛠" : u.rule.edit_work_list ? "✅" : "❌"
-              %th.font-size-16.text-center= u.rule.edit_all_eggs_collection.nil? ? "🛠" : u.rule.edit_all_eggs_collection ? "✅" : "❌"
-              %th.font-size-16.text-center= u.rule.edit_eggs_collection.nil? ? "🛠" : u.rule.edit_eggs_collection ? "✅" : "❌"
-            - else
-              %th.font-size-16 🛠
-              %th.font-size-16 🛠
-              %th.font-size-16 🛠
-              %th.font-size-16 🛠
-              %th.font-size-16 🛠
-              %th.font-size-16 🛠
-              %th.font-size-16 🛠
-              %th.font-size-16 🛠
+    %table.position_relative.display-inline-block.table
+      %thead
+        %tr
+          %th.width25
+            Id
+          %th.width75
+            = t('first_name')
+          %th.width75
+            = t('last_name')
+          %th.width75
+            = t('nickname')
+          %th.width200
+            = t('email')
+          %th.width125
+            = t('phone')
+          %th.width125
+            = t('telegram')
+          %th.width75
+            = t('is_available')
+          %th.width75
+            Worker
+          %th.width75
+            Manager
+          %th.width75
+            Create user
+          %th.width75
+            Edit_user
+          %th.width75
+            Edit all work list
+          %th.width75
+            Edit work list
+          %th.width75
+            Edit all eggs collection
+          %th.width75
+            Edit eggs collection
+          %th.width75
+            - if current_user.rule.manager
+              = form_for "", remote: true, url: { controller: "users/steps", action: "create_user"} do |f|
+                = f.submit "", class: "icon-new-user btn margin_top_15_px"
+      - @users.each do |u|
+        %tr
+          %th= u.id
+          %th= u.first_name
+          %th= u.last_name
+          %th= u.nickname
+          %th= u.email
+          %th= u.phone
+          %th= u.telegram
+          %th.font-size-16= u.is_available.nil? ? "🛠" : u.is_available ? "✅" : "❌"
+          - if !u.rule.nil?
+            %th.font-size-16.text-center= u.rule.worker.nil? ? "🛠" : u.rule.worker ? "✅" : "❌"
+            %th.font-size-16.text-center= u.rule.manager.nil? ? "🛠" : u.rule.manager ? "✅" : "❌"
+            %th.font-size-16.text-center= u.rule.create_user.nil? ? "🛠" : u.rule.create_user ? "✅" : "❌"
+            %th.font-size-16.text-center= u.rule.edit_user.nil? ? "🛠" : u.rule.edit_user ? "✅" : "❌"
+            %th.font-size-16.text-center= u.rule.edit_all_work_list.nil? ? "🛠" : u.rule.edit_all_work_list ? "✅" : "❌"
+            %th.font-size-16.text-center= u.rule.edit_work_list.nil? ? "🛠" : u.rule.edit_work_list ? "✅" : "❌"
+            %th.font-size-16.text-center= u.rule.edit_all_eggs_collection.nil? ? "🛠" : u.rule.edit_all_eggs_collection ? "✅" : "❌"
+            %th.font-size-16.text-center= u.rule.edit_eggs_collection.nil? ? "🛠" : u.rule.edit_eggs_collection ? "✅" : "❌"
+          - else
+            %th.font-size-16 🛠
+            %th.font-size-16 🛠
+            %th.font-size-16 🛠
+            %th.font-size-16 🛠
+            %th.font-size-16 🛠
+            %th.font-size-16 🛠
+            %th.font-size-16 🛠
+            %th.font-size-16 🛠
 
 
-            %td.display_flex{style: "border: 0px solid;"}
-              = form_for "", remote: true, url: { controller: "users/users", action: "edit", id: u.id} do |f|
-                = f.submit "", class: "icon-edit-worksheet btn"
-              = form_for "", remote: true, url: { controller: "users/users", action: "destroy", id: u.id} do |f|
-                = f.submit "", class: "icon-delete-worksheet btn"
+          %td.display_flex{style: "border: 0px solid;"}
+            = form_for "", remote: true, url: { controller: "users/users", action: "edit", id: u.id} do |f|
+              = f.submit "", class: "icon-edit-worksheet btn"
+            = form_for "", remote: true, url: { controller: "users/users", action: "destroy", id: u.id} do |f|
+              = f.submit "", class: "icon-delete-worksheet btn"

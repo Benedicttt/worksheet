@@ -203,8 +203,8 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
 }
 
 //rotate
-@media screen and (orientation:portrait) {
-  .wrapper { display: none }
+//@media screen and (orientation:portrait) {
+//  .wrapper { display: none }
   html, body {
     background: url(vecteezy_white-background1_DI0221.jpg);
     background-position: center center;
@@ -218,69 +218,69 @@ a, button, input, table, select {   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.6); }
     width: 100%;
   }
 
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+  //body {
+  //  display: flex;
+  //  justify-content: center;
+  //  align-items: center;
+  //  flex-direction: column;
+  //}
 
-  .phone {
-    height: 125px;
-    width: 225px;
-    border: 6px solid black;
-    text-align: center;
-    border-radius: 10px;
-    animation: rotate 1.5s ease-in-out infinite alternate;
-    /* display: none; */
-  }
-
-  .message {
-    color: black;
-    font-size: 14px;
-    margin-top: 40px;
-    /* display: none; */
-  }
-
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg)
-    }
-
-    10% {
-      transform: rotate(0deg)
-    }
-    20% {
-      transform: rotate(0deg)
-    }
-    30% {
-      transform: rotate(30deg)
-    }
-    50% {
-      transform: rotate(20deg)
-    }
-    75% {
-      transform: rotate(10deg)
-    }
-    85% {
-      transform: rotate(-90deg)
-    }
-    95% {
-      transform: rotate(-90deg)
-    }
-
-    100% {
-      transform: rotate(-90deg)
-    }
-  }
-
-  @media only screen and (max-device-width: 812px) and (orientation: landscape) {
-
-    .phone, .message {
-      display: block;
-    }
-  }
-}
+  //.phone {
+  //  height: 125px;
+  //  width: 225px;
+  //  border: 6px solid black;
+  //  text-align: center;
+  //  border-radius: 10px;
+  //  animation: rotate 1.5s ease-in-out infinite alternate;
+  //  /* display: none; */
+  //}
+  //
+  //.message {
+  //  color: black;
+  //  font-size: 14px;
+  //  margin-top: 40px;
+  //  /* display: none; */
+  //}
+  //
+  //@keyframes rotate {
+  //  0% {
+  //    transform: rotate(0deg)
+  //  }
+  //
+  //  10% {
+  //    transform: rotate(0deg)
+  //  }
+  //  20% {
+  //    transform: rotate(0deg)
+  //  }
+  //  30% {
+  //    transform: rotate(30deg)
+  //  }
+  //  50% {
+  //    transform: rotate(20deg)
+  //  }
+  //  75% {
+  //    transform: rotate(10deg)
+  //  }
+  //  85% {
+  //    transform: rotate(-90deg)
+  //  }
+  //  95% {
+  //    transform: rotate(-90deg)
+  //  }
+  //
+  //  100% {
+  //    transform: rotate(-90deg)
+  //  }
+  //}
+  //
+  //@media only screen and (max-device-width: 812px) and (orientation: landscape) {
+  //
+  //  .phone, .message {
+  //    display: block;
+  //  }
+  //}
+//}
 
 .container-sign {
   display: block;
