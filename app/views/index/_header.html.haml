@@ -1,20 +1,28 @@
-%div.user
-  - u = current_user
-  - if !u.nil?
-    #{u.first_name} #{u.last_name}
 
 %header
-  %div
-    %div
-      %h6
-        .text-center
-          #{params[:head]}
-    -#%br
-      -#    -#.float-right{ style: "text-shadow: 2px 2px #0f110c;" } WorkSheet
+  %div.display_flex
+    %h6
+      = params[:head]
+    %div.user
+      - u = current_user
+      - if !u.nil?
+        #{u.first_name} #{u.last_name}
 
-:css
-  .user {
-    display: block;
-    position: absolute;
-    font-size: 12px;
-  }
+- if mobile_device?
+  :css
+    .user {
+      display: block;
+      position: absolute;
+      font-size: 12px;
+      margin-left: 115%;
+      color: black !important;
+    }
+- else
+  :css
+    .user {
+      display: block;
+      position: absolute;
+      font-size: 12px;
+      margin-left: 25%;
+      color: black !important;
+    }

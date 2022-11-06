@@ -45,9 +45,8 @@ header {
   //background: #2C3446;
   //padding: 20px;
   border-radius: 15px;
-  width: 15%;
   display: block;
-  margin: 0 auto;
+  margin-left: 35%;
 }
 
 article {
@@ -83,7 +82,7 @@ footer {
   grid-template-rows: 1fr 12fr;
   grid-template-columns: 1fr 15fr;
   grid-template-areas:
-    "sidebar  header"
+    "header  header"
     "sidebar content"
     "sidebar footer";
 }
@@ -141,6 +140,9 @@ input {
 .margin_top_5_per { margin-top: 5% }
 .margin_top_15_per { margin-top: 15% }
 .margin_top_20_per { margin-top: 20% }
+.margin_top_30_per { margin-top: 30% }
+.margin_top_40_per { margin-top: 40% }
+.margin_top_50_per { margin-top: 50% }
 .margin_left_10_per { margin-left: 10% }
 .margin_left_30_per { margin-left: 30% }
 .margin_left_35_per { margin-left: 35% }
@@ -169,6 +171,7 @@ input {
 .width175 { width: 175px; }
 .width200 { width: 200px; }
 .width250 { width: 250px; }
+.width500 { width: 500px; }
 .height36 { height: 36px; }
 .height75 { height: 75px; }
 .height100 { height: 100px; }
