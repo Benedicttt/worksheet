@@ -1,3 +1,4 @@
+= render "shared/css_article"
 %td
   = f.hidden_field :id, value: "#{params[:id]}"
   = f.text_field :to, value: "#{period.to}-#{period.month}-#{period.year}", class: "datepicker", placeholder: "To"
