@@ -1,28 +1,17 @@
+%div.user
+  - u = current_user
+  - if !u.nil?
+    #{u.first_name} #{u.last_name}
 
 %header
   %div.display_flex
     %h6
       = params[:head]
-    %div.user
-      - u = current_user
-      - if !u.nil?
-        #{u.first_name} #{u.last_name}
 
-- if mobile_device?
-  :css
-    .user {
-      display: block;
-      position: absolute;
-      font-size: 12px;
-      margin-left: 90%;
-      color: black !important;
-    }
-- else
-  :css
-    .user {
-      display: block;
-      position: absolute;
-      font-size: 12px;
-      margin-left: 25%;
-      color: black !important;
-    }
+:css
+  .user {
+    display: block;
+    position: absolute;
+    font-size: 12px;
+    color: black !important;
+  }
