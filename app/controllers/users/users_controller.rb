@@ -99,8 +99,8 @@ class Users::UsersController < ApplicationController
 
   def update
     params[:head] = "User #{params[:id]} updated"
-    flash[:alert] = ''
-    flash[:success] = ''
+    flash[:alert] = ""
+    flash[:success] = ""
 
     begin
 
@@ -128,10 +128,10 @@ class Users::UsersController < ApplicationController
         edit_eggs_collection: params[:edit_eggs_collection]
       )
 
-      flash[:success] = "User #{user.first_name} #{user.last_name} updated successful"
+      flash[:success] += "<p> Params user #{user.first_name} #{user.last_name} updated successful"
 
     rescue
-      flash[:alert] = "User not updated"
+      flash[:alert] += "<p> User not updated"
     end
 
     # @users = User.all.order("users.id desc").limit(10).page(params[:page])
@@ -143,7 +143,42 @@ class Users::UsersController < ApplicationController
     else
       @user = current_user
 
-      flash[:success] = "User #{current_user.first_name} #{current_user.last_name} updated successful"
+      if params[:change_pass] == "1"
+
+        check_old_password = user.password == params[:old_password]
+        equal_password     = params[:new_password] == params[:confirm_password]
+
+        result_old_pass = nil
+        result_eql_pass = nil
+
+        if check_old_password
+          result_old_pass = true
+          flash[:success] += "<p>Old password correct"
+        else
+          result_old_pass = false
+          flash[:alert] += "<p>Old password is wrong"
+        end
+
+        if equal_password
+          result_eql_pass = true
+          flash[:success] += "<p>New-password and confirm-password equals!"
+        else
+          result_eql_pass = false
+          flash[:alert] += "<p>New password and confirm password not equals!"
+        end
+
+        if result_eql_pass && result_eql_pass
+          user.password = params[:new_password]
+          if user.save
+            flash[:success] = "<p> Password changed"
+            params[:change_pass] = "0"
+          else
+            user.errors.messages[:password].each { |pass| flash[:alert] += "<p>#{pass}" }
+          end
+
+        end
+      end
+
       render "users/edit"
     end
   end
