@@ -23,7 +23,7 @@
           = f.hidden_field :month, value: params[:month]
           = f.hidden_field :year, value: params[:year]
           = f.hidden_field :user_id, value: params[:user_id]
-          .margin_top_5_px
+          .margin_top_5_per.margin_left_2_per
             = f.submit "", class: "icon-new-worklist btn"
       - else
         - @work_list.order(month: :desc).map(&:month).uniq.each do |month|
@@ -37,7 +37,7 @@
 
             - if !wl.nil? && wl.vacation
               - full_work_time_with_lunch +=  wl.hours_minutes.to_f - 30.0
-            - elsif !wl.nil? && wl.hours.split(":")[0].to_i < 6
+            - elsif !wl.nil? && wl.hours_minutes <= 389.0
               - full_work_time_with_lunch += wl.hours_minutes.to_f
             - else
               - full_work_time_with_lunch += wl.hours_minutes.nil? || wl.hours_minutes.eql?(0.0) ? 0.0 : wl.hours_minutes.to_f - 30.0

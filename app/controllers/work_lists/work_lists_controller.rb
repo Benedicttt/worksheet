@@ -212,7 +212,7 @@ class WorkLists::WorkListsController < ApplicationController
             if !wl_line.nil?
               if wl_line.vacation
                 total_hours_without_lunch +=  wl_line.hours_minutes.to_f - 30.0
-              elsif wl_line.hours.split(":")[0].to_i < 6
+              elsif  wl_line.hours_minutes <= 389.0
                 total_hours_without_lunch += wl_line.hours_minutes.to_f
               else
                 total_hours_without_lunch += wl_line.hours_minutes.nil? || wl_line.hours_minutes.eql?(0.0) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
@@ -352,7 +352,7 @@ class WorkLists::WorkListsController < ApplicationController
               if !wl_line.nil?
                 if wl_line.vacation
                   total_hours_without_lunch +=  wl_line.hours_minutes.to_f - 30.0
-                elsif wl_line.hours.split(":")[0].to_i < 6
+                elsif  wl_line.hours_minutes <= 389.0
                   total_hours_without_lunch += wl_line.hours_minutes.to_f
                 else
                   total_hours_without_lunch += wl_line.hours_minutes.nil? || wl_line.hours_minutes.eql?(0.0) ? 0.0 : wl_line.hours_minutes.to_f - 30.0
