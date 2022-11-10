@@ -201,6 +201,12 @@
               - if day == current_day
                 :javascript
                   $(document).ready(function(){
+                    document.querySelectorAll(".tr_#{current_day}")[0].scrollIntoView({
+                      behavior: 'auto',
+                      block: 'start',
+                      inline: "nearest"
+                    })
+
                     $(".tr_#{day}").css('background-color', '#b7c6d4');
                   })
               - if DateTime.new(params[:year].to_i, params[:month].to_i, day).strftime("%A") == "Sunday"
