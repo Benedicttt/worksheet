@@ -1,6 +1,7 @@
 %article
   - if current_user.present?
     - days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
+    - current_day = Time.now.day
 
     = render "shared/flash"
 
@@ -36,11 +37,13 @@
 
               $(".tr_#{params[:day]}").css('background-color', '#a7b5a1');
               console.log("1")
+
             })
 
 
         - days.times do |index|
           - day = index + 1
+
           = form_for "", remote: true, url: work_lists_create_path(day: day) do |f|
             %table.table.container
               %tbody
@@ -76,7 +79,6 @@
                 = f.hidden_field :break_stop, value: break_stop_hour, :format=>"%H:%M"
                 = f.hidden_field :year, value: params[:year]
                 = f.hidden_field :user_id, value: params[:user_id].nil? ? current_user.id : params[:user_id]
-
 
                 %tr{ class: "tr_#{index + 1}"}
                   %td.text-center.width50.font-size-12{style: "color: brown;"}
@@ -195,6 +197,17 @@
 
                     - else
                       = f.submit "Add", class: 'btn width75 btn-dark btn-sm'
+
+              - if day == current_day
+                :javascript
+                  $(document).ready(function(){
+                    $(".tr_#{day}").css('background-color', '#b7c6d4');
+                  })
+              - if DateTime.new(params[:year].to_i, params[:month].to_i, day).strftime("%A") == "Sunday"
+                :javascript
+                  $(document).ready(function(){
+                    $(".tr_#{day}").css('background-color', '#ffbadb');
+                  })
 
 :javascript
   function timeToMins(time) {
