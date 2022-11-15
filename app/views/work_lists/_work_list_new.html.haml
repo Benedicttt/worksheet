@@ -10,37 +10,22 @@
         %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %thead
             %tr
-              %td.text-center.width50  Day
-              %td.text-center.width65  Work start
-              -#%td.text-center.width65  Break start
-              -#%td.text-center.width65  Break stop
-              %td.text-center.width65  Work stop
-              %td.text-center.width65  Washing time
-              %td.text-center.width40  Free day
-              %td.text-center.width40  Vacation day
-              %td.text-center.width65  Common hours
-              %td.text-center.width125 Comment
-              %td.text-center.width125
+              %td.font-size-12.text-center.width50  Day
+              %td.font-size-12.text-center.width65  Work start
+              -#%td.font-size-12.text-center.width65  Break start
+              -#%td.font-size-12.text-center.width65  Break stop
+              %td.font-size-12.text-center.width65  Work stop
+              %td.font-size-12.text-center.width65  Washing time
+              %td.font-size-12.text-center.width40  Free day
+              %td.font-size-12.text-center.width40  Vacation day
+              %td.font-size-12.text-center.width65  Common hours
+              %td.font-size-12.text-center.width125 Comment
+              %td.font-size-12.text-center.width125
                 = link_to "", work_lists_show_pdf_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
                 = link_to "", work_lists_show_excel_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: :xlsx), class: 'btn icon-excel'
 
 
       .tbl-content-form
-        - if !params[:day].blank? || !params[:day].nil?
-          :javascript
-            $(document).ready(function(){
-              document.querySelectorAll(".tr_#{params[:day]}")[0].scrollIntoView({
-                behavior: 'auto',
-                block: 'center',
-                inline: "nearest"
-              }) ;
-
-              $(".tr_#{params[:day]}").css('background-color', '#a7b5a1');
-              console.log("1")
-
-            })
-
-
         - days.times do |index|
           - day = index + 1
 
@@ -209,13 +194,32 @@
 
                     $(".tr_#{day}").css('background-color', '#b7c6d4');
                   })
+
               - if DateTime.new(params[:year].to_i, params[:month].to_i, day).strftime("%A") == "Sunday"
                 :javascript
                   $(document).ready(function(){
                     $(".tr_#{day}").css('background-color', '#ffbadb');
                   })
 
+              - if !params[:day].blank? || !params[:day].nil?
+                :javascript
+                  $(document).ready(function(){
+                    document.querySelectorAll(".tr_#{params[:day]}")[0].scrollIntoView({
+                      behavior: 'auto',
+                      block: 'start',
+                      inline: "nearest"
+                    }) ;
+
+                    $(".tr_#{params[:day]}").addClass("transform")
+
+                    setTimeout(() => {
+                         $(".tr_#{params[:day]}").removeClass("transform")
+                      }, 5000);
+
+                  })
+
 :javascript
+
   function timeToMins(time) {
     var b = time.split(':');
     return b[0]*60 + +b[1];
@@ -246,4 +250,19 @@
   .form-check {
     min-height: 1.5rem !important;
     margin-bottom: 0.125rem !important;
+  }
+
+  .transform {
+      -webkit-animation: glowing 400ms infinite;
+      -moz-animation: glowing 600ms infinite;
+      -o-animation: glowing 400ms infinite;
+      animation: glowing 600ms infinite;
+  }
+
+  @keyframes glowing {
+      0% { background-color: #386bb5; box-shadow: 0 0 5px #233f81; }
+      25% { background-color: #23487d; box-shadow: 0 0 20px #395080;}
+      50% { background-color: #182553; box-shadow: 0 0 5px #10182f; }
+      75% { background-color: #23487d; box-shadow: 0 0 20px #395080;}
+      100% { background-color: #386bb5; box-shadow: 0 0 5px #233f81; }
   }
