@@ -159,7 +159,7 @@
               %td.text-center.font-size-16
                 = flooreggs.to_i
               %td.text-center.font-size-16
-                = (egg_weight / count_day).round(2)
+                = egg_weight == 0.0 ? 0 : (egg_weight / count_day).round(2)
               %td.text-center.font-size-16
                 = deads_chicks.to_i
               %td.text-center.font-size-16
