@@ -51,6 +51,7 @@ fi
 #
 cd /app
 #
+
 /root/.rbenv/shims/gem install bundler || gem install bundler
 /root/.rbenv/shims/bundle install --jobs 20 --retry 5 --without development || bundle install --jobs 20 --retry 5 --without development
 

@@ -41,23 +41,31 @@ class EggsCollect::CollectListsController < ApplicationController
 
   def create
     param = {
-      prima: params[:prima],
-      craggs: params[:craggs],
-      big_small: "#{params[:big]}+#{params[:small]}",
-      flooreggs: params[:flooreggs],
-      egg_width: params[:egg_width],
-      deads_chick: params[:deads_chicks],
-      deads_hen: params[:deads_hens],
-      water_ml_day: params[:water_ml_day],
-      feed_g_day: params[:feed_g_day],
-      hen_width: params[:hen_width],
-      day: params[:day],
-      month: params[:month],
-      year: params[:year],
+      prima: params[:prima].to_i,
+      craggs: params[:craggs].to_i,
+      big_small: "#{params[:big].to_i}+#{params[:small].to_i}",
+      flooreggs: params[:flooreggs].to_i,
+      egg_width: params[:egg_width].to_f,
+      deads_chick: params[:deads_chicks].to_i,
+      deads_hen: params[:deads_hens].to_i,
+      water_ml_day: params[:water_ml_day].to_i,
+      feed_g_day: params[:feed_g_day].to_i,
+      hen_width: params[:hen_width].to_i,
+      day: params[:day].to_i,
+      month: params[:month].to_i,
+      year: params[:year].to_i,
     }
 
-    EggCollect.create! param if params[:id] == "0"
-    EggCollect.update! param if params[:id] != "0"
+    if params[:id].to_i == 0
+      EggCollect.create!(param)
+
+      flash[:success] = "Create Success"
+    else
+      ec = EggCollect.find(params[:id])
+      ec.update!(param)
+
+      flash[:success] = "Update Success"
+    end
 
     render "eggs_collect/new", day: params[:day], month: params[:month]
   end

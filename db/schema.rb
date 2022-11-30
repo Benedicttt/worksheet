@@ -18,16 +18,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_193052) do
     t.string "day"
     t.string "month"
     t.string "year"
-    t.integer "prima"
-    t.integer "craggs"
-    t.string "big_small"
-    t.integer "flooreggs"
-    t.integer "egg_width"
-    t.integer "deads_chick"
-    t.integer "deads_hen"
-    t.integer "water_ml_day"
-    t.integer "feed_g_day"
-    t.integer "hen_width"
+    t.float "prima", default: 0.0
+    t.float "craggs", default: 0.0
+    t.string "big_small", default: "0+0"
+    t.float "flooreggs", default: 0.0
+    t.float "egg_width", default: 0.0
+    t.float "deads_chick", default: 0.0
+    t.float "deads_hen", default: 0.0
+    t.float "water_ml_day", default: 0.0
+    t.float "feed_g_day", default: 0.0
+    t.float "hen_width", default: 0.0
   end
 
   create_table "eggs_collections", force: :cascade do |t|
