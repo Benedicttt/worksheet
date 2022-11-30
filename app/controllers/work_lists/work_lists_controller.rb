@@ -1,3 +1,5 @@
+require 'axlsx_styler'
+
 class WorkLists::WorkListsController < ApplicationController
   def new
     params[:head] = "Work List"
@@ -193,16 +195,18 @@ class WorkLists::WorkListsController < ApplicationController
                             !number_week_day[day + 1].nil? && (number_week_day[day][:week] == number_week_day[day + 1][:week]) ? "" : number_week_day[day][:week],
                             day,
                             name_day[0..2],
-                            wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start,
+                            wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : (wl_line.work_start == "00:00" ? "-" : wl_line.work_start),
                             wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : (wl_line.break_start == "00:00" ? "-" : wl_line.break_start),
                             wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : (wl_line.break_stop == "00:00" ? "-" : wl_line.break_stop),
-                            wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop,
+                            wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : (wl_line.work_stop == "00:00" ? "-" : wl_line.work_stop),
                             wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? "" : (wl_line.washing_time == "00:00" ? "-" : wl_line.washing_time),
-                            wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours,
+                            wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : (wl_line.hours == "00:00" ? "-" : wl_line.hours),
                             wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment
 
 
-            ], :style => item_style, :height => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 28 : 18 : 18
+            ], :style => item_style,
+               :sz => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 7 : 8 : 7 ,
+               :height => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 24 : 18 : 18
 
             number_week_day[day].merge!(row: sheet.rows.index(content) + 1)
 
