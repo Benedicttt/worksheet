@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_193052) do
     t.float "prima", default: 0.0
     t.float "craggs", default: 0.0
     t.string "big_small", default: "0+0"
+    t.string "comments", default: ""
     t.float "flooreggs", default: 0.0
     t.float "egg_width", default: 0.0
     t.float "deads_chick", default: 0.0

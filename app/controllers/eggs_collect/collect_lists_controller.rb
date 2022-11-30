@@ -48,6 +48,7 @@ class EggsCollect::CollectListsController < ApplicationController
       egg_width: params[:egg_width].to_f,
       deads_chick: params[:deads_chicks].to_i,
       deads_hen: params[:deads_hens].to_i,
+      comments: params[:comments],
       water_ml_day: params[:water_ml_day].to_i,
       feed_g_day: params[:feed_g_day].to_i,
       hen_width: params[:hen_width].to_i,

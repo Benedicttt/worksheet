@@ -7,6 +7,7 @@ class EggsCollect < ActiveRecord::Migration[7.0]
       t.float :prima, default: 0
       t.float :craggs, default: 0
       t.string :big_small, default: "0+0"
+      t.string :comments, default: ""
       t.float :flooreggs, default: 0
       t.float :egg_width, default: 0
       t.float :deads_chick, default: 0

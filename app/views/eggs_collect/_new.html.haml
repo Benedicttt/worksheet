@@ -38,6 +38,7 @@
               %td.width75.font-size-12.text-center Water ml/day
               %td.width75.font-size-12.text-center Feed g/day
               %td.width75.font-size-12.text-center Hen weight
+              %td.width75.font-size-12.text-center Comments
               %td.width125.font-size-12.text-center
               %td.width50.font-size-12.text-center
 
@@ -57,27 +58,29 @@
                 %td.font-size-12.text-center
                   = day
                 %td.font-size-12.text-center
-                  = f.number_field "prima", value: ec.nil? || ec.prima.nil? ? "-" : ec.prima.to_i, class: "width75 eggs_f"
+                  = f.number_field "prima", value: ec.nil? || ec.prima.nil? ? "-" : ec.prima.to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "craggs", value: ec.nil? || ec.craggs.nil? ? "-" : ec.craggs.to_i, class: "width75 eggs_f"
+                  = f.number_field "craggs", value: ec.nil? || ec.craggs.nil? ? "-" : ec.craggs.to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "big", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[0].to_i, class: "width75 eggs_f"
+                  = f.number_field "big", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[0].to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "small", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[1].to_i, class: "width75 eggs_f"
+                  = f.number_field "small", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[1].to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "flooreggs", value: ec.nil? || ec.flooreggs.nil? ? "-" : ec.flooreggs.to_i, class: "width75 eggs_f"
+                  = f.number_field "flooreggs", value: ec.nil? || ec.flooreggs.nil? ? "-" : ec.flooreggs.to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "egg_width", value: ec.nil? || ec.egg_width.nil? ? "-" : ec.egg_width, class: "width75 eggs_f", step: :any
+                  = f.number_field "egg_width", value: ec.nil? || ec.egg_width.nil? ? "-" : ec.egg_width, class: "width75 eggs_f", step: :any, enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "deads_chicks", value: ec.nil? || ec.deads_chick.nil? ? "-" : ec.deads_chick.to_i, class: "width75 eggs_f"
+                  = f.number_field "deads_chicks", value: ec.nil? || ec.deads_chick.nil? ? "-" : ec.deads_chick.to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "deads_hens", value: ec.nil? || ec.deads_hen.nil? ? "-" : ec.deads_hen.to_i, class: "width75 eggs_f"
+                  = f.number_field "deads_hens", value: ec.nil? || ec.deads_hen.nil? ? "-" : ec.deads_hen.to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "water_ml_day", value: ec.nil? || ec.water_ml_day.nil? ? "-" : ec.water_ml_day.to_i, class: "width75 eggs_f"
+                  = f.number_field "water_ml_day", value: ec.nil? || ec.water_ml_day.nil? ? "-" : ec.water_ml_day.to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "feed_g_day", value: ec.nil? || ec.feed_g_day.nil? ? "-" : ec.feed_g_day.to_i, class: "width75 eggs_f"
+                  = f.number_field "feed_g_day", value: ec.nil? || ec.feed_g_day.nil? ? "-" : ec.feed_g_day.to_i, class: "width75 eggs_f", enterkeyhint: "done"
                 %td.font-size-12.text-center
-                  = f.number_field "hen_width", value: ec.nil? || ec.hen_width.nil? ? "-" : ec.hen_width.to_i, class: "width75 eggs_f"
+                  = f.number_field "hen_width", value: ec.nil? || ec.hen_width.nil? ? "-" : ec.hen_width.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                %td.font-size-12.text-center
+                  = f.text_field "comments", value: ec.nil? || ec.comments.nil? ? "" : ec.comments, class: "width75 eggs_f", enterkeyhint: "done"
 
                 %td.text-center.width125
                   - if ec.nil?
@@ -188,3 +191,4 @@
     .eggs input {
            box-shadow: 0 0px 0px rgb(0 0 0 / 0%);
       }
+
