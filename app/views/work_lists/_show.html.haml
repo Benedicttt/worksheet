@@ -37,7 +37,7 @@
 
             - if !wl.nil? && wl.vacation
               - full_work_time_with_lunch +=  wl.hours_minutes.to_f - 30.0
-            - elsif !wl.nil? && wl.hours_minutes <= 389.0
+            - elsif !wl.nil? && !wl.hours_minutes.nil? && wl.hours_minutes <= 389.0
               - full_work_time_with_lunch += wl.hours_minutes.to_f
             - else
               - full_work_time_with_lunch += wl.hours_minutes.nil? || wl.hours_minutes.eql?(0.0) ? 0.0 : wl.hours_minutes.to_f - 30.0
@@ -72,6 +72,6 @@
             - full_work_time_with_washing = 0.0
 :css
   .form-select {
-    font-size: 10px;
+    font-size: 12px;
     height: 44px;
   }

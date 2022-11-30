@@ -1,5 +1,5 @@
 console.log('modal success')
-$("#modal").html("<%= j render 'shared/modal_success' %>");
+$("#modal").replaceWith("<%= j render 'shared/modal_success' %>");
 $("#modal").modal('show');
 console.log('show success')
 

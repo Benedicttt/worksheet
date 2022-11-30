@@ -1,5 +1,5 @@
-$("article").html('<%= j  render "locations/edit", params: params %>');
-$("header").html('<%= j  render "index/header"%>');
-$("modify").html('<%= j  render "shared/css_article", params: params %>');
+$("article").replaceWith('<%= j  render "locations/edit", params: params %>');
+$("header").replaceWith('<%= j  render "index/header"%>');
+$("modify").replaceWith('<%= j  render "shared/css_article", params: params %>');
 
 console.log('render locations')

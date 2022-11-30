@@ -1,0 +1,47 @@
+%header
+- if current_user.present?
+  %article
+    = render "shared/flash"
+    = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "search"} do |f|
+      %div.display_flex
+        %br
+          = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? "" : params[:month] }, { class: "form-select width200 margin_left_2_per font-size-16" }
+        = f.select :year, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
+        %br
+        = f.submit "", class: "margin_left_2_per " + (mobile_device? ? "icon-search-sm" : "icon-search")
+        %br
+
+    - if params[:hide] == false
+
+      - if @eggs.blank?
+        = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "new"} do |f|
+          = f.hidden_field :month, value: params[:month]
+          = f.hidden_field :year, value: params[:year]
+
+          .margin_top_5_per.margin_left_2_per
+            = f.submit "", class: "icon-new-worklist btn"
+      - else
+        ///
+
+        - @eggs.order(month: :desc).map(&:month).uniq.each do |month|
+          %br
+          %table.margin_left_2_per
+            %tbody
+              %tr
+                %th.text-center.width250
+                  Month #{month}, #{params[:year]}
+                %th.text-center.width125
+                  = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "new"} do |f|
+                    = f.hidden_field :month, value: month
+                    = f.hidden_field :year, value: params[:year]
+                    = f.submit "", class: "icon-edit-worksheet btn"
+                %th.text-center
+                  = link_to "", eggs_collect_show_pdf_path(month: month, year: params[:year], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
+                %th.text-center
+                %th.text-center
+                  = link_to "", eggs_collect_show_excel_path(month: month, year: params[:year], format: :xlsx), class: 'btn icon-excel'
+:css
+  .form-select {
+    font-size: 12px;
+    height: 44px;
+  }

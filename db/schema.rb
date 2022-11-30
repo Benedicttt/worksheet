@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_06_183017) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_193052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "egg_collects", force: :cascade do |t|
+    t.string "day"
+    t.string "month"
+    t.string "year"
+    t.integer "prima"
+    t.integer "craggs"
+    t.string "big_small"
+    t.integer "flooreggs"
+    t.integer "egg_width"
+    t.integer "deads_chick"
+    t.integer "deads_hen"
+    t.integer "water_ml_day"
+    t.integer "feed_g_day"
+    t.integer "hen_width"
+  end
 
   create_table "eggs_collections", force: :cascade do |t|
     t.integer "user_id"

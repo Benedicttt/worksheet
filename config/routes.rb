@@ -47,6 +47,15 @@ Rails.application.routes.draw do
       post   'destroy'         => 'work_shift_schedules#destroy'
     end
 
+    namespace :eggs_collect do
+      post   'new'             => 'collect_lists#new'
+      post   'create'          => 'collect_lists#create'
+      post   'search'          => 'collect_lists#search'
+      post   'show'            => 'collect_lists#show'
+      get    'show_pdf'        => "collect_lists#work_list_pdf"
+      get    'show_excel'      => "collect_lists#work_list_excel"
+    end
+
     namespace :work_lists do
       post   'new'             => 'work_lists#new'
       post   'create'          => 'work_lists#create'

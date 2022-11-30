@@ -120,7 +120,7 @@ class WorkLists::WorkListsController < ApplicationController
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
-      col_widths = [4, 6, 8, 6, 6, 6, 6, 6, 6, 34]
+      col_widths = [5, 3, 6, 6, 6, 6, 6, 7, 6, 38]
 
       format.html
       format.xlsx do
@@ -157,7 +157,7 @@ class WorkLists::WorkListsController < ApplicationController
           sheet.merge_cells('F%i:G%i' % [sheet.rows.index(header) + 1, sheet.rows.index(header) + 1])
 
           sheet.add_row []
-          sheet.add_row ["Week","Day number", "Day", "Work start", "Break start", "Break stop", "Work stop", "Washing hours", "Hours", "Comment"]
+          sheet.add_row ["Week","", "Day", "Work start", "Break start", "Break stop", "Work stop", "Washing", "Hours", "Comment"]
           10.times { |i| sheet.rows[2].cells[i].style = name_header_user_info }
 
            # variable
@@ -192,17 +192,17 @@ class WorkLists::WorkListsController < ApplicationController
             content = sheet.add_row [
                             !number_week_day[day + 1].nil? && (number_week_day[day][:week] == number_week_day[day + 1][:week]) ? "" : number_week_day[day][:week],
                             day,
-                            name_day,
+                            name_day[0..2],
                             wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start,
-                            wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : wl_line.break_start,
-                            wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : wl_line.break_stop,
+                            wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : (wl_line.break_start = "00:00" ? "-" : wl_line.break_start),
+                            wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : (wl_line.break_stop = "00:00" ? "-" : wl_line.break_stop),
                             wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop,
-                            wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? "" : wl_line.washing_time,
+                            wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? "" : (wl_line.washing_time = "00:00" ? "-" : wl_line.washing_time),
                             wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours,
                             wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment
 
 
-            ], :style => item_style, :height => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 26 : 18 : 18
+            ], :style => item_style, :height => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 48 : 18 : 18
 
             number_week_day[day].merge!(row: sheet.rows.index(content) + 1)
 

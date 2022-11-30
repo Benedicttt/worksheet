@@ -24,7 +24,6 @@
                 = link_to "", work_lists_show_pdf_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
                 = link_to "", work_lists_show_excel_path(month: params[:month], year: params[:year], user_id: params[:user_id], format: :xlsx), class: 'btn icon-excel'
 
-
       .tbl-content-form
         - days.times do |index|
           - day = index + 1
