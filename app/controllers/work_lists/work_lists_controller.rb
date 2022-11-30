@@ -194,15 +194,15 @@ class WorkLists::WorkListsController < ApplicationController
                             day,
                             name_day[0..2],
                             wl_line.nil? || wl_line.work_start.nil? || wl_line.work_start == ":" ? "" : wl_line.work_start,
-                            wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : (wl_line.break_start = "00:00" ? "-" : wl_line.break_start),
-                            wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : (wl_line.break_stop = "00:00" ? "-" : wl_line.break_stop),
+                            wl_line.nil? || wl_line.break_start.nil? || wl_line.break_start == ":" ? "" : (wl_line.break_start == "00:00" ? "-" : wl_line.break_start),
+                            wl_line.nil? || wl_line.break_stop.nil? || wl_line.break_stop == ":" ? "" : (wl_line.break_stop == "00:00" ? "-" : wl_line.break_stop),
                             wl_line.nil? || wl_line.work_stop.nil? || wl_line.work_stop == ":" ? "" : wl_line.work_stop,
-                            wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? "" : (wl_line.washing_time = "00:00" ? "-" : wl_line.washing_time),
+                            wl_line.nil? || wl_line.washing_time.nil? || wl_line.washing_time == ":" ? "" : (wl_line.washing_time == "00:00" ? "-" : wl_line.washing_time),
                             wl_line.nil? || wl_line.hours.nil? || wl_line.hours == ":" ? "" : wl_line.hours,
                             wl_line.nil? || wl_line.comment.nil? || wl_line.comment == ":" ? "" : wl_line.comment
 
 
-            ], :style => item_style, :height => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 48 : 18 : 18
+            ], :style => item_style, :height => (!wl_line.nil? && !wl_line.comment.nil?) ? wl_line.comment.size > 48 ? 28 : 18 : 18
 
             number_week_day[day].merge!(row: sheet.rows.index(content) + 1)
 

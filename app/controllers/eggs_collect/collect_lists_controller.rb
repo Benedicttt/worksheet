@@ -59,7 +59,7 @@ class EggsCollect::CollectListsController < ApplicationController
     EggCollect.create! param if params[:id] == "0"
     EggCollect.update! param if params[:id] != "0"
 
-    render "eggs_collect/new", day: params[:day]
+    render "eggs_collect/new", day: params[:day], month: params[:month]
   end
 
   def show_pdf
