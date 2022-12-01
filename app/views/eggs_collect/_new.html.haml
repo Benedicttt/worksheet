@@ -26,103 +26,104 @@
         %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %thead
             %tr
-              %td.width75.font-size-10.text-center Day
-              %td.width75.font-size-10.text-center Prima
-              %td.width75.font-size-10.text-center Craggs
-              %td.width75.font-size-10.text-center Big
-              %td.width75.font-size-10.text-center Small
-              %td.width75.font-size-10.text-center Flooreggs
-              %td.width75.font-size-10.text-center Egg weight
-              %td.width75.font-size-10.text-center Deads chicks
-              %td.width75.font-size-10.text-center Deads Hens
-              %td.width75.font-size-10.text-center Water ml/day
-              %td.width75.font-size-10.text-center Feed g/day
-              %td.width75.font-size-10.text-center Hen weight
-              %td.width75.font-size-10.text-center Comments
-              %td.width125.font-size-10.text-center
-              %td.width50.font-size-10.text-center
+              %td.font-size-10.text-center Day
+              %td.font-size-10.text-center Prima
+              %td.font-size-10.text-center Craggs
+              %td.font-size-10.text-center Big
+              %td.font-size-10.text-center Small
+              %td.font-size-10.text-center Flooreggs
+              %td.font-size-10.text-center Egg weight
+              %td.font-size-10.text-center Deads chicks
+              %td.font-size-10.text-center Deads Hens
+              %td.font-size-10.text-center Water ml/day
+              %td.font-size-10.text-center Feed g/day
+              %td.font-size-10.text-center Hen weight
+              %td.font-size-10.text-center Comments
+              %td.font-size-10.text-center
+              %td.font-size-10.text-center
 
-      - days.times do |index|
-        - day = index + 1
-        - ec = EggCollect.find_by(day: index + 1, month: params[:month], year: params[:year])
-        - ec.nil? ? count_day += 0 : count_day += 1
+      .tbl-content-form
+        - days.times do |index|
+          - day = index + 1
+          - ec = EggCollect.find_by(day: index + 1, month: params[:month], year: params[:year])
+          - ec.nil? ? count_day += 0 : count_day += 1
 
-        = form_for "", remote: true, url: eggs_collect_create_path(day: day) do |f|
-          = f.hidden_field "id", value: ec.nil? ? 0 : ec.id
-          = f.hidden_field "month", value: params[:month]
-          = f.hidden_field "year", value: params[:year]
+          = form_for "", remote: true, url: eggs_collect_create_path(day: day) do |f|
+            = f.hidden_field "id", value: ec.nil? ? 0 : ec.id
+            = f.hidden_field "month", value: params[:month]
+            = f.hidden_field "year", value: params[:year]
 
-          %table.table.container
-            %tbody
-              %tr
-                %td.font-size-12.text-center
-                  = day
-                %td.font-size-12.text-center
-                  = f.number_field "prima", value: ec.nil? || ec.prima.nil? ? "-" : ec.prima.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "craggs", value: ec.nil? || ec.craggs.nil? ? "-" : ec.craggs.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "big", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[0].to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "small", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[1].to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "flooreggs", value: ec.nil? || ec.flooreggs.nil? ? "-" : ec.flooreggs.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "egg_width", value: ec.nil? || ec.egg_width.nil? ? "-" : ec.egg_width, class: "width75 eggs_f", step: :any, enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "deads_chicks", value: ec.nil? || ec.deads_chick.nil? ? "-" : ec.deads_chick.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "deads_hens", value: ec.nil? || ec.deads_hen.nil? ? "-" : ec.deads_hen.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "water_ml_day", value: ec.nil? || ec.water_ml_day.nil? ? "-" : ec.water_ml_day.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "feed_g_day", value: ec.nil? || ec.feed_g_day.nil? ? "-" : ec.feed_g_day.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.number_field "hen_width", value: ec.nil? || ec.hen_width.nil? ? "-" : ec.hen_width.to_i, class: "width75 eggs_f", enterkeyhint: "done"
-                %td.font-size-12.text-center
-                  = f.text_field "comments", value: ec.nil? || ec.comments.nil? ? "" : ec.comments, class: "width75 eggs_f", enterkeyhint: "done"
+            %table.table.container
+              %tbody
+                %tr
+                  %td.font-size-12.text-center
+                    = day
+                  %td.font-size-12.text-center
+                    = f.number_field "prima", value: ec.nil? || ec.prima.nil? ? "-" : ec.prima.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "craggs", value: ec.nil? || ec.craggs.nil? ? "-" : ec.craggs.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "big", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[0].to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "small", value: ec.nil? || ec.big_small.nil? ? "-" : ec.big_small.split("+")[1].to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "flooreggs", value: ec.nil? || ec.flooreggs.nil? ? "-" : ec.flooreggs.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "egg_width", value: ec.nil? || ec.egg_width.nil? ? "-" : ec.egg_width, class: "width75 eggs_f", step: :any, enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "deads_chicks", value: ec.nil? || ec.deads_chick.nil? ? "-" : ec.deads_chick.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "deads_hens", value: ec.nil? || ec.deads_hen.nil? ? "-" : ec.deads_hen.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "water_ml_day", value: ec.nil? || ec.water_ml_day.nil? ? "-" : ec.water_ml_day.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "feed_g_day", value: ec.nil? || ec.feed_g_day.nil? ? "-" : ec.feed_g_day.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.number_field "hen_width", value: ec.nil? || ec.hen_width.nil? ? "-" : ec.hen_width.to_i, class: "width75 eggs_f", enterkeyhint: "done"
+                  %td.font-size-12.text-center
+                    = f.text_field "comments", value: ec.nil? || ec.comments.nil? ? "" : ec.comments, class: "eggs_f width75", enterkeyhint: "done"
 
-                %td.text-center.width125
-                  - if ec.nil?
-                    = f.submit 'Add', class: "btn btn-dark btn-sm width100", id: "add_#{index + 1}"
-                  - else
-                    = button_tag 'Edit', type: "button", class: "btn btn-warning btn-sm width100", id: "edit_#{index + 1}"
-                  :javascript
-                    $(document).ready(function(){
+                  %td.text-center
+                    - if ec.nil?
+                      = f.submit 'Add', class: "btn btn-dark btn-sm width100", id: "add_#{index + 1}"
+                    - else
+                      = button_tag 'Edit', type: "button", class: "btn btn-warning btn-sm width100", id: "edit_#{index + 1}"
+                    :javascript
+                      $(document).ready(function(){
 
-                       $("#edit_#{index + 1}.btn-warning.btn-sm").on("click", function() {
+                         $("#edit_#{index + 1}.btn-warning.btn-sm").on("click", function() {
 
-                      if ($(this).attr('class') == 'btn width100 btn-primary btn-sm click_#{index + 1}') {
-                            $(this).find("button").removeAttr('type');
-                            $(this).attr('type', 'submit');
+                        if ($(this).attr('class') == 'btn width100 btn-primary btn-sm click_#{index + 1}') {
+                              $(this).find("button").removeAttr('type');
+                              $(this).attr('type', 'submit');
 
-                          } else {
-                              $(".tr_#{index + 1}").each(function(index, tr) {
-                                 $(tr).find("input").removeAttr('readonly').removeClass("opacity_05")
-                                 $(tr).find("textarea").removeAttr('readonly').removeClass("opacity_05")
-                              })
+                            } else {
+                                $(".tr_#{index + 1}").each(function(index, tr) {
+                                   $(tr).find("input").removeAttr('readonly').removeClass("opacity_05")
+                                   $(tr).find("textarea").removeAttr('readonly').removeClass("opacity_05")
+                                })
 
-                             $(this).removeClass('btn-warning btn-sm')
-                             $(this).addClass('btn-primary btn-sm')
-                             $(this).addClass('width100')
-                             $(this).addClass('click_#{index + 1}')
-                             $(this).text("Update")
-                           }
-                         })
-                      })
-                %td.text-center.width50
+                               $(this).removeClass('btn-warning btn-sm')
+                               $(this).addClass('btn-primary btn-sm')
+                               $(this).addClass('width100')
+                               $(this).addClass('click_#{index + 1}')
+                               $(this).text("Update")
+                             }
+                           })
+                        })
+                  %td.text-center
 
-              - prima +=  ec.nil? || ec.prima.nil? ? 0 : ec.prima.to_i
-              - craggs +=  ec.nil? || ec.craggs.nil? ? 0 : ec.craggs.to_i
-              - big +=  ec.nil? || ec.big_small.nil? ? 0 : ec.big_small.split("+")[0].to_i
-              - small +=  ec.nil? || ec.big_small.nil? ? 0 : ec.big_small.split("+")[1].to_i
-              - flooreggs +=  ec.nil? || ec.flooreggs.nil? ? 0 : ec.flooreggs.to_i
-              - egg_weight +=  ec.nil? || ec.egg_width.nil? ? 0 : ec.egg_width.to_f
-              - deads_chicks +=  ec.nil? || ec.deads_chick.nil? ? 0 : ec.deads_chick.to_i
-              - deads_hens +=  ec.nil? || ec.deads_hen.nil? ? 0 : ec.deads_hen.to_i
-              - water_ml_day +=  ec.nil? || ec.water_ml_day.nil? ? 0 : ec.water_ml_day.to_i
-              - feed_g_day +=  ec.nil? || ec.feed_g_day.nil? ? 0 : ec.feed_g_day.to_i
-              - hen_weight +=  ec.nil? || ec.hen_width.nil? ? 0 : ec.hen_width.to_i
+                - prima +=  ec.nil? || ec.prima.nil? ? 0 : ec.prima.to_i
+                - craggs +=  ec.nil? || ec.craggs.nil? ? 0 : ec.craggs.to_i
+                - big +=  ec.nil? || ec.big_small.nil? ? 0 : ec.big_small.split("+")[0].to_i
+                - small +=  ec.nil? || ec.big_small.nil? ? 0 : ec.big_small.split("+")[1].to_i
+                - flooreggs +=  ec.nil? || ec.flooreggs.nil? ? 0 : ec.flooreggs.to_i
+                - egg_weight +=  ec.nil? || ec.egg_width.nil? ? 0 : ec.egg_width.to_f
+                - deads_chicks +=  ec.nil? || ec.deads_chick.nil? ? 0 : ec.deads_chick.to_i
+                - deads_hens +=  ec.nil? || ec.deads_hen.nil? ? 0 : ec.deads_hen.to_i
+                - water_ml_day +=  ec.nil? || ec.water_ml_day.nil? ? 0 : ec.water_ml_day.to_i
+                - feed_g_day +=  ec.nil? || ec.feed_g_day.nil? ? 0 : ec.feed_g_day.to_i
+                - hen_weight +=  ec.nil? || ec.hen_width.nil? ? 0 : ec.hen_width.to_i
 
       ////
       %div Total
@@ -130,20 +131,20 @@
         %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
           %thead
             %tr
-              %td.width75.font-size-10.text-center Day
-              %td.width75.font-size-10.text-center Prima
-              %td.width75.font-size-10.text-center Craggs
-              %td.width75.font-size-10.text-center Big
-              %td.width75.font-size-10.text-center Small
-              %td.width75.font-size-10.text-center Flooreggs
-              %td.width75.font-size-10.text-center Egg weight
-              %td.width75.font-size-10.text-center Deads chicks
-              %td.width75.font-size-10.text-center Deads Hens
-              %td.width75.font-size-10.text-center Water ml/day
-              %td.width75.font-size-10.text-center Feed g/day
-              %td.width75.font-size-10.text-center Hen weight
-              %td.width125.font-size-10.text-center
-              %td.width50.font-size-10.text-center
+              %td.font-size-10.text-center Day
+              %td.font-size-10.text-center Prima
+              %td.font-size-10.text-center Craggs
+              %td.font-size-10.text-center Big
+              %td.font-size-10.text-center Small
+              %td.font-size-10.text-center Flooreggs
+              %td.font-size-10.text-center Egg weight
+              %td.font-size-10.text-center Deads chicks
+              %td.font-size-10.text-center Deads Hens
+              %td.font-size-10.text-center Water ml/day
+              %td.font-size-10.text-center Feed g/day
+              %td.font-size-10.text-center Hen weight
+              %td.font-size-10.text-center
+              %td.font-size-10.text-center
 
       .tbl-header
         %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
@@ -191,4 +192,4 @@
     .eggs input {
            box-shadow: 0 0px 0px rgb(0 0 0 / 0%);
       }
-
+    }
