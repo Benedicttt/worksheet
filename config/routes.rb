@@ -52,8 +52,11 @@ Rails.application.routes.draw do
       post   'create'          => 'collect_lists#create'
       post   'search'          => 'collect_lists#search'
       post   'show'            => 'collect_lists#show'
-      get    'show_pdf'        => "collect_lists#work_list_pdf"
-      get    'show_excel'      => "collect_lists#work_list_excel"
+      get    'show_pdf'        => "collect_lists#show_pdf"
+      get    'show_excel'      => "collect_lists#show_excel"
+
+      post   'set'             => 'count_chicks#set'
+      post   'edit'            => 'count_chicks#edit'
     end
 
     namespace :work_lists do

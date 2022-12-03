@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_193052) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "count_chicks", force: :cascade do |t|
+    t.integer "month"
+    t.integer "year"
+    t.integer "chicks_count"
+    t.integer "kukko_count"
+  end
 
   create_table "egg_collects", force: :cascade do |t|
     t.string "day"
@@ -29,6 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_193052) do
     t.float "water_ml_day", default: 0.0
     t.float "feed_g_day", default: 0.0
     t.float "hen_width", default: 0.0
+    t.string "house"
   end
 
   create_table "eggs_collections", force: :cascade do |t|

@@ -4,7 +4,6 @@
     - year = params[:year].to_i
     - month = params[:month].to_i
     - days = Time.days_in_month(month, year)
-    - current_day = Time.now.day
 
     - count_day = 0.0
     - prima = 0.0
@@ -45,13 +44,14 @@
       .tbl-content-form
         - days.times do |index|
           - day = index + 1
-          - ec = EggCollect.find_by(day: index + 1, month: params[:month], year: params[:year])
+          - ec = EggCollect.find_by(day: index + 1, month: params[:month], year: params[:year], house: params[:house])
           - ec.nil? ? count_day += 0 : count_day += 1
 
           = form_for "", remote: true, url: eggs_collect_create_path(day: day) do |f|
             = f.hidden_field "id", value: ec.nil? ? 0 : ec.id
             = f.hidden_field "month", value: params[:month]
             = f.hidden_field "year", value: params[:year]
+            = f.hidden_field "house", value: params[:house]
 
             %table.table.container
               %tbody
@@ -146,36 +146,37 @@
               %td.font-size-10.text-center
               %td.font-size-10.text-center
 
-      .tbl-header
-        %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
-          %thead
-            %tr
-              %td.text-center.font-size-16
-                = count_day.to_i
-              %td.text-center.font-size-16
-                = prima.to_i
-              %td.text-center.font-size-16
-                = craggs.to_i
-              %td.text-center.font-size-16
-                = big.to_i
-              %td.text-center.font-size-16
-                = small.to_i
-              %td.text-center.font-size-16
-                = flooreggs.to_i
-              %td.text-center.font-size-16
-                = egg_weight == 0.0 ? 0 : (egg_weight / count_day).round(2)
-              %td.text-center.font-size-16
-                = deads_chicks.to_i
-              %td.text-center.font-size-16
-                = deads_hens.to_i
-              %td.text-center.font-size-16
-                = water_ml_day.to_i
-              %td.text-center.font-size-16
-                = feed_g_day.to_i
-              %td.text-center.font-size-16
-                = hen_weight.to_i
-              %td.text-center.font-size-16
-              %td.text-center.font-size-16
+      - if count_day != 0
+        .tbl-header
+          %table.table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+            %thead
+              %tr
+                %td.text-center.font-size-16
+                  = count_day.to_i
+                %td.text-center.font-size-16
+                  = prima.to_i
+                %td.text-center.font-size-16
+                  = craggs.to_i
+                %td.text-center.font-size-16
+                  = (big.to_i / count_day).round(0)
+                %td.text-center.font-size-16
+                  = (small.to_i / count_day).round(0)
+                %td.text-center.font-size-16
+                  = flooreggs.to_i
+                %td.text-center.font-size-16
+                  = egg_weight == 0.0 ? 0 : (egg_weight / count_day).round(2)
+                %td.text-center.font-size-16
+                  = deads_chicks.to_i
+                %td.text-center.font-size-16
+                  = deads_hens.to_i
+                %td.text-center.font-size-16
+                  = (water_ml_day.to_i / count_day).round(0)
+                %td.text-center.font-size-16
+                  = (feed_g_day / count_day).round(0)
+                %td.text-center.font-size-16
+                  = hen_weight.to_i
+                %td.text-center.font-size-16
+                %td.text-center.font-size-16
 
 :css
     .eggs    td {

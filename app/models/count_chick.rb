@@ -1,0 +1,3 @@
+class CountChick < ApplicationRecord
+
+end
