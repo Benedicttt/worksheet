@@ -6,6 +6,7 @@ class CounterChiks < ActiveRecord::Migration[7.0]
       t.integer :year_end
       t.integer :chicks_start
       t.integer :kukko_start
+      t.integer :month_start
     end
 
     add_column :egg_collects, :house, :string

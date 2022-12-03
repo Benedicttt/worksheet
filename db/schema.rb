@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
     t.integer "year_end"
     t.integer "chicks_start"
     t.integer "kukko_start"
+    t.integer "month_start"
   end
 
   create_table "egg_collects", force: :cascade do |t|

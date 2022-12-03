@@ -109,7 +109,7 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.merge_cells("C1:D1")
           sheet.merge_cells("F1:H1")
           sheet.merge_cells("K1:M1")
-          sheet.rows[0].cells[2].value = "#{params[:year]} - #{params[:year]}"
+          sheet.rows[0].cells[2].value = "#{params[:year]} - #{params[:year].to_i + 1}"
           sheet.rows[0].cells[5].value = params[:house].to_s
           sheet.rows[0].cells[9].value = "SS 14"
           sheet.rows[0].cells[10].value = "SS 49-52 2021"
@@ -194,11 +194,12 @@ class EggsCollect::CollectListsController < ApplicationController
                         ], style: name_header_user_info
 
 
-          sheet.add_row ["", "", "", "", "", "", "", "", "", ""], style: head_info
-          sheet.merge_cells("G38:I38")
-          sheet.merge_cells("J38:L38")
-          sheet.rows[37].cells[6].value = "Chiks last: "
-          sheet.rows[37].cells[9].value = "Kuko last: "
+
+          # sheet.add_row ["", "", "", "", "", "", "", "", "", ""], style: head_info
+          # sheet.merge_cells("G38:I38")
+          # sheet.merge_cells("J38:L38")
+          # sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+          # sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
 
           sheet.column_widths *col_widths
         end
