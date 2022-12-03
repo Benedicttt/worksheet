@@ -44,6 +44,69 @@
                 %th.text-center
                 %th.text-center
                   = link_to "", eggs_collect_show_excel_path(month: month, year: params[:year], house: params[:house], format: :xlsx), class: 'btn icon-excel'
+
+    %br
+    %br
+    %br
+    %h6 Period chicks and kuko houses
+    - CountChick.all.order(year_end: :desc).uniq.each do |cc|
+      %br
+      %table.margin_left_2_per
+        %tbody
+          %tr
+            %th.text-center{ id: "th-#{cc.id}"}
+              Years: #{cc.year_start} - #{cc.year_end}, House: #{cc.house}, chicks - #{cc.chicks_start}, kuko - #{cc.kukko_start}
+            %th.text-center.width125
+              = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "edit"} do |f|
+                %th= f.hidden_field :year_start, value: params[:year_start], id: "ys-#{cc.id}", class: "width50"
+                %th= f.hidden_field :year_end, value: params[:year_end], id: "ye-#{cc.id}", class: "width50"
+                %th= f.hidden_field :house, value: params[:house], id: "h-#{cc.id}", class: "width50"
+                %th= f.hidden_field :chicks_start, value: params[:chicks_start], id: "cs-#{cc.id}", class: "width50"
+                %th= f.hidden_field :kuko_start, value: params[:kuko_start], id: "ks-#{cc.id}", class: "width50"
+                %th= f.submit "", type: "button", class: "icon-edit-worksheet btn btn-#{cc.id}"
+                :javascript
+                  $(document).ready(function() {
+                    $(".btn-#{cc.id}").on("click", function() {
+                        $("#th-#{cc.id}").remove()
+                        $("#ys-#{cc.id}").removeAttr("type")
+                        $("#ye-#{cc.id}").removeAttr("type")
+                        $("#cs-#{cc.id}").removeAttr("type")
+                        $("#ks-#{cc.id}").removeAttr("type")
+                        $("#h-#{cc.id}").removeAttr("type")
+                        $("#house-#{cc.id}").removeAttr("type")
+                        $(".btn-#{cc.id}").attr("type", "submit")
+                    })
+                  })
+
+
+    .margin_top_5_per.margin_left_2_per
+      = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "set"} do |f|
+        %table
+          %thead
+            %tr
+              %th Year start
+              %th Year stop
+              %th House
+              %th Count chicks
+              %th Count kuko
+              %th
+          %tbody
+            %tr
+              .display_flex
+                %td
+                  = f.select :year_start, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
+                %td
+                  = f.select :year_end, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
+                %td
+                  = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: params[:house] }, { class: "form-select width150 margin_left_2_per font-size-16" }
+                %td
+                  = f.number_field :chicks_start, palceholder: "chiks", class: "width150 margin_left_2_per font-size-16 height50"
+                %td
+                  = f.number_field :kuko_start, palceholder: "kuko", class: "width150 margin_left_2_per font-size-16  height50"
+                %td
+                  = f.submit "Add", class: "btn btn-success margin_left_2_per"
+
+
 :css
   .form-select {
     font-size: 12px;

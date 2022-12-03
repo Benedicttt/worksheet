@@ -78,7 +78,7 @@ class EggsCollect::CollectListsController < ApplicationController
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
-      col_widths = [4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 20]
+      col_widths = [5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 19]
 
       format.html
       format.xlsx do

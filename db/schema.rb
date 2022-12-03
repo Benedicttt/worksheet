@@ -15,10 +15,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
   enable_extension "plpgsql"
 
   create_table "count_chicks", force: :cascade do |t|
-    t.integer "month"
-    t.integer "year"
-    t.integer "chicks_count"
-    t.integer "kukko_count"
+    t.string "house"
+    t.integer "year_start"
+    t.integer "year_end"
+    t.integer "chicks_start"
+    t.integer "kukko_start"
   end
 
   create_table "egg_collects", force: :cascade do |t|
