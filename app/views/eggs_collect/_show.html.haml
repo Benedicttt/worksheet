@@ -119,12 +119,13 @@
                             $(".btn-#{cc.id}").hide()
                         })
                       })
-        %div.display_flex
-          %table.margin_left_2_per
-            %tr
-              %td
-                = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "destroy", id: cc.id} do |s|
-                  = s.submit "", class: mobile_device? ? "icon-delete-worksheet-sm btn" : "icon-delete-worksheet btn", data: { confirm: 'Are you sure?' }
+        - if current_user.rule.manager
+          %div.display_flex
+            %table.margin_left_2_per
+              %tr
+                %td
+                  = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "destroy", id: cc.id} do |s|
+                    = s.submit "", class: mobile_device? ? "icon-delete-worksheet-sm btn" : "icon-delete-worksheet btn", data: { confirm: 'Are you sure?' }
 
 
 
