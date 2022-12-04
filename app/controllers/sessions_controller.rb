@@ -2,9 +2,6 @@ class SessionsController < ApplicationController
   def new
     flash[:success] = ""
     flash[:alert] = ""
-
-    puts "request.to_s"
-    puts  request.user_agent
   end
 
   def create

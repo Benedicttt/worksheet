@@ -87,45 +87,46 @@
                   })
 
 
-    .margin_top_5_per.margin_left_2_per
-      = button_tag "", class: "icon-new-worklist btn btn-add"
-      :javascript
-        $("#form_add").hide()
-        $(document).ready(function() {
-          $(".btn-add").on("click", function() {
-            $("#form_add").show()
-            $(".btn-add").hide()
+    - if current_user.rule.manager
+      .margin_top_5_per.margin_left_2_per
+        = button_tag "", class: "icon-new-worklist btn btn-add"
+        :javascript
+          $("#form_add").hide()
+          $(document).ready(function() {
+            $(".btn-add").on("click", function() {
+              $("#form_add").show()
+              $(".btn-add").hide()
+            })
           })
-        })
-      #form_add
-        = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "set"} do |f|
-          %table
-            %thead
-              %tr
-                %th Month start
-                %th Year start
-                %th Year stop
-                %th House
-                %th Count chicks
-                %th Count kuko
-                %th
-            %tbody
-              %tr
-                .display_flex
-                  %td
-                    = f.select :month_start, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: Time.now.month.to_i }, { class: "form-select width200 margin_left_2_per font-size-16" }
-                  %td
-                    = f.select :year_start, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
-                  %td
-                    = f.select :year_end, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
-                  %td
-                    = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: params[:house] }, { class: "form-select width150 margin_left_2_per font-size-16" }
-                  %td
-                    = f.number_field :chicks_start, palceholder: "chiks", class: "width150 margin_left_2_per font-size-16 height50"
-                  %td
-                    = f.number_field :kuko_start, palceholder: "kuko", class: "width150 margin_left_2_per font-size-16  height50"
-                  %td
-                    = f.submit "Add", class: "btn btn-success margin_left_2_per"
+        #form_add
+          = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "set"} do |f|
+            %table
+              %thead
+                %tr
+                  %th Month start
+                  %th Year start
+                  %th Year stop
+                  %th House
+                  %th Count chicks
+                  %th Count kuko
+                  %th
+              %tbody
+                %tr
+                  .display_flex
+                    %td
+                      = f.select :month_start, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: Time.now.month.to_i }, { class: "form-select width200 margin_left_2_per font-size-16" }
+                    %td
+                      = f.select :year_start, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
+                    %td
+                      = f.select :year_end, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
+                    %td
+                      = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: params[:house] }, { class: "form-select width150 margin_left_2_per font-size-16" }
+                    %td
+                      = f.number_field :chicks_start, palceholder: "chiks", class: "width150 margin_left_2_per font-size-16 height50"
+                    %td
+                      = f.number_field :kuko_start, palceholder: "kuko", class: "width150 margin_left_2_per font-size-16  height50"
+                    %td
+                      = f.submit "Add", class: "btn btn-success margin_left_2_per"
 
 
 :css
