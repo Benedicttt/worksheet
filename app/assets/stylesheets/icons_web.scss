@@ -1,5 +1,23 @@
 @media (min-width: 1024px) {
 
+  .icon-period {
+    background: url(period.png);
+    background-size: 100%;
+    margin-left: 20%;
+    height: 35px;
+    width: 35px !important;
+    border: 0px;
+  }
+
+  .icon-period:hover {
+    transition: 0.02s case;
+    transform: translate(-5%, -5%) scale(1.1, 1.1);
+  }
+
+  .icon-period:hover + .cursor {
+    transform: translate(-50%, -50%) scale(8);
+  }
+  //
   .icon-eggs_collect {
     background: url(eggs_collect.png);
     background-size: 100%;

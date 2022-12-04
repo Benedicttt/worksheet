@@ -1,10 +1,9 @@
 class EggsCollect::CountChicksController < ApplicationController
   def set
-    if CountChick.where(house:  params[:house], year_start:  params[:year_start], year_end: params[:year_end]).empty?
+    if CountChick.where(house:  params[:house], date_start:  params[:date_start], date_end: params[:date_end]).empty?
       cc = CountChick.new
-      cc.month_start = params[:month_start]
-      cc.year_end = params[:year_end]
-      cc.year_start = params[:year_start]
+      cc.date_end = params[:date_end]
+      cc.date_start = params[:date_start]
       cc.chicks_start = params[:chicks_start]
       cc.kukko_start = params[:kuko_start]
       cc.house = params[:house]
@@ -22,14 +21,32 @@ class EggsCollect::CountChicksController < ApplicationController
   def edit
     cc = CountChick.find(params[:id])
 
-    cc.update!(house: params[:house], year_start:  params[:year_start], year_end: params[:year_end], chicks_start: params[:chicks_start], kukko_start: params[:kuko_start], month_start: params[:month_start])
+    cc.update!(house: params[:house],
+               date_start:  params[:date_start],
+               date_end: params[:date_end],
+               chicks_start: params[:chicks_start],
+               kukko_start: params[:kuko_start]
+    )
 
     flash[:success] = "Period updated"
 
     render "eggs_collect/show", params: params
   end
 
-  def add_period
+  def destroy
+    CountChick.find(params[:id]).destroy!
+    flash[:success] = "Period deleted"
 
+    render "eggs_collect/show", params: params
+  end
+
+  def add_period
+    ec = EggCollect.where(house: params[:house], month: params[:month], year: params[:year])
+    ec.each do |e|
+      e.update(period: params[:period])
+    end
+
+    flash[:success] = "Update period in all days"
+    render "eggs_collect/show", params: params
   end
 end

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       post   'set'             => 'count_chicks#set'
       post   'edit'            => 'count_chicks#edit'
       post   'add_period'      => 'count_chicks#add_period'
+      post   'destroy'         => 'count_chicks#destroy'
     end
 
     namespace :work_lists do

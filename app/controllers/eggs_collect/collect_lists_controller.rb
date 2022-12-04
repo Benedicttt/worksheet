@@ -76,6 +76,9 @@ class EggsCollect::CollectListsController < ApplicationController
   end
 
   def show_excel
+    period_id = EggCollect.where(month: params[:month], year: params[:year]).map(&:period).compact.uniq[0]
+    period = CountChick.find(period_id)
+
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
@@ -122,14 +125,9 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.add_row ["", "", "", "", "", "", "", "", "", ""], style: head_info
           sheet.merge_cells("A2:C2")
           sheet.merge_cells("J2:M2")
-          sheet.rows[1].cells[1].value = "#{month_name} #{params[:year]}"
-          period = if !CountChick.find_by(year_start: params[:year], house: params[:house]).nil?
-                     CountChick.find_by(year_start: params[:year], house: params[:house])
-                   else
-                     CountChick.find_by(year_end: params[:year], house: params[:house])
-                   end
+          sheet.rows[1].cells[0].value = "#{month_name} #{params[:year]}"
 
-          sheet.rows[1].cells[9].value = "STARTED #{period.chicks_start} FEMALE AND #{period.kukko_start} MALE"
+          sheet.rows[1].cells[9].value = "STARTED #{period.nil? ? "" : period.chicks_start} FEMALE AND #{period.nil? ? "" : period.kukko_start} MALE"
           sheet.rows[1].cells[9].style = content_style_left_text
 
           sheet.add_row []
@@ -202,19 +200,25 @@ class EggsCollect::CollectListsController < ApplicationController
 
 
           # EggCollect.where(:created_at => DateTime.now.prev_month(12)..DateTime.now)
-          data_from = DateTime.new(period.year_start, period.month_start, 1)
-          deads_chick = EggCollect.where(:created_at => data_from..DateTime.new(params[:year].to_i, params[:month].to_i, DateTime.now.day)).map(&:deads_chick).inject(0){ |sum, x| sum + x }
-          deads_hen = EggCollect.where(:created_at => data_from..DateTime.new(params[:year].to_i, params[:month].to_i, DateTime.now.day)).map(&:deads_hen).inject(0){ |sum, x| sum + x }
-
           sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
           sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
           sheet.merge_cells("G38:I38")
           sheet.merge_cells("J38:L38")
-          sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
-          sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+
+          deads_chick = EggCollect.where(period: period_id).map(&:deads_chick).inject(0){ |sum, x| sum + x }
+          deads_hen = EggCollect.where(period: period_id).map(&:deads_hen).inject(0){ |sum, x| sum + x }
+
+          begin
+            sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+            sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+          rescue
+            sheet.rows[35].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+            sheet.rows[35].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+          end
 
           sheet.column_widths *col_widths
         end
+
         send_data p.to_stream.read, type: "application/xlsx", filename: "eggs_collect_#{params[:month]}_#{params[:year]}.xlsx"
       end
     end

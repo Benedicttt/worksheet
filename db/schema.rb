@@ -15,12 +15,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
   enable_extension "plpgsql"
 
   create_table "count_chicks", force: :cascade do |t|
+    t.datetime "date_start"
+    t.datetime "date_end"
     t.string "house"
-    t.integer "year_start"
-    t.integer "year_end"
     t.integer "chicks_start"
     t.integer "kukko_start"
-    t.integer "month_start"
   end
 
   create_table "egg_collects", force: :cascade do |t|
@@ -39,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
     t.float "feed_g_day", default: 0.0
     t.float "hen_width", default: 0.0
     t.string "house"
+    t.integer "period"
     t.datetime "created_at"
   end
 

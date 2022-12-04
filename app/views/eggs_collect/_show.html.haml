@@ -27,64 +27,99 @@
 
         - @eggs.order(month: :desc).map(&:month).uniq.each do |month|
           %br
-          %table.margin_left_2_per
-            %tbody
-              %tr
-                %th.text-center.width250
-                  Month: #{month}, #{params[:year]}
-                  House: #{params[:house]}
-                %th.text-center.width125
-                  = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "new"} do |f|
-                    = f.hidden_field :month, value: month
-                    = f.hidden_field :year, value: params[:year]
-                    = f.hidden_field :house, value: params[:house]
-                    = f.submit "", class: "icon-edit-worksheet btn"
-                %th.text-center
-                  = link_to "", eggs_collect_show_pdf_path(month: month, year: params[:year], house: params[:house], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
-                %th.text-center
-                %th.text-center
-                  = link_to "", eggs_collect_show_excel_path(month: month, year: params[:year], house: params[:house], format: :xlsx), class: 'btn icon-excel'
+          %div.display_flex
+            %table.margin_left_2_per
+              %tbody
+                %tr
+                  %th.text-center.width250
+                    Month: #{month}, #{params[:year]}
+                    House: #{params[:house]}
+                  %th.text-center.width125
+                    = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "new"} do |f|
+                      = f.hidden_field :month, value: month
+                      = f.hidden_field :year, value: params[:year]
+                      = f.hidden_field :house, value: params[:house]
+                      = f.submit "", class: "icon-edit-worksheet btn"
+                  %th.text-center
+                    = link_to "", eggs_collect_show_pdf_path(month: month, year: params[:year], house: params[:house], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
+                  %th.text-center
+                  %th.text-center
+                    = link_to "", eggs_collect_show_excel_path(month: month, year: params[:year], house: params[:house], format: :xlsx), class: 'btn icon-excel'
+                  %th.text-center
+                    = button_tag "", class: "btn icon-period month-#{month}"
+
+
+            %div{id: "period-#{month}"}
+              = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "add_period"} do |f|
+                = f.hidden_field :month, value: month
+                = f.hidden_field :year, value: params[:year]
+                = f.hidden_field :house, value: params[:house]
+
+                %table.margin_left_2_per
+                  %tr
+                    %th
+                      = f.select :period, CountChick.all.map(&:id), {  }, { class: "form-select width75 margin_left_2_per font-size-16" }
+                    %th
+                      = f.submit "Set", class: "btn btn-primary"
+
+                    :javascript
+                      $(document).ready(function() {
+                        $("#period-#{month}").hide()
+
+                        $(".month-#{month}").on("click", function() {
+                          $("#period-#{month}").show()
+                        } )
+                      })
+
 
     %br
     %br
     %br
     %h6 Period chicks and kuko houses
-    - CountChick.all.order(year_end: :desc).uniq.each do |cc|
+    - CountChick.all.order(date_end: :desc).uniq.each do |cc|
       %br
-      = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "edit"} do |f|
-        = f.hidden_field :id, value: cc.id
-        %table.margin_left_2_per
-          %tbody
+
+      %div.display_flex
+        = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "edit"} do |f|
+          = f.hidden_field :id, value: cc.id
+          %table.margin_left_2_per
+            %tbody
+              %tr
+                %th.text-center{ id: "th-#{cc.id}"}
+                  ID: #{cc.id}, Started: #{cc.date_start.nil? ? "" : cc.date_start.strftime("%F")}, Finish: #{cc.date_end.nil? ? "": cc.date_end.strftime("%F")}, House: #{cc.house}, chicks - #{cc.chicks_start}, kuko - #{cc.kukko_start}
+                %th.text-center.width125
+                  .display_flex
+                    %td{id: "form_#{cc.id}"}
+                      = f.text_field :date_start, value: cc.date_start.strftime("%F"), class: "datepicker width175", placeholder: "From"
+                    %td{id: "form_#{cc.id}"}
+                      = f.text_field :date_end, value: cc.date_end.strftime("%F"), class: "datepicker width175", placeholder: "To"
+                    %td{id: "form_#{cc.id}"}
+                      = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: cc.house }, { class: "form-select width150 margin_left_2_per font-size-16" }
+                    %td{id: "form_#{cc.id}"}
+                      = f.number_field :chicks_start, value: cc.chicks_start, palceholder: "chiks", class: "width150 margin_left_2_per font-size-16 height50"
+                    %td{id: "form_#{cc.id}"}
+                      = f.number_field :kuko_start, value: cc.kukko_start, palceholder: "kuko", class: "width150 margin_left_2_per font-size-16  height50"
+                    %td{id: "form_#{cc.id}"}
+                      = f.submit "Change", class: "btn btn-warning margin_left_2_per"
+                    %td
+                      = f.submit "", class: "icon-edit-worksheet btn btn-#{cc.id}", type: "button"
+                    :javascript
+                        $(document).ready(function() {
+                          $("td#form_#{cc.id}").hide()
+                          $(".btn-#{cc.id}").on("click", function() {
+                              $("th#th-#{cc.id}").hide()
+                              $("td#form_#{cc.id}").show()
+                              $(".btn-#{cc.id}").hide()
+                          })
+                        })
+        %div.display_flex
+          %table.margin_left_2_per
             %tr
-              %th.text-center{ id: "th-#{cc.id}"}
-                Month: #{cc.month_start} ,Years: #{cc.year_start} - #{cc.year_end}, House: #{cc.house}, chicks - #{cc.chicks_start}, kuko - #{cc.kukko_start}
-              %th.text-center.width125
-                .display_flex
-                  %td{id: "form_#{cc.id}"}
-                    = f.select :month_start, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: cc.month_start }, { class: "form-select width200 margin_left_2_per font-size-16" }
-                  %td{id: "form_#{cc.id}"}
-                    = f.select :year_start, %W[2022 2023 2024 2025 2026], { selected:  cc.year_start  }, { class: "form-select width125 margin_left_2_per font-size-16" }
-                  %td{id: "form_#{cc.id}"}
-                    = f.select :year_end, %W[2022 2023 2024 2025 2026], { selected: cc.year_end  }, { class: "form-select width125 margin_left_2_per font-size-16" }
-                  %td{id: "form_#{cc.id}"}
-                    = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: cc.house }, { class: "form-select width150 margin_left_2_per font-size-16" }
-                  %td{id: "form_#{cc.id}"}
-                    = f.number_field :chicks_start, value: cc.chicks_start, palceholder: "chiks", class: "width150 margin_left_2_per font-size-16 height50"
-                  %td{id: "form_#{cc.id}"}
-                    = f.number_field :kuko_start, value: cc.kukko_start, palceholder: "kuko", class: "width150 margin_left_2_per font-size-16  height50"
-                  %td{id: "form_#{cc.id}"}
-                    = f.submit "Change", class: "btn btn-warning margin_left_2_per"
-                  %td
-                    = f.submit "", class: "icon-edit-worksheet btn btn-#{cc.id}", type: "button"
-                :javascript
-                  $(document).ready(function() {
-                    $("td#form_#{cc.id}").hide()
-                    $(".btn-#{cc.id}").on("click", function() {
-                        $("th#th-#{cc.id}").hide()
-                        $("td#form_#{cc.id}").show()
-                        $(".btn-#{cc.id}").hide()
-                    })
-                  })
+              %td
+                = form_for "", remote: true, url: { controller: "eggs_collect/count_chicks", action: "destroy", id: cc.id} do |s|
+                  = s.submit "", class: mobile_device? ? "icon-delete-worksheet-sm btn" : "icon-delete-worksheet btn", data: { confirm: 'Are you sure?' }
+
+
 
 
     - if current_user.rule.manager
@@ -114,11 +149,9 @@
                 %tr
                   .display_flex
                     %td
-                      = f.select :month_start, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: Time.now.month.to_i }, { class: "form-select width200 margin_left_2_per font-size-16" }
+                      = f.text_field :date_start, value: params[:date_start].nil? ? "" : params[:date_start], class: "datepicker width175", placeholder: "From"
                     %td
-                      = f.select :year_start, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
-                    %td
-                      = f.select :year_end, %W[2022 2023 2024 2025 2026], { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
+                      = f.text_field :date_end, value: params[:date_end].nil? ? "" : params[:date_end], class: "datepicker width175", placeholder: "To"
                     %td
                       = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: params[:house] }, { class: "form-select width150 margin_left_2_per font-size-16" }
                     %td
@@ -129,8 +162,22 @@
                       = f.submit "Add", class: "btn btn-success margin_left_2_per"
 
 
+
 :css
   .form-select {
     font-size: 12px;
     height: 50px;
   }
+:javascript
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      disableTouchKeyboard: true,
+      format: "dd-mm-yyyy",
+      autoclose: true,
+      todayBtn: "linked",
+      todayHighlight: true,
+      showWeek: true,
+      calendarWeeks: true,
+      language: "#{params[:locale].to_s}",
+    })
+  })
