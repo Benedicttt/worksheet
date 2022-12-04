@@ -76,8 +76,8 @@ class EggsCollect::CollectListsController < ApplicationController
   end
 
   def show_excel
-    period_id = EggCollect.where(month: params[:month], year: params[:year]).map(&:period).compact.uniq[0]
-    period = CountChick.find(period_id)
+    period_id = EggCollect.where(month: params[:month], year: params[:year], house: params[:house]).map(&:period).compact.uniq[0]
+    period = CountChick.find_by(id: period_id, house: params[:house])
 
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
@@ -205,15 +205,17 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.merge_cells("G38:I38")
           sheet.merge_cells("J38:L38")
 
-          deads_chick = EggCollect.where(period: period_id).map(&:deads_chick).inject(0){ |sum, x| sum + x }
-          deads_hen = EggCollect.where(period: period_id).map(&:deads_hen).inject(0){ |sum, x| sum + x }
+          if !period.nil?
+            deads_chick = EggCollect.where(period: period_id, house: params[:house]).map(&:deads_chick).inject(0){ |sum, x| sum + x }
+            deads_hen = EggCollect.where(period: period_id, house: params[:house]).map(&:deads_hen).inject(0){ |sum, x| sum + x }
 
-          begin
-            sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
-            sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
-          rescue
-            sheet.rows[35].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
-            sheet.rows[35].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+            begin
+              sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+              sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+            rescue
+              sheet.rows[35].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+              sheet.rows[35].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+            end
           end
 
           sheet.column_widths *col_widths

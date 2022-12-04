@@ -31,8 +31,9 @@
             %table.margin_left_2_per
               %tbody
                 %tr
-                  %th.text-center.width250
-                    Month: #{month}, #{params[:year]}
+                  %th.text-center.width350
+                    Period: #{@eggs.map(&:period).compact.uniq[0]};
+                    Date: #{month}, #{params[:year]};
                     House: #{params[:house]}
                   %th.text-center.width125
                     = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "new"} do |f|
@@ -84,34 +85,40 @@
           = f.hidden_field :id, value: cc.id
           %table.margin_left_2_per
             %tbody
-              %tr
-                %th.text-center{ id: "th-#{cc.id}"}
-                  ID: #{cc.id}, Started: #{cc.date_start.nil? ? "" : cc.date_start.strftime("%F")}, Finish: #{cc.date_end.nil? ? "": cc.date_end.strftime("%F")}, House: #{cc.house}, chicks - #{cc.chicks_start}, kuko - #{cc.kukko_start}
-                %th.text-center.width125
-                  .display_flex
-                    %td{id: "form_#{cc.id}"}
-                      = f.text_field :date_start, value: cc.date_start.strftime("%F"), class: "datepicker width175", placeholder: "From"
-                    %td{id: "form_#{cc.id}"}
-                      = f.text_field :date_end, value: cc.date_end.strftime("%F"), class: "datepicker width175", placeholder: "To"
-                    %td{id: "form_#{cc.id}"}
-                      = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: cc.house }, { class: "form-select width150 margin_left_2_per font-size-16" }
-                    %td{id: "form_#{cc.id}"}
-                      = f.number_field :chicks_start, value: cc.chicks_start, palceholder: "chiks", class: "width150 margin_left_2_per font-size-16 height50"
-                    %td{id: "form_#{cc.id}"}
-                      = f.number_field :kuko_start, value: cc.kukko_start, palceholder: "kuko", class: "width150 margin_left_2_per font-size-16  height50"
-                    %td{id: "form_#{cc.id}"}
-                      = f.submit "Change", class: "btn btn-warning margin_left_2_per"
-                    %td
-                      = f.submit "", class: "icon-edit-worksheet btn btn-#{cc.id}", type: "button"
-                    :javascript
-                        $(document).ready(function() {
-                          $("td#form_#{cc.id}").hide()
-                          $(".btn-#{cc.id}").on("click", function() {
-                              $("th#th-#{cc.id}").hide()
-                              $("td#form_#{cc.id}").show()
-                              $(".btn-#{cc.id}").hide()
-                          })
+              %th.width250{ id: "th-#{cc.id}"}
+                .font-size-12
+                  ID: #{cc.id}
+                .font-size-8
+                  Started: #{cc.date_start.nil? ? "" : cc.date_start.strftime("%Y")} Finish: #{cc.date_end.nil? ? "": cc.date_end.strftime("%Y")}
+                .font-size-8
+                  House: #{cc.house}
+                .font-size-8
+                  chicks - #{cc.chicks_start}, kuko - #{cc.kukko_start}
+              %th.text-center.width125
+                .display_flex
+                  %td{id: "form_#{cc.id}"}
+                    = f.text_field :date_start, value: cc.date_start.strftime("%F"), class: "datepicker width100", placeholder: "From"
+                  %td{id: "form_#{cc.id}"}
+                    = f.text_field :date_end, value: cc.date_end.strftime("%F"), class: "datepicker width100", placeholder: "To"
+                  %td{id: "form_#{cc.id}"}
+                    = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: cc.house }, { class: "form-select width100 margin_left_2_per font-size-16" }
+                  %td{id: "form_#{cc.id}"}
+                    = f.number_field :chicks_start, value: cc.chicks_start, palceholder: "chiks", class: " margin_left_2_per width100 font-size-16 height50"
+                  %td{id: "form_#{cc.id}"}
+                    = f.number_field :kuko_start, value: cc.kukko_start, palceholder: "kuko", class: "margin_left_2_per font-size-16 width100 height50"
+                  %td{id: "form_#{cc.id}"}
+                    = f.submit "Change", class: "btn btn-warning margin_left_2_per width100"
+                  %td
+                    = f.submit "", class: "icon-edit-worksheet btn btn-#{cc.id}", type: "button"
+                  :javascript
+                      $(document).ready(function() {
+                        $("td#form_#{cc.id}").hide()
+                        $(".btn-#{cc.id}").on("click", function() {
+                            $("th#th-#{cc.id}").hide()
+                            $("td#form_#{cc.id}").show()
+                            $(".btn-#{cc.id}").hide()
                         })
+                      })
         %div.display_flex
           %table.margin_left_2_per
             %tr
