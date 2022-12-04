@@ -129,7 +129,7 @@ class EggsCollect::CollectListsController < ApplicationController
                      CountChick.find_by(year_end: params[:year], house: params[:house])
                    end
 
-          sheet.rows[1].cells[9].value = "STARTED #{period.chicks_start} FEMALE AND #{period.chicks_start} MALE"
+          sheet.rows[1].cells[9].value = "STARTED #{period.chicks_start} FEMALE AND #{period.kukko_start} MALE"
           sheet.rows[1].cells[9].style = content_style_left_text
 
           sheet.add_row []
