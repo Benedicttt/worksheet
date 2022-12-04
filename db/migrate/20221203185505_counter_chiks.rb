@@ -10,10 +10,12 @@ class CounterChiks < ActiveRecord::Migration[7.0]
     end
 
     add_column :egg_collects, :house, :string
+    add_column :egg_collects, :created_at, :datetime
   end
 
   def down
     drop_table :count_chicks
     remove_column :egg_collects, :house
+    remove_column :egg_collects, :created_at
   end
 end

@@ -54,6 +54,7 @@ class EggsCollect::CollectListsController < ApplicationController
       month: params[:month].to_i,
       year: params[:year].to_i,
       house: params[:house].to_s,
+      created_at: DateTime.new(params[:year].to_i, params[:month].to_i, params[:day].to_i),
     }
 
     if params[:id].to_i == 0
@@ -122,7 +123,13 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.merge_cells("A2:C2")
           sheet.merge_cells("J2:M2")
           sheet.rows[1].cells[1].value = "#{month_name} #{params[:year]}"
-          sheet.rows[1].cells[9].value = "STARTED 9054 FEMALE AND 672 MALE"
+          period = if !CountChick.find_by(year_start: params[:year], house: params[:house]).nil?
+                     CountChick.find_by(year_start: params[:year], house: params[:house])
+                   else
+                     CountChick.find_by(year_end: params[:year], house: params[:house])
+                   end
+
+          sheet.rows[1].cells[9].value = "STARTED #{period.chicks_start} FEMALE AND #{period.chicks_start} MALE"
           sheet.rows[1].cells[9].style = content_style_left_text
 
           sheet.add_row []
@@ -194,12 +201,17 @@ class EggsCollect::CollectListsController < ApplicationController
                         ], style: name_header_user_info
 
 
+          # EggCollect.where(:created_at => DateTime.now.prev_month(12)..DateTime.now)
+          data_from = DateTime.new(period.year_start, period.month_start, 1)
+          deads_chick = EggCollect.where(:created_at => data_from..DateTime.new(params[:year].to_i, params[:month].to_i, DateTime.now.day)).map(&:deads_chick).inject(0){ |sum, x| sum + x }
+          deads_hen = EggCollect.where(:created_at => data_from..DateTime.new(params[:year].to_i, params[:month].to_i, DateTime.now.day)).map(&:deads_hen).inject(0){ |sum, x| sum + x }
 
-          # sheet.add_row ["", "", "", "", "", "", "", "", "", ""], style: head_info
-          # sheet.merge_cells("G38:I38")
-          # sheet.merge_cells("J38:L38")
-          # sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
-          # sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+          sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
+          sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
+          sheet.merge_cells("G38:I38")
+          sheet.merge_cells("J38:L38")
+          sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+          sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
 
           sheet.column_widths *col_widths
         end

@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
     t.float "feed_g_day", default: 0.0
     t.float "hen_width", default: 0.0
     t.string "house"
+    t.datetime "created_at"
   end
 
   create_table "eggs_collections", force: :cascade do |t|
