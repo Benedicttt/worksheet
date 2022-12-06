@@ -206,8 +206,8 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.merge_cells("J38:L38")
 
           if !period.nil?
-            deads_chick = EggCollect.where(period: period_id, house: params[:house]).map(&:deads_chick).inject(0){ |sum, x| sum + x }
-            deads_hen = EggCollect.where(period: period_id, house: params[:house]).map(&:deads_hen).inject(0){ |sum, x| sum + x }
+            deads_chick = EggCollect.where(period: period_id, house: params[:house], created_at: ..(DateTime.new(params[:year].to_i, params[:month].to_i, 1))).map(&:deads_chick).inject(0){ |sum, x| sum + x }
+            deads_hen = EggCollect.where(period: period_id, house: params[:house], created_at: ..(DateTime.new(params[:year].to_i, params[:month].to_i, 1))).map(&:deads_hen).inject(0){ |sum, x| sum + x }
 
             begin
               sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
