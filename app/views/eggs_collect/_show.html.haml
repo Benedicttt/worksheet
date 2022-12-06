@@ -2,15 +2,19 @@
 - if current_user.present?
   %article
     = render "shared/flash"
-    = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "search"} do |f|
-      %div.display_flex
-        %br
-          = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? Time.now.month.to_i : params[:month] }, { class: "form-select width200 margin_left_2_per font-size-16" }
-        = f.select :year, %w(2022 2023 2024 2025 2026), { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
-        = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: params[:house] }, { class: "form-select width150 margin_left_2_per font-size-16" }
-        %br
-        = f.submit "", class: "margin_left_2_per " + (mobile_device? ? "icon-search-sm" : "icon-search")
-        %br
+    %div.display_flex
+      = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "search"} do |f|
+        %div.display_flex
+          %br
+            = f.select :month, Date::MONTHNAMES.each_with_index.collect{|m , i| [m.nil? ? m : m + " #{i}" , i]}, { selected: params[:month].nil? ? Time.now.month.to_i : params[:month] }, { class: "form-select width200 margin_left_2_per font-size-16" }
+          = f.select :year, %w(2022 2023 2024 2025 2026), { selected:  params[:year].nil? ? Date.today.year : params[:year]  }, { class: "form-select width125 margin_left_2_per font-size-16" }
+          = f.select :house, %W[Alakerta/Parvi Uusikana], { selected: params[:house] }, { class: "form-select width150 margin_left_2_per font-size-16" }
+          %br
+          = f.submit "", class: "margin_left_2_per " + (mobile_device? ? "icon-search-sm" : "icon-search")
+          %br
+      .margin_left_2_per
+        - if !params[:year].nil? || !params[:house].nil?
+          = link_to "", eggs_collect_show_excel_path(year: params[:year], house: params[:house], all_report: true, format: :xlsx), class: 'btn icon-excel icon-excel-all'
 
     - if params[:hide] == false
 
