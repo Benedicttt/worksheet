@@ -12,7 +12,7 @@
           %br
           = f.submit "", class: "margin_left_2_per " + (mobile_device? ? "icon-search-sm" : "icon-search")
           %br
-      .margin_left_2_per
+      .margin_left_5_per
         - if !params[:year].nil? || !params[:house].nil?
           = link_to "", eggs_collect_show_excel_path(year: params[:year], house: params[:house], all_report: true, format: :xlsx), class: 'btn icon-excel icon-excel-all'
 
