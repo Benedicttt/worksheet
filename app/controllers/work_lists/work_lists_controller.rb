@@ -114,7 +114,11 @@ class WorkLists::WorkListsController < ApplicationController
 
     params[:hide] = false
 
-    render "work_lists/show"
+    respond_to do |format|
+      format.js {
+        render "work_lists/show", params: params
+      }
+    end
   end
 
   def work_list_excel
