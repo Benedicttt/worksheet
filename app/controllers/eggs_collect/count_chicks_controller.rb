@@ -43,7 +43,7 @@ class EggsCollect::CountChicksController < ApplicationController
   def add_period
     ec = EggCollect.where(house: params[:house], month: params[:month], year: params[:year])
     ec.each do |e|
-      e.update(period: params[:period], house: params[:house])
+      e.update(period: params[:period], house: CountChick.find(params[:period]).house)
     end
 
     flash[:success] = "Update period in all days"
