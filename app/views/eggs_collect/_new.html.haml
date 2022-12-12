@@ -42,9 +42,12 @@
               %td.font-size-10.text-center
 
       .tbl-content-form
+        - period = nil
         - days.times do |index|
           - day = index + 1
           - ec = EggCollect.find_by(day: index + 1, month: params[:month], year: params[:year], house: params[:house])
+          - if index == 1
+            - period = ec.period
           - ec.nil? ? count_day += 0 : count_day += 1
 
           = form_for "", remote: true, url: eggs_collect_create_path(day: day) do |f|
@@ -53,6 +56,7 @@
             = f.hidden_field "year", value: params[:year]
             = f.hidden_field "house", value: params[:house]
             = f.hidden_field "day", value: day
+            = f.hidden_field "period", value: period
 
 
             %table.table.container
