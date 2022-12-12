@@ -4,7 +4,8 @@ class EggsCollect::CollectListsController < ApplicationController
 
     @eggs = EggCollect.all
 
-    params[:hide] == true
+    params[:hide] = true
+    params[:trigger] = true
 
     render "eggs_collect/show", params: params
   end

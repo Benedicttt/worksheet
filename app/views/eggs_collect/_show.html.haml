@@ -201,6 +201,10 @@
                       = f.submit "Add", class: "btn btn-success margin_left_2_per"
 
 
+- if params[:trigger] == true
+  - params[:trigger] = false
+  :javascript
+    $("#month").trigger("change")
 
 :css
   .form-select {

@@ -97,6 +97,7 @@ class WorkLists::WorkListsController < ApplicationController
   end
 
   def show
+    params[:trigger] = true
     params[:head] = "Work List"
 
     render "work_lists/show"

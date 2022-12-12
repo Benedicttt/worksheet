@@ -96,6 +96,12 @@
             - full_work_time = 0.0
             - full_work_time_with_lunch = 0.0
             - full_work_time_with_washing = 0.0
+
+  - if params[:trigger] == true
+    - params[:trigger] = false
+    :javascript
+      $("#month").trigger("change")
+
 :css
   .form-select {
     font-size: 12px;
