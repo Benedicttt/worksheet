@@ -1,4 +1,8 @@
+# require "actionview/lib/action_view/helpers/number_helper.rb"
+
 class EggsCollect::CollectListsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
+
   def show
     params[:head] = "Eggs collect"
 
@@ -89,7 +93,7 @@ class EggsCollect::CollectListsController < ApplicationController
 
   def template_all(params)
     respond_to do |format|
-      col_widths = [5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 19]
+      col_widths = [5, 7, 6, 6, 6, 6, 6, 6, 6, 7, 6, 6, 16]
 
       format.html
       format.xlsx do
@@ -97,14 +101,13 @@ class EggsCollect::CollectListsController < ApplicationController
         wb = @p.workbook
 
           EggCollect.all.order(month: :asc).where(year: params[:year]).map(&:month).compact.uniq.each do |month|
-            period_id = EggCollect.where(month: month, year: params[:year], house: params[:house
-            ]).map(&:period).compact.uniq[0]
+            period_id = EggCollect.where(month: month, year: params[:year], house: params[:house]).map(&:period).compact.uniq[0]
             period = CountChick.find_by(id: period_id, house: params[:house])
             days = Time.days_in_month(month.to_i, params[:year].to_i)
 
             name_header_user_info = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-            head_info = wb.styles.add_style  :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-            content_style = wb.styles.add_style  :b => false, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+            head_info = wb.styles.add_style  :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}, :border => { :style => :hair, :color => "F000000", :edges => [:top, :bottom] }
+            content_style = wb.styles.add_style  :b => false, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}, :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }
             content_style_left_text = wb.styles.add_style  :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :right, :vertical => :center, :wrap_text => true}
 
               wb.add_worksheet(name: " #{params[:house].to_s.gsub("/", " ")}, month " + month.to_s,
@@ -128,21 +131,21 @@ class EggsCollect::CollectListsController < ApplicationController
               sheet.merge_cells("K1:M1")
               sheet.rows[0].cells[2].value = "#{params[:year]} - #{params[:year].to_i + 1}"
               sheet.rows[0].cells[5].value = params[:house].to_s
-              sheet.rows[0].cells[9].value = "SS 14"
+              sheet.rows[0].cells[8].value = "SS 14"
+              sheet.rows[0].cells[9].value = period.type_animal
               sheet.rows[0].cells[10].value = "SS 49-52 2021"
-              sheet.rows[0].cells[10].style = content_style_left_text
+              sheet.rows[0].cells[10].style = head_info
 
               puts params.to_json.to_s
               date = Date.parse("#{params[:year]}-#{month}-1")
               month_name = date.strftime("%B")
 
-              sheet.add_row ["", "", "", "", "", "", "", "", "", ""], style: head_info
+              sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
               sheet.merge_cells("A2:C2")
               sheet.merge_cells("J2:M2")
               sheet.rows[1].cells[0].value = "#{month_name} #{params[:year]}"
 
               sheet.rows[1].cells[9].value = "STARTED #{period.nil? ? "" : period.chicks_start} FEMALE AND #{period.nil? ? "" : period.kukko_start} MALE"
-              sheet.rows[1].cells[9].style = content_style_left_text
 
               sheet.add_row []
               sheet.add_row ["Day","Prime", "Creggs", "Big", "Small", "Flooreggs", "Egg weight", "Deads chiks", "Deads kukko", "Water ml/day", "Feed g/day", "Hen weight", "Comment"]
@@ -199,14 +202,14 @@ class EggsCollect::CollectListsController < ApplicationController
               sheet.add_row []
 
               sheet.add_row ["Total",
-                             prima,
-                             craggs,
-                             big != 0 ? (big / count_day).round(0) : big,
-                             small != 0 ? (small / count_day).round(0) : small,
-                             flooreggs,
+                             number_with_delimiter(prima.to_i),
+                             number_with_delimiter(craggs.to_i),
+                             number_with_delimiter(big != 0 ? ((big / count_day).round(0)).to_i : big.to_i),
+                             number_with_delimiter(small != 0 ? ((small / count_day).round(0)).to_i : small.to_i),
+                             number_with_delimiter(flooreggs.to_i),
                              egg_width != 0.0 ? (egg_width / count_day).round(2) : egg_width,
-                             deads_chick.to_i,
-                             deads_hen.to_i,
+                             number_with_delimiter(deads_chick.to_i),
+                             number_with_delimiter(deads_hen.to_i),
                              water != 0 ? (water / count_day).round(0) : water,
                              food != 0 ? (food / count_day).round(0) : food,
                              hen_width
@@ -246,7 +249,7 @@ class EggsCollect::CollectListsController < ApplicationController
     days = Time.days_in_month(params[:month].to_i, params[:year].to_i)
 
     respond_to do |format|
-      col_widths = [5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 19]
+      col_widths = [5, 7, 6, 6, 6, 6, 6, 6, 6, 7, 6, 6, 16]
 
       format.html
       format.xlsx do
@@ -254,8 +257,8 @@ class EggsCollect::CollectListsController < ApplicationController
         wb = @p.workbook
 
         name_header_user_info = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-        head_info = wb.styles.add_style  :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
-        content_style = wb.styles.add_style  :b => false, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+        head_info = wb.styles.add_style  :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}, :border => { :style => :hair, :color => "F000000", :edges => [:top, :bottom] }
+        content_style = wb.styles.add_style  :b => false, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}, :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }
         content_style_left_text = wb.styles.add_style  :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :right, :vertical => :center, :wrap_text => true}
 
         wb.add_worksheet(name: "Work List " + month.to_s,
@@ -279,7 +282,8 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.merge_cells("K1:M1")
           sheet.rows[0].cells[2].value = "#{params[:year]} - #{params[:year].to_i + 1}"
           sheet.rows[0].cells[5].value = params[:house].to_s
-          sheet.rows[0].cells[9].value = "SS 14"
+          sheet.rows[0].cells[8].value = "SS 14"
+          sheet.rows[0].cells[9].value = period.type_animal
           sheet.rows[0].cells[10].value = "SS 49-52 2021"
           sheet.rows[0].cells[10].style = content_style_left_text
 
@@ -350,36 +354,37 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.add_row []
 
           sheet.add_row ["Total",
-                         prima,
-                         craggs,
-                         big != 0 ? (big / count_day).round(0) : big,
-                         small != 0 ? (small / count_day).round(0) : small,
-                         flooreggs,
+                         number_with_delimiter(prima.to_i),
+                         number_with_delimiter(craggs.to_i),
+                         number_with_delimiter(big != 0 ? ((big / count_day).round(0)).to_i : big.to_i),
+                         number_with_delimiter(small != 0 ? ((small / count_day).round(0)).to_i : small.to_i),
+                         number_with_delimiter(flooreggs.to_i),
                          egg_width != 0.0 ? (egg_width / count_day).round(2) : egg_width,
-                         deads_chick.to_i,
-                         deads_hen.to_i,
+                         number_with_delimiter(deads_chick.to_i),
+                         number_with_delimiter(deads_hen.to_i),
                          water != 0 ? (water / count_day).round(0) : water,
                          food != 0 ? (food / count_day).round(0) : food,
                          hen_width
                         ], style: name_header_user_info
+          sheet.add_row []
 
 
           # EggCollect.where(:created_at => DateTime.now.prev_month(12)..DateTime.now)
           sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
           sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
-          sheet.merge_cells("G38:I38")
-          sheet.merge_cells("J38:L38")
+          sheet.merge_cells("G39:I39")
+          sheet.merge_cells("J39:L39")
 
           if !period.nil?
             deads_chick = EggCollect.where(period: period_id, house: params[:house], created_at: ..(DateTime.new(params[:year].to_i, params[:month].to_i, days))).map(&:deads_chick).inject(0){ |sum, x| sum + x }
             deads_hen = EggCollect.where(period: period_id, house: params[:house], created_at: ..(DateTime.new(params[:year].to_i, params[:month].to_i, days))).map(&:deads_hen).inject(0){ |sum, x| sum + x }
 
             begin
-              sheet.rows[37].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
-              sheet.rows[37].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+              sheet.rows[38].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+              sheet.rows[38].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
             rescue
-              sheet.rows[35].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
-              sheet.rows[35].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
+              sheet.rows[36].cells[6].value = "Chiks last: #{(period.chicks_start - deads_chick).to_i}"
+              sheet.rows[36].cells[9].value = "Kuko last: #{(period.kukko_start - deads_hen).to_i}"
             end
           end
 

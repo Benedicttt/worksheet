@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_14_183130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_185505) do
     t.string "house"
     t.integer "chicks_start"
     t.integer "kukko_start"
+    t.string "type_animal"
   end
 
   create_table "egg_collects", force: :cascade do |t|

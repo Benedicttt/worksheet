@@ -26,4 +26,10 @@ class ApplicationController < ActionController::Base
     minutes = time.to_i % 60
     { hours: hours, minutes: minutes }
   end
+
+  def format_number(number)
+    parts = number.to_s.split('.')
+    parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1 ")
+    parts.join(' ')
+  end
 end

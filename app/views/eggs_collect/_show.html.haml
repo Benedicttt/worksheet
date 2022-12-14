@@ -63,9 +63,11 @@
               %tbody
                 %tr
                   %th.text-center.width350
-                    Period: #{@eggs.map(&:period).compact.uniq[0]};
+                    - id_period = @eggs.map(&:period).compact.uniq[0]
+                    - type_animal = CountChick.find(id_period).type_animal
+                    Period: #{id_period};
                     Date: #{month}, #{params[:year]};
-                    House: #{params[:house]}
+                    House: #{params[:house]}, Type: #{type_animal}
                   %th.text-center.width125
                     = form_for "", remote: true, url: { controller: "eggs_collect/collect_lists", action: "new"} do |f|
                       = f.hidden_field :month, value: month
@@ -76,7 +78,7 @@
                   -#  = link_to "", eggs_collect_show_pdf_path(month: month, year: params[:year], house: params[:house], format: "pdf"), class: 'btn icon-pdf', target: "_blank"
                   %th.text-center
                   %th.text-center
-                    = link_to "", eggs_collect_show_excel_path(month: month, year: params[:year], house: params[:house], format: :xlsx), class: 'btn icon-excel'
+                    = link_to "", eggs_collect_show_excel_path(type_animal: type_animal, month: month, year: params[:year], house: params[:house], format: :xlsx), class: 'btn icon-excel'
                   %th.text-center
                     = button_tag "", class: "btn icon-period month-#{month}"
 
@@ -118,7 +120,7 @@
             %tbody
               %th.width250{ id: "th-#{cc.id}"}
                 .font-size-12
-                  ID: #{cc.id}
+                  ID: #{cc.id}, Type: #{cc.type_animal}
                 .font-size-8
                   Started: #{cc.date_start.nil? ? "" : cc.date_start.strftime("%Y")} Finish: #{cc.date_end.nil? ? "": cc.date_end.strftime("%Y")}
                 .font-size-8
@@ -137,6 +139,8 @@
                     = f.number_field :chicks_start, value: cc.chicks_start, palceholder: "chiks", class: " margin_left_2_per width100 font-size-16 height50"
                   %td{id: "form_#{cc.id}"}
                     = f.number_field :kuko_start, value: cc.kukko_start, palceholder: "kuko", class: "margin_left_2_per font-size-16 width100 height50"
+                  %td{id: "form_#{cc.id}"}
+                    = f.select :type_animal, %W[Classic Light], { selected: params[:type_animal] }, { class: "form-select width150 margin_left_2_per font-size-16" }
                   %td{id: "form_#{cc.id}"}
                     = f.submit "Change", class: "btn btn-warning margin_left_2_per width100"
                   %td
@@ -197,6 +201,8 @@
                       = f.number_field :chicks_start, palceholder: "chiks", class: "width150 margin_left_2_per font-size-16 height50"
                     %td
                       = f.number_field :kuko_start, palceholder: "kuko", class: "width150 margin_left_2_per font-size-16  height50"
+                    %td
+                      = f.select :type_animal, %W[Classic Light], { selected: params[:type_animal] }, { class: "form-select width150 margin_left_2_per font-size-16" }
                     %td
                       = f.submit "Add", class: "btn btn-success margin_left_2_per"
 

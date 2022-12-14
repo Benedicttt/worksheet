@@ -7,6 +7,7 @@ class EggsCollect::CountChicksController < ApplicationController
       cc.chicks_start = params[:chicks_start]
       cc.kukko_start = params[:kuko_start]
       cc.house = params[:house]
+      cc.type_animal = params[:type_animal]
 
       cc.save
 
@@ -25,7 +26,8 @@ class EggsCollect::CountChicksController < ApplicationController
                date_start:  params[:date_start],
                date_end: params[:date_end],
                chicks_start: params[:chicks_start],
-               kukko_start: params[:kuko_start]
+               kukko_start: params[:kuko_start],
+               type_animal: params[:type_animal]
     )
 
     flash[:success] = "Period updated"
