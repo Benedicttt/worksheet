@@ -132,7 +132,7 @@ class EggsCollect::CollectListsController < ApplicationController
               sheet.rows[0].cells[2].value = "#{params[:year]} - #{params[:year].to_i + 1}"
               sheet.rows[0].cells[5].value = params[:house].to_s
               sheet.rows[0].cells[8].value = "SS 14"
-              sheet.rows[0].cells[9].value = period.type_animal
+              sheet.rows[0].cells[9].value = period.nil? || period.type_animal.nil? ? "" : period.type_animal
               sheet.rows[0].cells[10].value = "SS 49-52 2021"
               sheet.rows[0].cells[10].style = head_info
 
@@ -283,7 +283,7 @@ class EggsCollect::CollectListsController < ApplicationController
           sheet.rows[0].cells[2].value = "#{params[:year]} - #{params[:year].to_i + 1}"
           sheet.rows[0].cells[5].value = params[:house].to_s
           sheet.rows[0].cells[8].value = "SS 14"
-          sheet.rows[0].cells[9].value = period.type_animal
+          sheet.rows[0].cells[9].value = period.nil? || period.type_animal.nil? ? "" : period.type_animal
           sheet.rows[0].cells[10].value = "SS 49-52 2021"
           sheet.rows[0].cells[10].style = content_style_left_text
 
