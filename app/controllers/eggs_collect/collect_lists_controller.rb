@@ -151,6 +151,7 @@ class EggsCollect::CollectListsController < ApplicationController
               sheet.add_row ["Day","Prime", "Creggs", "Big", "Small", "Flooreggs", "Egg weight", "Deads chiks", "Deads kukko", "Water ml/day", "Feed g/day", "Hen weight", "Comment"]
               13.times { |i| sheet.rows[3].cells[i].style = name_header_user_info }
 
+               # for month
               prima = 0
               craggs = 0
               big = 0
@@ -197,6 +198,7 @@ class EggsCollect::CollectListsController < ApplicationController
                 water += !ec.nil? && !ec.water_ml_day.nil? ? ec.water_ml_day : 0
                 food += !ec.nil? && !ec.feed_g_day.nil? ? ec.feed_g_day : 0
                 hen_width += !ec.nil? && !ec.hen_width.nil? ? ec.hen_width : 0
+
               end
 
               sheet.add_row []
@@ -237,6 +239,73 @@ class EggsCollect::CollectListsController < ApplicationController
               sheet.column_widths *col_widths
             end
 
+          end
+
+        #Sheet "total"
+        global_prima = 0
+        global_craggs = 0
+        global_big = 0
+        global_small = 0
+        global_flooreggs = 0
+        global_egg_width = 0.0
+        global_deads_chick = 0
+        global_deads_hen = 0
+        global_water = 0
+        global_food = 0
+        global_hen_width = 0
+        global_count_day = 0
+
+        col_widths = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]
+        name_header_user_info = wb.styles.add_style :bg_color => "ECECEC", :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}
+        head_info = wb.styles.add_style  :b => true, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}, :border => { :style => :hair, :color => "F000000", :edges => [:top, :bottom] }
+        content_style = wb.styles.add_style  :b => false, :sz => 8,  :font_name => 'Monaco', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true}, :border => { :style => :dotted, :color => "F000000", :edges => [:top, :bottom] }
+
+        wb.add_worksheet(name: "Total",
+                           :page_margins => {
+                           :left => 0.5,
+                           :right => 0.5,
+                           :top => 0.1,
+                           :bottom => 0.1,
+                           :header => 0.0,
+                           :footer => 0.0
+                         },
+                         :paper_size => 9) do |sheet|
+          sheet.page_setup.fit_to :paper_size => 9, :fit_to_width => 2
+
+          EggCollect.all.where(year: params[:year]).each do |ec|
+            global_prima += ec.prima.to_i
+            global_craggs += ec.craggs.to_i
+            global_big += ec.big_small.split("+")[0].to_i
+            global_small += ec.big_small.split("+")[1].to_i
+            global_flooreggs += ec.flooreggs.to_i
+            global_egg_width += ec.egg_width.to_f
+            global_deads_chick += ec.deads_chick.to_i
+            global_deads_hen += ec.deads_hen.to_i
+            global_water += ec.water_ml_day.to_i
+            global_food += ec.feed_g_day.to_i
+            global_hen_width += ec.hen_width.to_i
+            global_count_day += 1
+          end
+
+          # header doc
+          sheet.add_row ["", "", "", "", "", "", "", "", "", "", "", "", ""], style: head_info
+          sheet.add_row ["Prime", "Creggs", "Big", "Small", "Flooreggs", "Egg weight", "Deads chiks", "Deads kukko", "Water ml/day", "Feed g/day", "Hen weight"]
+          11.times { |i| sheet.rows[1].cells[i].style = name_header_user_info }
+          sheet.add_row [
+                         number_with_delimiter(global_prima.to_i),
+                         number_with_delimiter(global_craggs.to_i),
+                         number_with_delimiter(global_big != 0 ? ((global_big / global_count_day).round(0)).to_i : global_big.to_i),
+                         number_with_delimiter(global_small != 0 ? ((global_small / global_count_day).round(0)).to_i : global_small.to_i),
+                         number_with_delimiter(global_flooreggs.to_i),
+                         global_egg_width != 0.0 ? (global_egg_width / global_count_day).round(2) : global_egg_width,
+                         number_with_delimiter(global_deads_chick.to_i),
+                         number_with_delimiter(global_deads_hen.to_i),
+                         global_water != 0 ? (global_water / global_count_day).round(0) : global_water,
+                         global_food != 0 ? (global_food / global_count_day).round(0) : global_food,
+                         global_hen_width
+                        ], style: content_style
+
+          sheet.column_widths *col_widths
         end
       end
     end
